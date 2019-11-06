@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2018.10.12)  6 NOV 2019 11:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2018.10.12)  6 NOV 2019 12:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -612,37 +612,42 @@ File: dvips.def 2015/12/30 v3.0k Driver-dependent file (DPC,SPQR)
 ))
 \Gin@req@height=\dimen144
 \Gin@req@width=\dimen145
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen146
+\extrarowheight=\dimen147
+\NC@list=\toks29
+\extratabsurround=\skip55
+\backup@length=\skip56
 ) (./paper.aux
 
 LaTeX Warning: Label `ln:cSizeCheck' multiply defined.
 
-
-LaTeX Warning: Label `ln:resolvable' multiply defined.
-
 )
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
  (./marco.tex)
-LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 46.
+LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 47.
 
-LaTeX Font Info:    No file OMScmtt.fd. on input line 46.
+LaTeX Font Info:    No file OMScmtt.fd. on input line 47.
 
 
 LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbraceleft' on input line 46.
+(Font)              for symbol `textbraceleft' on input line 47.
 
 (./sections/abstract.tex) (./sections/introduction.tex)
 (./sections/preliminaries.tex) (./sections/i_uip.tex
@@ -650,30 +655,61 @@ LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
 LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
 (Font)              using `OT1/cmr/bx/n' instead on input line 12.
 
+[1
 
+]
 Overfull \hbox (6.37117pt too wide) in paragraph at lines 45--46
 \OT1/cmr/m/n/10 will mark and keep $\OML/cmm/m/it/10 p$ \OT1/cmr/m/n/10 in $\OM
 L/cmm/m/it/10 C[]$ \OT1/cmr/m/n/10 (line 13[]), and con-tinue res-o-lu-tions at
  level $\OML/cmm/m/it/10 i$\OT1/cmr/m/n/10 . $[]$
  []
 
-[1
 
-] [2] [3] [4]) (./sections/evaluation.tex [5]) [6] (./paper.aux)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [2]
+[3] [4]
+
+LaTeX Warning: Reference `alg:i-uip-CB' on page 5 undefined on input line 152.
+
+
+LaTeX Warning: Reference `ln:enqueue' on page 5 undefined on input line 152.
+
+
+LaTeX Warning: Reference `ln:pop' on page 5 undefined on input line 152.
+
+
+LaTeX Warning: Reference `ln:reequeue' on page 5 undefined on input line 152.
+
+) (./sections/evaluation.tex [5]
+Overfull \hbox (7.84198pt too wide) in paragraph at lines 8--9
+\OT1/cmr/m/n/10 clause length and mem-ory con-sump-tion for each in-stances. Fo
+r $[]$
+ []
+
+
+Overfull \hbox (10.7094pt too wide) in paragraph at lines 16--27
+ [] 
+ []
+
+) [6] [7] (./paper.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3596 strings out of 493030
- 46468 string characters out of 6136259
- 128331 words of memory out of 5000000
- 7066 multiletter control sequences out of 15000+600000
+ 3640 strings out of 493030
+ 46983 string characters out of 6136259
+ 128989 words of memory out of 5000000
+ 7108 multiletter control sequences out of 15000+600000
  13906 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 33i,10n,23p,1366b,334s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 33i,14n,23p,1370b,410s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on paper.dvi (6 pages, 22464 bytes).
+Output written on paper.dvi (7 pages, 24040 bytes).
