@@ -32,4 +32,13 @@ A solver produce smaller clauses can construct smaller proofs as well. For UNSAT
 
 
 \subsection{$\IUIP$ as a Practical Learning Scheme}
-To evaluate $\IUIP$'s effectiveness as a clause learning scheme, we implement $\IUIPMIN$ on $\MapleBase$ with $\IUIPGreedy$ (sec~\ref{sec:greedy}) and two variable activity adjustment heuristics,  $\IUIPActive$ and $\IUIPDist$ (sec~\ref{sec: varajust}).  
+To evaluate $\IUIP$'s effectiveness as a clause learning scheme, we implement $\IUIPMIN$ on $\MapleBase$ with the extensions mentioned in section~\ref{sec:i-uip}. We evaluated four different configurations (i-UIP, i-UIP-Greedy, i-UIP-Inclusive, and i-UIP-Exclusive) of $\IUIP$ and 1-UIP learning on the SAT Race 2019 main track benchmark and report each configuration's solved instances and PAR-2 score. 
+
+\nf{Inserted a table here, and graphs and analysis}
+
+
+\subsection{$\IUIP$ on Modern SAT solvers}
+To validate $\IUIP$ as a generalizable learning scheme on modern SAT solvers, we re-implement $\IUIP$ on $\MapleSeven$ \cite{},  $\MapleNine$ \cite{} and $\expSAT$.  
+The first two solvers are the winner of 2017 and 2019 SAT race, respectively.  $\expSAT$ is a top ten solver from 2019 SAT race which uses random walk simulation to help branch. For each solver, we compare the base 1-UIP learning scheme against top two $\IUIP$ configurations, $\IUIPGreedy$ and $\IUIPActive$, on the SAT Race 2019 main track benchmark. We report solved instances and PAR-2 score.
+
+\nf{Inserted a table here, and graphs and analysis}
