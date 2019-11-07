@@ -58,6 +58,7 @@ This simple and greedy $\IUIP$ learning scheme can produce significantly smaller
     \State $Gap \gets |\oneUIPClause| - \textit{LBD}(\oneUIPClause)$
      \If{$Gap > t_{gap}$} \label{ln:compareGap}
         \State $\iUIPClause \gets \IUIP(\oneUIPClause, \phi)$
+        \State \textcolor{gray}{\textbf{I-UIP-Greedy}($\iUIPClause$ , $\oneUIPClause$)}  \Comment{additional clause selection policy, see sec~\ref{sec:greedy}}
         \If {$|\iUIPClause| < |\oneUIPClause|$} 
             \State $\text{Succeed} \gets \text{Succeed}+1$ \label{ln:updateS}
         \EndIf
@@ -82,16 +83,15 @@ The gap threshold $t_{gap}$ is initialized to 0, and is updated at every restart
 \subsection{Early stop i-UIP Learning}
 At any point of $\IUIP$ learning, if the number of marked literals in $\iUIPClause$ (literals which are forced into the clause to preserve $\LBD$) exceeds the input clause $\oneUIPClause$'s $\GAP$, we can abort $\IUIP$ learning for $\oneUIPClause$ because the size of the final $\iUIPClause$ is at least the size of $\oneUIPClause$. The early stopping rule prevents solver from wasting time on traversing a large implication graph when $\IUIP$ has already failed.
 
-\subsection{Greedy Active Clause Selection}
-Even though $\IUIP$ learning can reduce the size of the learnt clause $\iUIPClause$, but it may introduce inactive literals into $\iUIPClause$.  Inactive literals prevents the clause from being asserted to force literal implication. Therefore, a practical clause learning scheme should consider both size and variable activity. We propose an optional extension $\IUIPGreedy$ to filter out inactive $\oneUIPClause$.  
+\subsection{Greedy Active Clause Selection} \label{sec:greedy}
+Even though $\IUIP$ learning can reduce the size of the learnt clause $\iUIPClause$, but it may introduce literals with low variable activity into $\iUIPClause$.  Inactive literals prevents the clause from being asserted to force literal implication. Therefore, a practical clause learning scheme should consider both size and variable activity. We propose an optional extension $\IUIPGreedy$ to filter out inactive $\oneUIPClause$.  
 
 \begin{algorithm}[t]
 \caption{$\IUIPGreedy$}\label{alg:greedySelection}
 \begin{algorithmic}[1]
+\Require  $\iUIPClause$ is a valid i-UIP clause
 \Require  $\oneUIPClause$ is a valid 1-UIP clause
-\Require  $\assertionTrail$ is a valid assertion trail
-\Procedure{$\IUIPGreedy$}{$\oneUIPClause,  \assertionTrail$} 
-   \State $\iUIPClause \gets \IUIP(\oneUIPClause, \assertionTrail)$
+\Procedure{$\IUIPGreedy$}{$\iUIPClause, \oneUIPClause$} 
    \If{$|\iUIPClause| < |\oneUIPClause| \wedge (\code{AvgVarAct}(\iUIPClause) > \code{AvgVarAct}(\oneUIPClause)) $} \label{ln:checkSizeAndActivity}
     \State \textbf{return} $\iUIPClause$
 \Else
@@ -103,7 +103,7 @@ Even though $\IUIP$ learning can reduce the size of the learnt clause $\iUIPClau
 
 After computing the $\iUIPClause$, $\IUIPGreedy$ compares both the size and the average variable activity for $\oneUIPClause$ and $\iUIPClause$ (alg.~\ref{alg:greedySelection} at line~\ref{ln:checkSizeAndActivity}). The algorithm learns $\iUIPClause$ if the clause has smaller size and higher average variable activity. 
 
-\subsection{Adjust Variable Activity}
+\subsection{Adjust Variable Activity} \label{sec: varajust}
 Two popular branching heuristics for modern SAT solvers are VSIDS and LBR. Both heuristics increase 
 the variable activity for all literals involved in resolutions during 1-UIP learning. Since $\IUIP$ extends 1-UIP with deeper resolutions against the trail, the variables activities for the fresh literals involved in the additional resolution steps need to be adjusted as well. We purpose two optional schemes for adjusting variable activities, $\IUIPActive$ and $\IUIPDist$. 
 

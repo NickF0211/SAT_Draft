@@ -1,7 +1,7 @@
 \section{Implementation and Experiments}
 
-\subsection{Reduce Clause Size with $\IUIP$}
-To evaluate the effectiveness of $\IUIP$ as a clause reduction technique, we implement  $\IUIPPURE$ and $\IUIPMIN$  on top of \text{\MapleBase} \cite{}, the winner of SAT Race 2015 application track.  We than compare the performance of the baseline $\MapleBase$ with $\MapleIUIPPURE$ and $\MapleIUIMIN$ on the full set of benchmarks from SAT RACE 2019 main track.
+\subsection{Clause Reduction with $\IUIP$}
+To evaluate $\IUIP$'s effectiveness as a clause reduction technique, we implement  $\IUIPPURE$ and $\IUIPMIN$  on top of \text{\MapleBase} \cite{}, the winner of SAT Race 2015 application track.  We than compare the performance of the baseline $\MapleBase$ with $\MapleIUIPPURE$ and $\MapleIUIMIN$ on the full set of benchmarks from SAT RACE 2019 main track.
 
 The benchmark contains 400 instances divided into two groups of 200, new and old, representing historical instances and fresh instances in the 2019 race, respectively. I partition the old group instances into six partitions of size 30 and one partition of size 20. Each partition is then assigned to a Intel CPU node with 16 cores (2 sockets 8 cores  and  1 thread) and 96649 MB memory. The new group is partitioned based on their contributor (e.g. Heule contributed 22 matrix multiplication instances), and each partition is assigned to a aforementioned CPU node. To speed up the experiment, we allow a CPU node to solver at most seven instances concurrently. 
 
@@ -13,7 +13,7 @@ Beside solved instances and PAR-2 score, we additionally measure the average cla
 
 
 \begin{center}
-\begin{tabular}{ | m{4cm} | m{2cm}| m{2cm} | m{2cm} | m{2cm} | } 
+\begin{tabular}{ | m{3.5cm} | m{2cm}| m{2cm} | m{2cm} | m{2cm} | } 
 \hline
 Solver & \# solved & PAR-2 & Clause Size & Memory \\ 
 \hline
@@ -26,10 +26,10 @@ $\MapleIUIMIN$ & cell8 & cell9 & cell10 & cell11\\
 \end{tabular}
 \end{center}
 
-A solver produce smaller clauses can construct smaller proofs as well. For UNSAT instances, we additionally measure their DRUP\cite{} proof checking time as well as the size of the optimized DRUP proof. We used DART-trim \cite{} with 10000 timeout to check and optimize DRUP proofs. 
+A solver produce smaller clauses can construct smaller proofs as well. For UNSAT instances, we additionally measure their DRUP\cite{} proof checking time as well as the size of the optimized DRUP proof. We used DART-trim \cite{} with 5000 timeout to check and optimize DRUP proofs. 
 
 \nf{Insert a comparison graphs here. (X and Y comparisons graph, showing both time and optimized proof size).}
 
 
-
-
+\subsection{$\IUIP$ as a Practical Learning Scheme}
+To evaluate $\IUIP$'s effectiveness as a clause learning scheme, we implement $\IUIPMIN$ on $\MapleBase$ with $\IUIPGreedy$ (sec~\ref{sec:greedy}) and two variable activity adjustment heuristics,  $\IUIPActive$ and $\IUIPDist$ (sec~\ref{sec: varajust}).  
