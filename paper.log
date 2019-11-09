@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2018.10.12)  7 NOV 2019 16:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2018.10.12)  9 NOV 2019 18:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -715,9 +715,14 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2]
 [3] [4]) (./sections/evaluation.tex [5]
-Overfull \hbox (7.84198pt too wide) in paragraph at lines 8--9
-\OT1/cmr/m/n/10 clause length and mem-ory con-sump-tion for each in-stances. Fo
-r $[]$
+Overfull \hbox (7.03636pt too wide) in paragraph at lines 8--9
+\OT1/cmr/m/n/10 clause length and clause re-duc-tion ra-tio for each in-stances
+. For $[]$
+ []
+
+
+Overfull \hbox (10.7094pt too wide) in paragraph at lines 16--27
+ [] 
  []
 
 

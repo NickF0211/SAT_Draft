@@ -5,7 +5,7 @@ To evaluate $\IUIP$'s effectiveness as a clause reduction technique, we implemen
 
 The benchmark contains 400 instances divided into two groups of 200, new and old, representing historical instances and fresh instances in the 2019 race, respectively. I partition the old group instances into six partitions of size 30 and one partition of size 20. Each partition is then assigned to a Intel CPU node with 16 cores (2 sockets 8 cores  and  1 thread) and 96649 MB memory. The new group is partitioned based on their contributor (e.g. Heule contributed 22 matrix multiplication instances), and each partition is assigned to a aforementioned CPU node. To speed up the experiment, we allow a CPU node to solver at most seven instances concurrently. 
 
-Beside solved instances and PAR-2 score, we additionally measure the average clause length and memory consumption for each instances. For $\MapleIUIPPURE$  and $\MapleIUIMIN$, we also captures the $\IUIP$ learning attempted rate and success rate.
+Beside solved instances and PAR-2 score, we additionally measure the average clause length and clause reduction ratio for each instances. For $\MapleIUIPPURE$  and $\MapleIUIMIN$, we also captures the $\IUIP$ learning attempted rate and success rate.
 
 \nf{Inserted a table here, and graphs and analysis}
 
@@ -13,15 +13,15 @@ Beside solved instances and PAR-2 score, we additionally measure the average cla
 
 
 \begin{center}
-\begin{tabular}{ | m{3.5cm} | m{2cm}| m{2cm} | m{2cm} | m{2cm} | } 
+\begin{tabular}{ | m{3.5cm} | m{2cm}| m{2cm} | m{2cm} | m{2.5cm} | } 
 \hline
-Solver & \# solved & PAR-2 & Clause Size & Memory \\ 
+Solver & \# solved & PAR-2 & Clause Size & Cl Reduction\% \\ 
 \hline
-$\MapleBase$ & cell5 & cell6 & cell 7 & cell 8 \\ 
+$\MapleBase$ & cell5 & cell6 & 59.3 & 37.53\% \\ 
 \hline
-$\MapleIUIPPURE$ & cell8 & cell9 & cell10 & cell11\\ 
+$\MapleIUIPPURE$ & 221 & cell9 & cell10 & cell11\\ 
 \hline
-$\MapleIUIMIN$ & cell8 & cell9 & cell10 & cell11\\ 
+$\MapleIUIMIN$ & 226 & cell9 & 41.5 & 49.5\%\\ 
 \hline
 \end{tabular}
 \end{center}
