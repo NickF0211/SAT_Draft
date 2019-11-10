@@ -17,14 +17,32 @@ Beside solved instances and PAR-2 score, we additionally measure the average cla
 \hline
 Solver & \# solved & PAR-2 & Clause Size & Cl Reduction\% \\ 
 \hline
-$\MapleBase$ & cell5 & cell6 & 59.3 & 37.53\% \\ 
+$\MapleBase$ & 221 & 5005.2 & 62.6 & 36.53\% \\ 
 \hline
-$\MapleIUIPPURE$ & 221 & cell9 & cell10 & cell11\\ 
+$\MapleIUIPPURE$ & cell9 & cell9 & cell10 & cell11\\ 
 \hline
-$\MapleIUIMIN$ & 226 & cell9 & 41.5 & 49.5\%\\ 
+$\MapleIUIMIN$ & 226 & 4933.6 & 45.2 & 47.5\%\\ 
 \hline
 \end{tabular}
 \end{center}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth, natwidth=610,natheight=642]{clause_length_PDF.png}
+    \caption{Average clause (relative to 1-UIP clauses) size distribution. X axis indicates the relative size difference, and Y axis indicates the PDF.}
+     \label{fig:len_pdf}
+\end{figure}
+\begin{figure} \label{fig:len_compare}
+    \centering
+    \includegraphics[width=0.8\textwidth, natwidth=610,natheight=642 ]{i-uip-sizes-compare.png}
+    \caption{Average clause size comparison plot. Each point in the plot represents an benchmark instance. X and Y axis shows the clause length from $\MapleIUIMIN$ and $\MapleBase$, respectively  }
+    \label{fig:len_compare}
+\end{figure}
+
+
+
+
 
 A solver produce smaller clauses can construct smaller proofs as well. For UNSAT instances, we additionally measure their DRUP\cite{} proof checking time as well as the size of the optimized DRUP proof. We used DART-trim \cite{} with 5000 timeout to check and optimize DRUP proofs. 
 

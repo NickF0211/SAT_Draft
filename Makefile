@@ -8,8 +8,8 @@ paper.ps: paper.dvi
 	dvips -Ppdf -G0 paper.dvi
 	# the -G0 fixes the ligature problem.
 
-paper.pdf: paper.ps
-	ps2pdf paper.ps
+paper.pdf: 
+	pdflatex paper.tex
 
 PDF: paper.pdf
 	xpdf paper.pdf
