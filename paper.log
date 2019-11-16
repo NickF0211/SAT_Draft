@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.12)  10 NOV 2019 14:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.12)  16 NOV 2019 15:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -833,42 +833,76 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2]
 [3] [4]) (./sections/evaluation.tex [5]
-Overfull \hbox (7.03636pt too wide) in paragraph at lines 8--9
-\OT1/cmr/m/n/10 clause length and clause re-duc-tion ra-tio for each in-stances
-. For $[]$
- []
-
-
-Overfull \hbox (10.7094pt too wide) in paragraph at lines 16--27
+Overfull \hbox (10.7094pt too wide) in paragraph at lines 12--23
  [] 
  []
 
-<./figures/clause_length_PDF.png, id=38, 462.528pt x 346.896pt>
+[6] <./figures/clause_length_PDF.png, id=41, 462.528pt x 346.896pt>
 File: ./figures/clause_length_PDF.png Graphic file (type png)
 
 <use ./figures/clause_length_PDF.png>
-Package pdftex.def Info: ./figures/clause_length_PDF.png used on input line 32.
+Package pdftex.def Info: ./figures/clause_length_PDF.png used on input line 36.
 
 (pdftex.def)             Requested size: 277.69987pt x 208.2821pt.
 
-<./figures/i-uip-sizes-compare.png, id=40, 462.528pt x 346.896pt>
+<./figures/i-uip-sizes-compare.png, id=43, 462.528pt x 346.896pt>
 File: ./figures/i-uip-sizes-compare.png Graphic file (type png)
 
 <use ./figures/i-uip-sizes-compare.png>
-Package pdftex.def Info: ./figures/i-uip-sizes-compare.png used on input line 3
-8.
+Package pdftex.def Info: ./figures/i-uip-sizes-compare.png used on input line 4
+2.
+(pdftex.def)             Requested size: 277.69987pt x 208.2821pt.
+
+Overfull \hbox (46.9886pt too wide) in paragraph at lines 54--63
+ [] 
+ []
+
+
+Underfull \vbox (badness 1163) has occurred while \output is active []
+
+ [7 <./figures/clause_length_PDF.png>]
+Overfull \hbox (13.52214pt too wide) in paragraph at lines 70--71
+[]\OT1/cmr/m/n/10 Fig. 5[] shows that the op-ti-mized proof con-struct by $[]$ 
+and $[]$
+ []
+
+
+Overfull \hbox (46.9886pt too wide) in paragraph at lines 74--85
+ [] 
+ []
+
+
+Underfull \hbox (badness 1264) in paragraph at lines 86--86
+[]\OT1/cmr/m/n/10 Fig.5: |Op-ti-mized UN-SAT proof com-par-i-son for 1-UIP $[]$
+ and
+ []
+
+<./figures/proof_size_compare.png, id=49, 462.528pt x 346.896pt>
+File: ./figures/proof_size_compare.png Graphic file (type png)
+
+<use ./figures/proof_size_compare.png>
+Package pdftex.def Info: ./figures/proof_size_compare.png used on input line 92
+.
 (pdftex.def)             Requested size: 277.69987pt x 208.2821pt.
 
 
-LaTeX Warning: Reference `sec:i-uip' on page 6 undefined on input line 53.
+LaTeX Warning: Reference `sec:i-uip' on page 8 undefined on input line 98.
 
 
-Overfull \hbox (3.78085pt too wide) in paragraph at lines 53--54
+Overfull \hbox (3.78085pt too wide) in paragraph at lines 98--99
 []$ \OT1/cmr/m/n/10 on $[]$ with the ex-ten-sions men-tioned in sec-tion [].
  []
 
-[6] [7 <./figures/clause_length_PDF.png> <./figures/i-uip-sizes-compare.png>])
-[8] (./paper.aux)
+
+Underfull \vbox (badness 1383) has occurred while \output is active []
+
+ [8 <./figures/i-uip-sizes-compare.png>] [9 <./figures/proof_size_compare.png>]
+
+Overfull \hbox (14.62262pt too wide) in paragraph at lines 104--119
+ [] 
+ []
+
+) [10] (./paper.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -880,13 +914,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 6422 strings out of 493029
- 91055 string characters out of 6136233
- 188740 words of memory out of 5000000
- 9811 multiletter control sequences out of 15000+600000
+ 6432 strings out of 493029
+ 91275 string characters out of 6136233
+ 188782 words of memory out of 5000000
+ 9820 multiletter control sequences out of 15000+600000
  14707 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,14n,42p,1370b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,16n,42p,1370b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
@@ -906,10 +940,10 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf
 onts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmtt9.pfb>
-Output written on paper.pdf (8 pages, 288784 bytes).
+Output written on paper.pdf (10 pages, 323129 bytes).
 PDF statistics:
- 116 PDF objects out of 1000 (max. 8388607)
- 81 compressed objects within 1 object stream
+ 124 PDF objects out of 1000 (max. 8388607)
+ 85 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
