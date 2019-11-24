@@ -27,7 +27,7 @@ $\MapleIUIMIN$ & 226 & 4890.67 & 45.2 & 47.8\%\\
 
 Fig.~\ref{fig:t1} shows that both version of $\IUIP$ solved five more instances than the baseline solver with lower PAR-2 scores. $\IUIPMIN$ has marginally lower PAR-2 score than $\IUIPPURE$. Both $\IUIPPURE$ and $\IUIPMIN$ produce clause with significantly smaller size than 1-UIP by 27.7\% and 20.7\%, respectively. Fig.~\ref{fig:len_pdf} shows the probability density distribution (PDF) of the average clause length from $\IUIPMIN$ relative to 1-UIP. $\IUIPMIN$ learning produces shorter clauses for 88.25\% instances, and average relative reduction from 1-UIP is 18.685\%.Fig.~\ref{fig:len_compare} compares the absolute average clause size from $\IUIPMIN$ and 1-UIP, and it shows that $\IUIPMIN$ in general produces smaller clauses, and the size reduction is more significant for instances with large average 1-UIP clause size. 
 
-We also looked at the 14 instances solved by $\IUIPMIN$ but not by 1-UIP. $\IUIPMIN$ produces smaller clauses for all of them with average relative reduction of 22\% and maximum 77\% (30 vs 135). Seven out of 14 instances has size relative reduction over 30\%. For the 9 instances solved by 1-UIP but not by $\IUIPMIN$, $\IUIPMIN$ only produce smaller clause by 33\% and with average relative reduction of 3.3\$.
+We also looked at the 14 instances solved by $\IUIPMIN$ but not by 1-UIP. $\IUIPMIN$ produces smaller clauses for all of them with average relative reduction of 22\% and maximum 77\% (30 vs 135). Seven out of 14 instances has size relative reduction over 30\%. For the 9 instances solved by 1-UIP but not by $\IUIPMIN$, $\IUIPMIN$ only produce smaller clause for three instances and with average relative reduction of 3.3\%.
 
 
 
@@ -40,7 +40,7 @@ We also looked at the 14 instances solved by $\IUIPMIN$ but not by 1-UIP. $\IUIP
 \begin{figure} \label{fig:len_compare}
     \centering
     \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{i-uip-sizes-compare.png}
-    \caption{Average clause size comparison plot. Each point in the plot represents an benchmark instance. X and Y axis shows the clause length from $\MapleIUIMIN$ and $\MapleBase$, respectively  }
+    \caption{Average clause size comparison plot. Each point in the plot represents an benchmark instance. X and Y axis shows the clause length from $\IUIP$ and 1-UIP, respectively. Each green (red) dot represents an compared instance between $\MapleBase$ and $\MapleIUIMIN$ ($\IUIPPURE$).   }
     \label{fig:len_compare}
 \end{figure}
 
@@ -67,7 +67,7 @@ $\MapleIUIMIN$ & 28.8\% & 59.3\% \\
 
 A solver produce smaller clauses can construct smaller proofs. For UNSAT instances, we additionally measure their DRUP\cite{} proof checking time as well as the size of the optimized DRUP proof. We used DART-trim \cite{} with 5000 timeout to check and optimize DRUP proofs. 
 
-Fig.~\ref{fig:t3} shows that the optimized proof construct by $\IUIPMIN$ and $\IUIPPURE$ are significantly smaller than 1-UIP proofs. The relative proof size reduction rougly correlates to the average clause size reduction. Fig.~\ref{fig:proof_compare} shows the absolute proof size comparison results. 
+Fig.~\ref{fig:t3} shows that the optimized proof construct by $\IUIPMIN$ and $\IUIPPURE$ are significantly smaller than 1-UIP proofs. The relative proof size reduction roughly correlates to the average clause size reduction. Fig.~\ref{fig:proof_compare} shows the absolute proof size comparison results. 
 
 \begin{figure} 
 \begin{center} 
@@ -127,7 +127,44 @@ i-UIP-Inclusive, and i-UIP-Exclusive on SAT2019 race main track.}
 
 
 \subsection{$\IUIP$ on Modern SAT solvers}
-To validate $\IUIP$ as a generalizable learning scheme on modern SAT solvers, we re-implement $\IUIP$ on $\MapleSeven$ \cite{},  $\MapleNine$ \cite{} and $\expSAT$.  
-The first two solvers are the winner of 2017 and 2019 SAT race, respectively.  $\expSAT$ is a top ten solver from 2019 SAT race which uses random walk simulation to help branching. For each solver, we compare the base 1-UIP learning scheme against top two $\IUIP$ configurations, $\IUIPGreedy$ and $\IUIPActive$, on the SAT Race 2019 main track benchmark. We report solved instances and PAR-2 score.
+To validate $\IUIP$ as a generalizable learning scheme on modern SAT solvers, we re-implement $\IUIP$ on $\MapleSeven$ \cite{},  $\MapleNine$ \cite{}($\MapleNineShort$) and $\expSAT$\cite{} ($\expSATShort$).  
+The first two solvers are the winner of 2017 and 2019 SAT race, respectively.  $\expSATShort$ is a top ten solver from 2019 SAT race which uses random walk simulation to help branching. For each solver, we compare the base 1-UIP learning scheme against $\IUIP$ learning and the top two $\IUIP$ variants, $\IUIPGreedy$ and $\IUIPActive$, on the SAT Race 2019 main track benchmark. We report solved instances, PAR-2 score and the average clause size.
 
-\nf{Inserted a table here, and graphs and analysis}
+\begin{figure} 
+\begin{center}
+\begin{tabular}{ | m{3.7cm} | m{4cm}| m{2cm} | m{2.75cm} |  } 
+\hline
+Solver & \# solved (SAT, UNSAT) & PAR-2 & Avg clause Size \\ 
+\hline
+$\MapleSeven$ & 232 (135, 97)  & 4755.96 & 61.9  \\ 
+\hline
+$\MapleSeven$-i-uip & TBA & TBA & TBA \\ 
+\hline
+$\MapleSeven$-i-greedy & \textbf{237} (\textbf{140}, 97) & \textbf{4678.434} & \textbf{43.62} \\ 
+\hline
+$\MapleSeven$-i-inclusive & TBA & TBA & TBA \\ 
+\hline
+\hline
+$\expSATShort$ & 237 (137, 100)  & 4628.96 & 63.19 \\
+\hline
+$\expSATShort$-i-uip & TBA & TBA & TBA \\ 
+\hline
+$\expSATShort$-i-greedy & 244 (143, \textbf{101}) & \textbf{4460.92} & 47.25 \\
+\hline
+$\expSATShort$-i-inclusive & \textbf{245} (\textbf{146}, 99) & 4475.76 & \textbf{45.33} \\
+\hline
+\hline
+$\MapleNineShort$ & 243 (145, \textbf{98}) & 4450.24 & 61.00 \\
+\hline
+$\MapleNineShort$-i-uip & 244 (148, 96) & \textbf{4409.88} & \textbf{37.43} \\
+\hline
+$\MapleNineShort$-i-greedy & 243 (146, 97) & 4476.73 & 40.65 \\
+\hline
+$\MapleNineShort$-i-inclusive & \textbf{245} (\textbf{150}, 95) & 4425.99 & 37.60 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Benchmark results of 1-UIP, i-UIP($\IUIPMIN$), i-UIP-Greedy,
+i-UIP-Inclusive on SAT2019 race main track.}
+\label{fig:t5}
+\end{figure}
