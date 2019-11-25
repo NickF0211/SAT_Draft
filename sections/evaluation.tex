@@ -5,7 +5,7 @@ To evaluate $\IUIP$'s effectiveness as a clause reduction technique, we implemen
 
 The benchmark contains 400 instances divided into two groups of 200, new and old, representing historical instances and fresh instances in the 2019 race, respectively. I partition the old group instances into six partitions of size 30 and one partition of size 20. Each partition is then assigned to a Intel CPU node with 16 cores (2 sockets 8 cores  and  1 thread) and 96649 MB memory. The new group is partitioned based on their contributor (e.g. Heule contributed 22 matrix multiplication instances), and each partition is assigned to a aforementioned CPU node. To speed up the experiment, we allow a CPU node to solver at most seven instances concurrently. 
 
-Beside solved instances count and PAR-2 score, we additionally measure the average clause length and clause reduction ratio for each instances. For $\MapleIUIPPURE$  and $\MapleIUIMIN$, we also captures the $\IUIP$ learning attempted rate and success rate.
+Beside solved instances count and PAR-2 score, we additionally measure the average clause length and clause reduction ratio (both cumulative and non-cumulative)\footnote{The cumulative reduction ratio is obtained through learning all clauses with the target learning scheme; Therefore, the reduction is cumulative. The non-cumulative reduction ratio is obtained by running the target scheme for measurement only (the minimized 1-UIP clause is learned); Therefore, the reduction is not cumulative. }  for each instances. For $\MapleIUIPPURE$  and $\MapleIUIMIN$, we also captures the $\IUIP$ learning attempted rate and success rate.
 
 \begin{figure} 
 \begin{center}
@@ -17,11 +17,12 @@ $\MapleBase$ & 221 & 5018.89 & 62.6 & 36.53\% \\
 \hline
 $\MapleIUIPPURE$ & 226 & 4920.04 & 49.6 & 41.6\% \\ 
 \hline
-$\MapleIUIMIN$ & 226 & 4890.67 & 45.2 & 47.8\%\\ 
+$\MapleIUIMIN$ & 226 & 4890.67 & 45.2 & 47.8\%  (51.19\%)\\ 
 \hline
 \end{tabular}
 \end{center}
-\caption{Benchmark results of $\MapleBase$ , $\MapleIUIPPURE$  and $\MapleIUIMIN$ on SAT2019 race main track.}
+\caption{Benchmark results of $\MapleBase$ , $\MapleIUIPPURE$  and $\MapleIUIMIN$ on SAT2019 race main track.
+CL Reduction\% is the clause size reduction ratio comparing to non-minimized 1-UIP clauses, and the values in the brackets are the non-cumulative reduction ratio.}
 \label{fig:t1}
 \end{figure}
 
