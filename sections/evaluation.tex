@@ -3,7 +3,7 @@
 \subsection{Clause Reduction with $\IUIP$}
 To evaluate $\IUIP$'s effectiveness as a clause reduction technique, we implement  $\IUIPPURE$ and $\IUIPMIN$  on top of \text{\MapleBase} \cite{}, the winner of SAT Race 2015 application track.  We than compare the performance of the baseline $\MapleBase$ with $\MapleIUIPPURE$ and $\MapleIUIMIN$ on the full set of benchmarks from SAT RACE 2019 main track.
 
-The benchmark contains 400 instances divided into two groups of 200, new and old, representing historical instances and fresh instances in the 2019 race, respectively. I partition the old group instances into six partitions of size 30 and one partition of size 20. Each partition is then assigned to a Intel CPU node with 16 cores (2 sockets 8 cores  and  1 thread) and 96649 MB memory. The new group is partitioned based on their contributor (e.g. Heule contributed 22 matrix multiplication instances), and each partition is assigned to a aforementioned CPU node. To speed up the experiment, we allow a CPU node to solver at most seven instances concurrently. 
+The benchmark contains 400 instances divided into two groups of 200, new and old, representing historical instances and fresh instances in the 2019 race, respectively. I partition the old group instances into six partitions of size 30 and one partition of size 20. Each partition is then assigned to a XeonE5-2 CPU node with 16 cores (2 sockets 8 cores  and  1 thread) and 96649 MB memory. The new group is partitioned based on their contributor (e.g. Heule contributed 22 matrix multiplication instances), and each partition is assigned to a aforementioned CPU node. To speed up the experiment, we allow a CPU node to solver at most seven instances concurrently. 
 
 Beside solved instances count and PAR-2 score, we additionally measure the average clause length and clause reduction ratio (both cumulative and non-cumulative)\footnote{The cumulative reduction ratio is obtained through learning all clauses with the target learning scheme; Therefore, the reduction is cumulative. The non-cumulative reduction ratio is obtained by running the target scheme for measurement only (the minimized 1-UIP clause is learned); Therefore, the reduction is not cumulative. }  for each instances. For $\MapleIUIPPURE$  and $\MapleIUIMIN$, we also captures the $\IUIP$ learning attempted rate and success rate.
 
@@ -129,7 +129,7 @@ i-UIP-Inclusive, and i-UIP-Exclusive on SAT2019 race main track.}
 
 \subsection{$\IUIP$ on Modern SAT solvers}
 To validate $\IUIP$ as a generalizable learning scheme on modern SAT solvers, we re-implement $\IUIP$ on $\MapleSeven$ \cite{},  $\MapleNine$ \cite{}($\MapleNineShort$) and $\expSAT$\cite{} ($\expSATShort$).  
-The first two solvers are the winner of 2017 and 2019 SAT race, respectively.  $\expSATShort$ is a top ten solver from 2019 SAT race which uses random walk simulation to help branching. For each solver, we compare the base 1-UIP learning scheme against $\IUIP$ learning and the top two $\IUIP$ variants, $\IUIPGreedy$ and $\IUIPActive$, on the SAT Race 2019 main track benchmark. We report solved instances, PAR-2 score and the average clause size.
+The first two solvers are the winner of 2017 and 2019 SAT race, respectively.  $\expSATShort$ is a top ten solver from 2019 SAT race which uses random walk simulation to help branching. We chose $\expSATShort$ because 1) it is the best solver in the 2019 SAT Race without using chronological backtracking; 2) the random walk simulation branching heuristic allows our learning schemes to partially sidestep the problem of variable activity. For each solver, we compare the base 1-UIP learning scheme against $\IUIP$ learning and the top two $\IUIP$ variants, $\IUIPGreedy$ and $\IUIPActive$, on the SAT Race 2019 main track benchmark. We report solved instances, PAR-2 score and the average clause size.
 
 \begin{figure} 
 \begin{center}
@@ -139,11 +139,11 @@ Solver & \# solved (SAT, UNSAT) & PAR-2 & Avg clause Size \\
 \hline
 $\MapleSeven$ & 232 (135, 97)  & 4755.96 & 61.9  \\ 
 \hline
-$\MapleSeven$-i-uip & TBA & TBA & TBA \\ 
+$\MapleSeven$-i-uip & \textbf{240} (\textbf{144}, 96) & \textbf{4601.25} & \textbf{36.97} \\ 
 \hline
-$\MapleSeven$-i-greedy & \textbf{237} (\textbf{140}, 97) & \textbf{4678.434} & \textbf{43.62} \\ 
+$\MapleSeven$-i-greedy & 237 (140, \textbf{97}) & 4678.434 & 43.62 \\ 
 \hline
-$\MapleSeven$-i-inclusive & TBA & TBA & TBA \\ 
+$\MapleSeven$-i-inclusive & 234 (137, 97) & 4718.03 & 37.96 \\ 
 \hline
 \hline
 $\expSATShort$ & 237 (137, 100)  & 4628.96 & 63.19 \\
@@ -169,3 +169,10 @@ $\MapleNineShort$-i-inclusive & \textbf{245} (\textbf{150}, 95) & 4425.99 & 37.6
 i-UIP-Inclusive on SAT2019 race main track.}
 \label{fig:t5}
 \end{figure}
+
+Table~\ref{fig:t5} shows the benchmark result of $\IUIP$ configurations on different solvers. All three configurations of $\IUIP$ outperformed 1-UIP on $\MapleSeven$. i-UIP, i-UIP-Greedy and i-UIP-inclusive solved 8, 5 and 2 more instances, respectively, whiling producing smaller clauses.  The improvement of $\IUIP$ is more significant on $\MapleSeven$ than on $\MapleBase$ for both solved instances and clause size reduction. This may suggests that $\IUIP$ and the recent learnt clause minimization approach~\cite{} synergies well because: 1) i-UIP clauses are shorter with more common literals which allows vivification~\cite{} to prune literals more aggressively through unit propagation. 2) using $\IUIP$ instead of 1-UIP scheme to analyze conflicts during vivification could derive shorter clauses.
+
+Similar to the observation on $\MapleSeven$, all three configurations of $\IUIP$ significantly outperformed 1-UIP on $\expSATShort$. i-UIP, i-UIP-Greedy and i-UIP-inclusive solved x, 7 and 8 more instances, respectively, while producing smaller clauses. We expect all three configurations of $\IUIP$ to solve the similar amount of instances with close PAR-2 scores because $\expSATShort$ allows the learning schemes to partially sidestep the activity problem. The learning adjustment for variable activities should have less impact on the solver's performance, and we observed the expected performance from the benchmark results. $\IUIP$ improved $\expSATShort$ the most across all compared solvers for both solved instances (+8) and PAR-2 score (-168), and this is might be due to the partially mitigation of the side-effect from variable activity.
+
+$\IUIP$ learning schemes show moderate improvement on $\MapleNineShort$ as i-UIP, i-UIP-greedy and i-UIP-inclusive solved 1, 0 and 2 more instances, respectively, while producing smaller clauses. Our learning schemes didn't improve $\MapleNineShort$ significantly because the side-effects from chronological backtracking (CB). More specifically, We believe CB prevents decision levels from being compressed through the process of backtracking and re-asserting literals. Comparing to 1-uip clause, the shorter i-uip clauses can bring related literals tighter in a decision level, and consequently produces smaller decision levels with  backtracking. However, since CB discourages long distance backtracking, the effect of learning shorter clauses is shadowed until a full restart.  We believe we have observed an interesting interaction effect that shows the limitations of both CB and $\IUIP$ learning for future research.
+
