@@ -9,15 +9,15 @@ Beside solved instances count and PAR-2 score, we additionally measure the avera
 
 \begin{figure} 
 \begin{center}
-\begin{tabular}{ | m{3.5cm} | m{2cm}| m{2cm} | m{2cm} | m{2.5cm} | } 
+\begin{tabular}{ | m{3.3cm} | m{2cm}| m{2cm} | m{2cm} | m{2.7cm} | } 
 \hline
 Solver & \# solved & PAR-2 & Clause Size & Cl Reduction\% \\ 
 \hline
-$\MapleBase$ & 221 & 5018.89 & 62.6 & 36.53\% \\ 
+$\MapleBase$ & 221 (132, 89) & 5018.89 & 62.6 & 36.53\% \\ 
 \hline
-$\MapleIUIPPURE$ & 226 & 4920.04 & 49.6 & 41.6\% \\ 
+$\MapleIUIPPURE$ & \textbf{228} (135, 93) & \nf{4867.37} & 49.88 & 41.6\%  (42.72\%)\\ 
 \hline
-$\MapleIUIMIN$ & 226 & 4890.67 & 45.2 & 47.8\%  (51.19\%)\\ 
+$\MapleIUIMIN$ & 226 (135, 91) & 4890.67 & \textbf{45.2} & \textbf{47.8\% (51.19\%)}\\ 
 \hline
 \end{tabular}
 \end{center}
@@ -27,28 +27,23 @@ CL Reduction\% is the clause size reduction ratio comparing to non-minimized 1-U
 \end{figure}
 
 Fig.~\ref{fig:t1} shows that both version of $\IUIP$ solved five more instances than the baseline solver with lower PAR-2 scores. $\IUIPMIN$ has marginally lower PAR-2 score than $\IUIPPURE$. Both $\IUIPPURE$ and $\IUIPMIN$ produce clause with significantly smaller size than 1-UIP by 27.7\% and 20.7\%, respectively. Fig.~\ref{fig:len_pdf} shows the probability density distribution (PDF) of the average clause length reduction of $\IUIPMIN$ relative to 1-UIP. $\IUIPMIN$ learning produces shorter clauses for 88.25\% instances, and average relative reduction from 1-UIP is 18.685\%. Fig.~\ref{fig:len_compare} compares the absolute average clause size from $\IUIPMIN$ and 1-UIP, and it shows that $\IUIPMIN$ in general produces smaller clauses, and the size reduction is more significant for instances with large average 1-UIP clause size. 
-
-We also looked at the 14 instances solved by $\IUIPMIN$ but not by 1-UIP. $\IUIPMIN$ produces smaller clauses for all of them with average relative reduction of 22\% and maximum 77\% (30 vs 135). Seven out of 14 instances has size relative reduction over 30\%. For the 9 instances solved by 1-UIP but not by $\IUIPMIN$, $\IUIPMIN$ only produce smaller clause for three instances and with average relative reduction of 3.3\%.
-
-
-
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{clause_length_PDF.png}
-    \caption{Average clause (relative to 1-UIP clauses) size distribution. X axis indicates the relative size difference, and Y axis indicates the PDF.}
+    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{figures/factor_clause_length_PDF.png}
+    \caption{ Relative Clause size distribution. X axis indicates the relative size of i-uip clause (with respect to 1-uip clause) for each instance, and Y axis indicates the probability density.}
      \label{fig:len_pdf}
 \end{figure}
 \begin{figure} \label{fig:len_compare}
     \centering
     \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{i-uip-sizes-compare.png}
-    \caption{Average clause size comparison plot. Each point in the plot represents an benchmark instance. X and Y axis shows the clause length from $\IUIP$ and 1-UIP, respectively. Each green (red) dot represents an compared instance between $\MapleBase$ and $\MapleIUIMIN$ ($\IUIPPURE$).   }
+    \caption{Average clause size comparison plot. Each point in the plot represents an instance. X and Y axis shows the clause length from $\IUIP$ and 1-UIP, respectively. Each green (red) dot represents an compared instance between $\MapleBase$ and $\MapleIUIMIN$ ($\IUIPPURE$).   }
     \label{fig:len_compare}
 \end{figure}
 
+We also looked at the 14 instances solved by $\IUIPMIN$ but not by 1-UIP. $\IUIPMIN$ produces smaller clauses for all of them with average relative reduction of 22\% and maximum 77\% (30 vs 135). Seven out of 14 instances has size relative reduction over 30\%. For the 9 instances solved by 1-UIP but not by $\IUIPMIN$, $\IUIPMIN$ only produce smaller clause for three instances and with average relative reduction of 3.3\%.
+
 
 $\IUIPMIN$ outperformed $\IUIPPURE$ in both PAR-2 score and clause size.  This results agrees with our observation in Fig.~\ref{fig:t2}: $\IUIPMIN$ attempted $\IUIP$ learning more frequently, and it is more likely to succeed. Remark that the success of $\IUIP$ learning is determined by the size of the learned i-UIP clause $\iUIPClause$, and the $\IUIP$ learning frequency is also indirectly controlled by $\IUIP$'s success rate from the previous restart interval. The results indicates  $\IUIPMIN$ shortened $\iUIPClause$'s size through further minimization of $\iUIPClause$ at non-unique implication decision level.
-
-
 
 \begin{figure} 
 \begin{center} 
@@ -108,9 +103,11 @@ Solver & \# solved (SAT, UNSAT) & PAR-2 & Avg clause Size \\
 \hline
 1-UIP & 221 (132, 89)  & 5018.89 & 62.6  \\ 
 \hline
-i-UIP & \textbf{226} (135, \textbf{91}) & 4890.67 & 45.2 \\ 
+\nf{i-UIP-PURE} &\textbf{228} (135, \nf{93}) & 4867.37 & 49.88 \\
 \hline
-i-UIP-greedy & \textbf{226} (135, \textbf{91})  & \textbf{4866.94} & 47.7 \\
+i-UIP & 226 (135, 91) & 4890.67 & 45.2 \\ 
+\hline
+i-UIP-greedy & 226 (135, 91)  & \textbf{4866.94} & 47.7 \\
 \hline
 i-UIP-active-Inclusive & 225 (\textbf{138}, 87) & 4958.49 & 52..12 \\
 \hline
@@ -118,7 +115,7 @@ i-UIP-active-Exclusive & 223 (134, 89) & 5015.23 & \textbf{43.2} \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Benchmark results of 1-UIP ($\MapleBase$), i-UIP($\IUIPMIN$), i-UIP-Greedy,
+\caption{Benchmark results of 1-UIP ($\MapleBase$),i-UIP-PURE, i-UIP($\IUIPMIN$), i-UIP-Greedy,
 i-UIP-Inclusive, and i-UIP-Exclusive on SAT2019 race main track.}
 \label{fig:t4}
 \end{figure}
@@ -139,11 +136,13 @@ Solver & \# solved (SAT, UNSAT) & PAR-2 & Avg clause Size \\
 \hline
 $\MapleSeven$ & 232 (135, 97)  & 4755.96 & 61.9  \\ 
 \hline
-$\MapleSeven$-i-uip & \textbf{240} (\textbf{144}, 96) & \textbf{4601.25} & \textbf{36.97} \\ 
+$\MapleSeven$-i-uip & 240 (144, 96) & 4601.25 & \textbf{36.97} \\ 
 \hline
-$\MapleSeven$-i-greedy & 237 (140, \textbf{97}) & 4678.434 & 43.62 \\ 
+$\MapleSeven$-i-greedy & 237 (140, 97) & 4678.434 & 43.62 \\ 
 \hline
-$\MapleSeven$-i-inclusive & 234 (137, 97) & 4718.03 & 37.96 \\ 
+$\MapleSeven$-i-inclusive & 234 (137, 97) & 4718.03 & 37.96 \\
+\hline
+$\MapleSeven$-i-pure & 245 (146, \nf{99}) & \nf{4488.30} & 43.76 \\
 \hline
 \hline
 $\expSATShort$ & 237 (137, 100)  & 4628.96 & 63.19 \\
@@ -170,11 +169,12 @@ i-UIP-Inclusive on SAT2019 race main track.}
 \label{fig:t5}
 \end{figure}
 
-\nf{Benchmark results from running $\expSAT$ are harder to produce due to the randomness caused by the solver's strategy for selecting branching heuristics: the solver runs 2500s with LBR and the remaining 2500s with VSIDS. This is problematic for reproducing results because two runs of the same solver can be in different states at 2500s mark, and switching heuristics at different states will cause further divergence. The divergence can be quiet impactful (+- 2 instances at most for i-uip-active). For reproducible benchmark results, should we turn off the 2500s heuristic switching? Should we add a new section for the reproducible result? or remove the existing ones?}
+\nf{Benchmark results from running $\expSAT$ are harder to produce due to the randomness caused by the solver's strategy for selecting branching heuristics: the solver runs 2500s with LBR and the remaining 2500s with VSIDS. This is problematic for reproducing results because two runs of the same solver can be in different states at 2500s mark, and switching heuristics at different states will cause further divergence. The result can be quiet impactful (+- 2 instances at most for i-uip-active). For reproducible benchmark results, should we turn off the 2500s heuristic switching? Should we add a new section for the reproducible result? or remove the existing ones?}
 
 
-Table~\ref{fig:t5} shows the benchmark result of $\IUIP$ configurations on different solvers. All three configurations of $\IUIP$ outperformed 1-UIP on $\MapleSeven$. i-UIP, i-UIP-Greedy and i-UIP-inclusive solved 8, 5 and 2 more instances, respectively, whiling producing smaller clauses.  The improvement of $\IUIP$ is more significant on $\MapleSeven$ than on $\MapleBase$ for both solved instances and clause size reduction. This may suggests that $\IUIP$ and the recent learnt clause minimization approach~\cite{} synergies well because: 1) i-UIP clauses are shorter with more common literals which allows vivification~\cite{} to prune literals more aggressively through unit propagation. 2) using $\IUIP$ instead of 1-UIP scheme to analyze conflicts during vivification could derive shorter clauses.
+Table~\ref{fig:t5} shows the benchmark result of $\IUIP$ configurations on different solvers. All three configurations of $\IUIP$ outperformed 1-UIP on $\MapleSeven$. i-UIP, i-UIP-Greedy and i-UIP-inclusive solved 8, 5 and 2 more instances, respectively, whiling producing smaller clauses.  The improvement of $\IUIP$ is more significant on $\MapleSeven$ than on $\MapleBase$ for both solved instances and clause size reduction. This may suggests that $\IUIP$ and the recent learnt clause minimization approach~\cite{} synergies well because i-UIP clauses are shorter with more common literals which allows vivification~\cite{} to prune literals more aggressively through more unit propagation. 
 
 Similar to the observation on $\MapleSeven$, all three configurations of $\IUIP$ significantly outperformed 1-UIP on $\expSATShort$. i-UIP, i-UIP-Greedy and i-UIP-inclusive solved 4, 7 and 8 more instances, respectively, while producing smaller clauses. We expect all three configurations of $\IUIP$ to solve the similar amount of instances with close PAR-2 scores because the additional random walk exploration allows the learning schemes to partially sidestep the activity problem; hence, the learning adjustment for variable activities should have less impact on the solver's performance. However, we observed that both i-UIP-greedy and i-UIP-inclusive outperformed the default i-UIP learning scheme. One possible explanation is that i-UIP-greedy and i-UIP-inclusive schemes can easily overcompensate variable activities for i-UIP clauses, and $\expSATShort$'s random walk exploration can use future search information to mitigate the negative effects of our overcompensation. The i-UIP-greedy and i-UIP-inclusive schemes improved $\expSATShort$ the most among all the compared solvers for both solved instances (+7, +8) and PAR-2 score (-168, -153) possibly due to the aforementioned reason.
 
 $\IUIP$ learning schemes show moderate improvement on $\MapleNineShort$ as i-UIP, i-UIP-greedy and i-UIP-inclusive solved 1, 0 and 2 more instances, respectively, while producing smaller clauses. Our learning schemes didn't improve $\MapleNineShort$ significantly possibly due to the side-effects of chronological backtracking (CB). More specifically, We believe CB prevents decision levels from being compressed through the process of backtracking and re-asserting literals. Comparing to 1-UIP clause, the shorter i-UIP clauses can bring related literals closer with shorter implications, and consequently produces less and smaller decision levels through  backtracking. However, since CB discourages long distance backtracking, the effect of learning shorter clauses is shadowed until a full restart.  We believe we have observed an interesting interaction effect that shows the limitations of both CB and $\IUIP$ learning for future research.
+
