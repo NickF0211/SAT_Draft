@@ -1,7 +1,7 @@
 \section{Implementation and Experiments}
 
 \subsection{Clause Reduction with $\IUIP$}
-To evaluate $\IUIP$'s effectiveness as a clause reduction technique, we implement  $\IUIPPURE$ and $\IUIPMIN$  on top of \text{\MapleBase} \cite{}, the winner of SAT Race 2015 application track.  We than compare the performance of the baseline $\MapleBase$ with $\MapleIUIPPURE$ and $\MapleIUIMIN$ on the full set of benchmarks from SAT RACE 2019 main track.
+To evaluate $\IUIP$'s effectiveness as a clause reduction technique, we implement  $\IUIPPURE$ and $\IUIPMIN$ with Control-I-UIP and Early Stopping rules in Sec~\ref{sec:i-uip} on top of \text{\MapleBase} \cite{}, the winner of SAT Race 2015 application track.  We than compare the performance of the baseline $\MapleBase$ with $\MapleIUIPPURE$ and $\MapleIUIMIN$ on the full set of benchmarks from SAT RACE 2019 main track.
 
 The benchmark contains 400 instances divided into two groups of 200, new and old, representing historical instances and fresh instances in the 2019 race, respectively. I partition the old group instances into six partitions of size 30 and one partition of size 20. Each partition is then assigned to a XeonE5-2 CPU node with 16 cores (2 sockets 8 cores  and  1 thread) and 96649 MB memory. The new group is partitioned based on their contributor (e.g. Heule contributed 22 matrix multiplication instances), and each partition is assigned to a aforementioned CPU node. To speed up the experiment, we allow a CPU node to solver at most seven instances concurrently. 
 
@@ -26,24 +26,25 @@ CL Reduction\% is the clause size reduction ratio comparing to non-minimized 1-U
 \label{fig:t1}
 \end{figure}
 
-Fig.~\ref{fig:t1} shows that both version of $\IUIP$ solved five more instances than the baseline solver with lower PAR-2 scores. $\IUIPMIN$ has marginally lower PAR-2 score than $\IUIPPURE$. Both $\IUIPPURE$ and $\IUIPMIN$ produce clause with significantly smaller size than 1-UIP by 27.7\% and 20.7\%, respectively. Fig.~\ref{fig:len_pdf} shows the probability density distribution (PDF) of the average clause length reduction of $\IUIPMIN$ relative to 1-UIP. $\IUIPMIN$ learning produces shorter clauses for 88.25\% instances, and average relative reduction from 1-UIP is 18.685\%. Fig.~\ref{fig:len_compare} compares the absolute average clause size from $\IUIPMIN$ and 1-UIP, and it shows that $\IUIPMIN$ in general produces smaller clauses, and the size reduction is more significant for instances with large average 1-UIP clause size. 
+Fig.~\ref{fig:t1} shows that $\IUIPPURE$ ($\IUIPPURE$) solved seven (five) more instances than the baseline solver with lower PAR-2 scores. $\IUIPPURE$ has marginally lower PAR-2 score than $\IUIPPURE$. Both $\IUIPPURE$ and $\IUIPMIN$ produce clause with significantly smaller size than 1-UIP by  20.4\% and 27.7\%, respectively. Fig.~\ref{fig:len_pdf} shows the probability density distribution (PDF) of the relative clause size of both i-uip learning schemes ($\IUIPPURE$ in red and $\IUIPMIN$ in green) for each instance. $\IUIPPURE$ ($\IUIPMIN$) produces shorter clauses for 76.5\% (88.25\%) of instances, and average relative reduction from 1-UIP is 16.7\% (18.6\%). Fig.~\ref{fig:len_compare} compares the absolute clause size of $\IUIPMIN$, $\IUIPPURE$ and 1-UIP, and it shows that both i-UIP learning schemes in general produce the smaller clauses, and the size reduction is more significant for instances with large average 1-UIP clause size. Moreover, $\IUIPMIN$ clauses (indicated in green) is consistently smaller than $\IUIPPURE$ clauses.
+
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{figures/factor_clause_length_PDF.png}
-    \caption{ Relative Clause size distribution. X axis indicates the relative size of i-uip clause (with respect to 1-uip clause) for each instance, and Y axis indicates the probability density.}
+    \caption{ Relative Clause size distribution. X axis indicates the relative size of i-uip clause (with respect to 1-uip clause) for each instance, and Y axis indicates the probability density. $\IUIPMIN$ and $\IUIPPURE$ are illustrated with green and red, respectively}
      \label{fig:len_pdf}
 \end{figure}
 \begin{figure} \label{fig:len_compare}
     \centering
     \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{i-uip-sizes-compare.png}
-    \caption{Average clause size comparison plot. Each point in the plot represents an instance. X and Y axis shows the clause length from $\IUIP$ and 1-UIP, respectively. Each green (red) dot represents an compared instance between $\MapleBase$ and $\MapleIUIMIN$ ($\IUIPPURE$).   }
+    \caption{Average clause size comparison plot. Each point in the plot represents an instance. X and Y axis shows the clause length from $\IUIP$ and 1-UIP, respectively. Each green (red) dot represents an compared instance between $\MapleBase$ and $\MapleIUIMIN$ ($\IUIPPURE$). }
     \label{fig:len_compare}
 \end{figure}
+\nf{ Do we need this?
+We additionally looked at the 14 instances solved by $\IUIPMIN$ but not by 1-UIP. $\IUIPMIN$ produces smaller clauses for all of them with average relative reduction of 22\% and maximum 77\% (30 vs 135). Seven out of 14 instances has size relative reduction over 30\%. For the 9 instances solved by 1-UIP but not by $\IUIPMIN$, $\IUIPMIN$ only produce smaller clause for three instances and with average relative reduction of 3.3\%.}
 
-We also looked at the 14 instances solved by $\IUIPMIN$ but not by 1-UIP. $\IUIPMIN$ produces smaller clauses for all of them with average relative reduction of 22\% and maximum 77\% (30 vs 135). Seven out of 14 instances has size relative reduction over 30\%. For the 9 instances solved by 1-UIP but not by $\IUIPMIN$, $\IUIPMIN$ only produce smaller clause for three instances and with average relative reduction of 3.3\%.
 
-
-$\IUIPMIN$ outperformed $\IUIPPURE$ in both PAR-2 score and clause size.  This results agrees with our observation in Fig.~\ref{fig:t2}: $\IUIPMIN$ attempted $\IUIP$ learning more frequently, and it is more likely to succeed. Remark that the success of $\IUIP$ learning is determined by the size of the learned i-UIP clause $\iUIPClause$, and the $\IUIP$ learning frequency is also indirectly controlled by $\IUIP$'s success rate from the previous restart interval. The results indicates  $\IUIPMIN$ shortened $\iUIPClause$'s size through further minimization of $\iUIPClause$ at non-unique implication decision level.
+$\IUIPMIN$ outperformed $\IUIPPURE$ in clause size.  This results agrees with our observation in Fig.~\ref{fig:t2}: $\IUIPMIN$ attempted $\IUIP$ learning more frequently, and it is more likely to succeed. Remark that the success of $\IUIP$ learning is determined by the size of the learned i-UIP clause $\iUIPClause$, and the $\IUIP$ learning frequency is also indirectly controlled by $\IUIP$'s success rate from the previous restart interval. The results indicates  $\IUIPMIN$ shortened $\iUIPClause$'s size through further resolutions of $\iUIPClause$ at non-unique implication decision level. 
 
 \begin{figure} 
 \begin{center} 
@@ -61,7 +62,7 @@ $\MapleIUIMIN$ & 28.8\% & 59.3\% \\
 \label{fig:t2}
 \end{figure}
 
-A solver produce smaller clauses can construct smaller proofs. For UNSAT instances, we additionally measure their DRUP\cite{} proof checking time as well as the size of the optimized DRUP proof. We used DART-trim \cite{} with 5000 timeout to check and optimize DRUP proofs. 
+A solver produce smaller clauses can construct smaller proofs. For UNSAT instances, we measure their DRUP\cite{} proof checking time as well as the size of the optimized DRUP proof. We used DART-trim \cite{} with 5000 timeout to check and optimize DRUP proofs. 
 
 Fig.~\ref{fig:t3} shows that the optimized proof construct by $\IUIPMIN$ and $\IUIPPURE$ are significantly smaller than 1-UIP proofs. The relative proof size reduction roughly correlates to the average clause size reduction. Fig.~\ref{fig:proof_compare} shows the absolute proof size comparison results. 
 
@@ -90,10 +91,6 @@ $\MapleIUIMIN$ & 413.2 & 17.18\% \\
     \label{fig:proof_compare}
 \end{figure}
 
-\subsection{$\IUIP$ as a Practical Learning Scheme}
-To evaluate $\IUIP$'s effectiveness as a clause learning scheme, we implement $\IUIPMIN$ on $\MapleBase$ with the extensions mentioned in section~\ref{sec:i-uip}. We evaluated four different configurations (i-UIP, i-UIP-Greedy, i-UIP-Inclusive, and i-UIP-Exclusive) of $\IUIP$ and 1-UIP learning on the SAT Race 2019 main track benchmark and report each configuration's solved instances, PAR-2 score and average clause size. 
-
-Fig.~\ref{fig:t4} summarizes the result of the experiment. Learning scheme i-UIP-greedy solves the same amount of instance (226) as i-UIP with less PAR-2 score. The inclusive activity adjustment solves the most SAT instances (138) and the least UNSAT instances (87). The exclusive activity adjustment scheme produces the shortest average clause size, but solved the second least instances, one more instance than the baseline.  
 
 \begin{figure} 
 \begin{center}
@@ -119,6 +116,12 @@ i-UIP-active-Exclusive & 223 (134, 89) & 5015.23 & \textbf{43.2} \\
 i-UIP-Inclusive, and i-UIP-Exclusive on SAT2019 race main track.}
 \label{fig:t4}
 \end{figure}
+
+\subsection{$\IUIP$ as a Practical Learning Scheme}
+To evaluate $\IUIP$'s effectiveness as a clause learning scheme, we implement $\IUIPMIN$ on $\MapleBase$ with the extensions mentioned in section~\ref{sec:i-uip}. We evaluated five configurations (i-UIP-PURE, i-UIP, i-UIP-Greedy, i-UIP-Inclusive, and i-UIP-Exclusive) of $\IUIP$ and 1-UIP learning on the SAT Race 2019 main track benchmark and report each configuration's solved instances, PAR-2 score and average clause size. 
+
+Fig.~\ref{fig:t4} summarizes the result of the experiment. Learning scheme i-UIP-PURE the most overall instances (228) and the most UNSAT instances (93). The i-uip-greedy scheme has the lowest PAR-2 score. The inclusive activity adjustment solves the most SAT instances (138). The exclusive activity adjustment scheme produces the shortest average clause size, but solved the second least instances, one more instance than the baseline. All configurations of $\IUIP$ outperform the baseline 1-UIP scheme in solved instances, PAR-2 score and average clause size.
+
 
 
 \nf{Inserted a table here, and graphs and analysis}

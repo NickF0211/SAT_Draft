@@ -1,5 +1,6 @@
 \relax 
 \citation{}
+\citation{}
 \select@language{english}
 \@writefile{toc}{\select@language{english}}
 \@writefile{lof}{\select@language{english}}
@@ -10,6 +11,8 @@
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Preliminaries}{1}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Find i-uip Clause}{1}}
+\newlabel{sec:i-uip}{{3}{1}}
+\citation{}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textbf  {i-UIP}\relax }}{2}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{alg:i-uip}{{1}{2}}
@@ -22,28 +25,28 @@
 \newlabel{ln:abondon}{{11}{2}}
 \newlabel{ln:mark}{{13}{2}}
 \newlabel{ln:endCompleteResolution}{{20}{2}}
-\newlabel{ln:checkSize}{{21}{2}}
-\newlabel{ln:cSizeCheck}{{25}{2}}
+\newlabel{ln: 2ndMinStart}{{22}{2}}
+\newlabel{ln: 2ndMinEnd}{{24}{2}}
+\newlabel{ln:checkSize}{{26}{2}}
+\newlabel{ln:cSizeCheck}{{30}{2}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Control-$\textbf  {i-UIP}$\relax }}{3}}
 \newlabel{alg:enableCondition}{{2}{3}}
 \newlabel{ln:compareGap}{{3}{3}}
 \newlabel{ln:updateS}{{7}{3}}
 \newlabel{ln:updateA}{{9}{3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Control i-UIP Learning}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Early stop i-UIP Learning}{3}}
-\citation{}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces $\textbf  {i-UIP-Greedy}$\relax }}{4}}
 \newlabel{alg:greedySelection}{{3}{4}}
 \newlabel{ln:checkSizeAndActivity}{{2}{4}}
 \newlabel{ln:cSizeCheck}{{6}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Early stop i-UIP Learning}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Greedy Active Clause Selection}{4}}
 \newlabel{sec:greedy}{{3.3}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Adjust Variable Activity}{4}}
 \newlabel{sec: varajust}{{3.4}{4}}
 \citation{}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Integrate with Chronological Backtracking}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Implementation and Experiments}{5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Clause Reduction with $\textbf  {i-UIP}$}{5}}
+\citation{}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces \textbf  {i-UIP}-CB\relax }}{6}}
 \newlabel{alg:i-uip-CB}{{4}{6}}
 \newlabel{ln:enqueue}{{4}{6}}
@@ -51,30 +54,32 @@
 \newlabel{ln:dequeue}{{7}{6}}
 \newlabel{ln:resolvable}{{9}{6}}
 \newlabel{ln:reequeue}{{13}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Implementation and Experiments}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Clause Reduction with $\textbf  {i-UIP}$}{6}}
+\citation{}
+\citation{}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Benchmark results of $\textit  {MapleCOMSPS\_LRB}$ , $\text  {Maple-\textbf  {Pure-i-UIP}}$ and $\text  {Maple-\textbf  {Min-i-UIP}}$ on SAT2019 race main track. CL Reduction\% is the clause size reduction ratio comparing to non-minimized 1-UIP clauses, and the values in the brackets are the non-cumulative reduction ratio.\relax }}{7}}
 \newlabel{fig:t1}{{1}{7}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Average clause (relative to 1-UIP clauses) size distribution. X axis indicates the relative size difference, and Y axis indicates the PDF.\relax }}{7}}
-\newlabel{fig:len_pdf}{{2}{7}}
-\citation{}
-\citation{}
-\newlabel{fig:len_compare}{{\caption@xref {fig:len_compare}{ on input line 41}}{8}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Average clause size comparison plot. Each point in the plot represents an benchmark instance. X and Y axis shows the clause length from $\textbf  {i-UIP}$ and 1-UIP, respectively. Each green (red) dot represents an compared instance between $\textit  {MapleCOMSPS\_LRB}$ and $\text  {Maple-\textbf  {Min-i-UIP}}$ ($\textbf  {Pure-i-UIP}$). \relax }}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  Relative Clause size distribution. X axis indicates the relative size of i-uip clause (with respect to 1-uip clause) for each instance, and Y axis indicates the probability density. $\textbf  {Min-i-UIP}$ and $\textbf  {Pure-i-UIP}$ are illustrated with green and red, respectively\relax }}{8}}
+\newlabel{fig:len_pdf}{{2}{8}}
+\newlabel{fig:len_compare}{{\caption@xref {fig:len_compare}{ on input line 37}}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Average clause size comparison plot. Each point in the plot represents an instance. X and Y axis shows the clause length from $\textbf  {i-UIP}$ and 1-UIP, respectively. Each green (red) dot represents an compared instance between $\textit  {MapleCOMSPS\_LRB}$ and $\text  {Maple-\textbf  {Min-i-UIP}}$ ($\textbf  {Pure-i-UIP}$). \relax }}{8}}
 \newlabel{fig:len_compare}{{3}{8}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Compare $\textbf  {Pure-i-UIP}$ and $\textbf  {Min-i-UIP}$ i-uip attempt rate and success rate. $\textbf  {Min-i-UIP}$ scheme attempted $\textbf  {i-UIP}$ more frequently, and it is more likely to successfully produce smaller $\ensuremath  {C_{i}}$ clause .\relax }}{8}}
-\newlabel{fig:t2}{{4}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Compare $\textbf  {Pure-i-UIP}$ and $\textbf  {Min-i-UIP}$ i-uip attempt rate and success rate. $\textbf  {Min-i-UIP}$ scheme attempted $\textbf  {i-UIP}$ more frequently, and it is more likely to successfully produce smaller $\ensuremath  {C_{i}}$ clause .\relax }}{9}}
+\newlabel{fig:t2}{{4}{9}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Optimized UNSAT proof comparison for 1-UIP $\textbf  {Pure-i-UIP}$ and $\textbf  {Min-i-UIP}$. Optimized proof size measures the average absolute proof size in MB, and relative reduction size measures the average relative reduction for all UNSAT instances.\relax }}{9}}
 \newlabel{fig:t3}{{5}{9}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Average optimized proof size between 1-uip and $\textbf  {Min-i-UIP}$.\relax }}{9}}
-\newlabel{fig:proof_compare}{{6}{9}}
-\citation{}
-\citation{}
-\citation{}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}$\textbf  {i-UIP}$ as a Practical Learning Scheme}{10}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Benchmark results of 1-UIP ($\textit  {MapleCOMSPS\_LRB}$), i-UIP($\textbf  {Min-i-UIP}$), i-UIP-Greedy, i-UIP-Inclusive, and i-UIP-Exclusive on SAT2019 race main track.\relax }}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}$\textbf  {i-UIP}$ as a Practical Learning Scheme}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Average optimized proof size between 1-uip and $\textbf  {Min-i-UIP}$.\relax }}{10}}
+\newlabel{fig:proof_compare}{{6}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Benchmark results of 1-UIP ($\textit  {MapleCOMSPS\_LRB}$),i-UIP-PURE, i-UIP($\textbf  {Min-i-UIP}$), i-UIP-Greedy, i-UIP-Inclusive, and i-UIP-Exclusive on SAT2019 race main track.\relax }}{10}}
 \newlabel{fig:t4}{{7}{10}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}$\textbf  {i-UIP}$ on Modern SAT solvers}{10}}
 \citation{}
 \citation{}
+\citation{}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}$\textbf  {i-UIP}$ on Modern SAT solvers}{11}}
 \@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Benchmark results of 1-UIP, i-UIP($\textbf  {Min-i-UIP}$), i-UIP-Greedy, i-UIP-Inclusive on SAT2019 race main track.\relax }}{11}}
 \newlabel{fig:t5}{{8}{11}}
+\citation{}
+\citation{}
 \bibcite{ref_url1}{1}
