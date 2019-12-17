@@ -26,12 +26,12 @@ CL Reduction\% is the clause size reduction ratio comparing to non-minimized 1-U
 \label{fig:t1}
 \end{figure}
 
-Fig.~\ref{fig:t1} shows that $\IUIPPURE$ ($\IUIPPURE$) solved seven (five) more instances than the baseline solver with lower PAR-2 scores. $\IUIPPURE$ has marginally lower PAR-2 score than $\IUIPPURE$. Both $\IUIPPURE$ and $\IUIPMIN$ produce clause with significantly smaller size than 1-UIP by  20.4\% and 27.7\%, respectively. Fig.~\ref{fig:len_pdf} shows the probability density distribution (PDF) of the relative clause size of both i-uip learning schemes ($\IUIPPURE$ in red and $\IUIPMIN$ in green) for each instance. $\IUIPPURE$ ($\IUIPMIN$) produces shorter clauses for 76.5\% (88.25\%) of instances, and average relative reduction from 1-UIP is 16.7\% (18.6\%). Fig.~\ref{fig:len_compare} compares the absolute clause size of $\IUIPMIN$, $\IUIPPURE$ and 1-UIP, and it shows that both i-UIP learning schemes in general produce the smaller clauses, and the size reduction is more significant for instances with large average 1-UIP clause size. Moreover, $\IUIPMIN$ clauses (indicated in green) is consistently smaller than $\IUIPPURE$ clauses.
+Fig.~\ref{fig:t1} shows that $\IUIPPURE$ ($\IUIPPURE$) solved seven (five) more instances than the baseline solver with lower PAR-2 scores. $\IUIPPURE$ has marginally lower PAR-2 score than $\IUIPPURE$. Both $\IUIPPURE$ and $\IUIPMIN$ produce clause with significantly smaller size than 1-UIP by  20.4\% and 27.7\%, respectively. Fig.~\ref{fig:len_pdf} shows the probability density distribution (PDF) of the relative clause size of both i-uip learning schemes ($\IUIPPURE$ in red and $\IUIPMIN$ in green) for each instance. $\IUIPPURE$ ($\IUIPMIN$) produces shorter clauses for 77.7\% (88.5\%) of instances, and average relative reduction from 1-UIP is 16.7\% (18.6\%). Fig.~\ref{fig:len_compare} compares the absolute clause size of $\IUIPMIN$, $\IUIPPURE$ and 1-UIP, and it shows that both i-UIP learning schemes in general produce the smaller clauses, and the size reduction is more significant for instances with large average 1-UIP clause size. Moreover, $\IUIPMIN$ clauses (indicated in green) is consistently smaller than $\IUIPPURE$ clauses.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{figures/factor_clause_length_PDF.png}
-    \caption{ Relative Clause size distribution. X axis indicates the relative size of i-uip clause (with respect to 1-uip clause) for each instance, and Y axis indicates the probability density. $\IUIPMIN$ and $\IUIPPURE$ are illustrated with green and red, respectively}
+    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{figures/clause_reduction_PDF.png}
+     \caption{ Relative clause size reduction distribution. X axis indicates the relative size of difference between i-uip and 1-uip clauses (calculated as $\dfrac{|\oneUIPClause|-|\iUIPClause|}{|\oneUIPClause|}$ ) for each instance, and Y axis shows the probability density.}
      \label{fig:len_pdf}
 \end{figure}
 \begin{figure} \label{fig:len_compare}
