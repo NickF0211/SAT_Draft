@@ -48,7 +48,7 @@ $\IUIPMIN$ outperformed $\IUIPPURE$ in clause size.  This results agrees with ou
 
 \begin{figure} 
 \begin{center} 
-\begin{tabular}{ | m{3.5cm} | m{5cm}| m{5cm} | } 
+\begin{tabular}{ | m{3.5cm} | m{5cm}| m{3.5cm} | } 
 \hline
 Solver & $\IUIP$ attempt rate & $\IUIP$ success rate  \\ 
 \hline
@@ -68,7 +68,7 @@ Fig.~\ref{fig:t3} shows that the optimized proof construct by $\IUIPMIN$ and $\I
 
 \begin{figure} 
 \begin{center} 
-\begin{tabular}{ | m{3.5cm} | m{5cm}| m{5cm} | } 
+\begin{tabular}{ | m{3.5cm} | m{5cm}| m{3.5cm} | } 
 \hline
 Solver & optimized proof size (MB) & relative reduction size  \\ 
 \hline
@@ -161,11 +161,11 @@ $\MapleNineShort$ & 238 (140, \textbf{98}) & 4531.24 & 60.91 \\
 \hline
 $\MapleNineShort$-i-pure & 238 (140, \textbf{98}) +0 & 4519.08 &  43.32\\
 \hline
-$\MapleNineShort$-i-min & 244 (148, 96) +6 & \textbf{4409.88} & \textbf{37.43} \\
+$\MapleNineShort$-i-min & 244 (\textbf{148}, 96) +6 & \textbf{4419.84} & \textbf{36.88} \\
 \hline
 $\MapleNineShort$-i-greedy & 243 (146, 97) + 5 & 4476.73 & 40.65 \\
 \hline
-$\MapleNineShort$-i-inclusive & \textbf{245} (\textbf{150}, 95) +7 & 4425.99 & 37.60 \\
+$\MapleNineShort$-i-inclusive & \textbf{243} (\textbf{148}, 95) +5 & 4455.76 & 37.02 \\
 \hline
 \hline
 SAT 2019 Competitor & & &\\
@@ -192,7 +192,7 @@ Table~\ref{fig:t5} shows the benchmark result of $\IUIP$ configurations on diffe
 
 We observed significant improvement of $\IUIP$ for the SAT 2018 winner, $\MapleEightShort$. Three out of four $\IUIP$ configurations outperformed 1-UIP by 5, 4 an 4 instances, respectively. $\MapleEightShort$ improved from $\MapleSeven$ by using chronological backtracking (CB) for long distance backtracks. Therefore, we used $\IUIP$-CB extension for all $\IUIP$ configurations. The results indicates that the improvement of $\IUIP$ is slightly shadowed by the adoption of CB. More specifically, we believe CB prevents decision levels from being compressed through the process of backtracking and literal assertion. Comparing to 1-UIP clause, the shorter i-UIP clauses can bring related literals closer with shorter implications, and consequently produces less and smaller decision levels through  backtracking. However, since CB discourages long distance backtracking, the effect of learning shorter clauses is shadowed until a full restart.  We believe we have observed an interesting interaction effect that shows the limitations of both CB and $\IUIP$ learning for future research.  
 
-$\IUIP$ learning schemes showed significant improvement for $\MapleNineShort$. Three out of four configurations improved solved instances by 6, 5 and 7 instances, respectively. $\MapleNineShort$ uses duplicate learning (DL) to prioritize clauses that are learned multiple times. $\IUIP$ and DL didn't synergies well possibly because i-uip clauses are less likely to be duplicated. We observed that $\IUIPMIN$ ,in average, added 12\% less duplicated clauses into the core clause database. One possible explanation is that the conflict blocked by a single 1-uip clauses can be alternatively blocked by one of many i-uip clauses. Therefore, the same 1-uip clause can be reduced to different i-uip clauses depending on the solver's assertion trail.
+$\IUIP$ learning schemes showed significant improvement for $\MapleNineShort$. Three out of four configurations improved solved instances by 6, 5 and 5 instances, respectively. $\MapleNineShort$ uses duplicate learning (DL) to prioritize clauses that are learned multiple times. $\IUIP$ and DL didn't synergies well possibly because i-uip clauses are less likely to be duplicated. We observed that $\IUIPMIN$ ,in average, added 12\% less duplicated clauses into the core clause database. One possible explanation is that the conflict blocked by a single 1-uip clauses can be alternatively blocked by one of many i-uip clauses. Therefore, the same 1-uip clause can be reduced to different i-uip clauses depending on the solver's assertion trail.
 
 We observed significant improvement of $\IUIP$ for $\expSATShort$, three out of four configurations of $\IUIP$ significantly outperformed 1-UIP learning by 4, 7 and 8 more instances, respectively, while producing smaller clauses. We expect all three configurations of $\IUIP$ to solve the similar amount of instances with close PAR-2 scores because the additional random walk exploration allows the learning schemes to partially sidestep the activity problem; hence, the learning adjustment for variable activities should have less impact on the solver's performance. However, we observed that both $\IUIPGreedy$ and $\IUIPActive$ outperformed the default i-UIP learning scheme. One possible explanation is that $\IUIPGreedy$ and $\IUIPActive$ schemes could easily overcompensate variable activities for i-UIP clauses, and $\expSATShort$'s random walk exploration could use future search information to mitigate the negative effects of our overcompensation. 
 
