@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.12)  10 DEC 2019 13:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.12)  27 JAN 2020 13:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -844,12 +844,12 @@ Overfull \hbox (18.23703pt too wide) in paragraph at lines 29--30
 \OT1/cmr/m/n/10 marginally lower PAR-2 score than $[]$. Both $[]$ and $[]$
  []
 
-<figures/factor_clause_length_PDF.png, id=41, 462.528pt x 346.896pt>
-File: figures/factor_clause_length_PDF.png Graphic file (type png)
+<figures/clause_reduction_PDF.png, id=41, 462.528pt x 346.896pt>
+File: figures/clause_reduction_PDF.png Graphic file (type png)
 
-<use figures/factor_clause_length_PDF.png>
-Package pdftex.def Info: figures/factor_clause_length_PDF.png used on input lin
-e 33.
+<use figures/clause_reduction_PDF.png>
+Package pdftex.def Info: figures/clause_reduction_PDF.png used on input line 33
+.
 (pdftex.def)             Requested size: 277.69987pt x 208.2821pt.
 
 <./figures/i-uip-sizes-compare.png, id=43, 462.528pt x 346.896pt>
@@ -860,24 +860,24 @@ Package pdftex.def Info: ./figures/i-uip-sizes-compare.png used on input line 3
 9.
 (pdftex.def)             Requested size: 277.69987pt x 208.2821pt.
 
-Overfull \hbox (46.9886pt too wide) in paragraph at lines 51--60
+Overfull \hbox (4.30946pt too wide) in paragraph at lines 50--59
  [] 
  []
 
-[7] [8 <./figures/factor_clause_length_PDF.png> <./figures/i-uip-sizes-compare.
-png>]
-Overfull \hbox (13.52214pt too wide) in paragraph at lines 67--68
+
+Overfull \hbox (13.52214pt too wide) in paragraph at lines 66--67
 []\OT1/cmr/m/n/10 Fig. 5[] shows that the op-ti-mized proof con-struct by $[]$ 
 and $[]$
  []
 
-
-Overfull \hbox (46.9886pt too wide) in paragraph at lines 71--82
+[7] [8 <./figures/clause_reduction_PDF.png> <./figures/i-uip-sizes-compare.png>
+]
+Overfull \hbox (4.30946pt too wide) in paragraph at lines 70--81
  [] 
  []
 
 
-Underfull \hbox (badness 1264) in paragraph at lines 83--83
+Underfull \hbox (badness 1264) in paragraph at lines 82--82
 []\OT1/cmr/m/n/10 Fig.5: |Op-ti-mized UN-SAT proof com-par-i-son for 1-UIP $[]$
  and
  []
@@ -886,43 +886,49 @@ Underfull \hbox (badness 1264) in paragraph at lines 83--83
 File: ./figures/proof_size_compare.png Graphic file (type png)
 
 <use ./figures/proof_size_compare.png>
-Package pdftex.def Info: ./figures/proof_size_compare.png used on input line 89
+Package pdftex.def Info: ./figures/proof_size_compare.png used on input line 88
 .
 (pdftex.def)             Requested size: 277.69987pt x 208.2821pt.
 
-Overfull \hbox (14.62262pt too wide) in paragraph at lines 97--114
+Overfull \hbox (14.62262pt too wide) in paragraph at lines 96--113
  [] 
  []
 
 
-Underfull \hbox (badness 2846) in paragraph at lines 116--116
-\OT1/cmr/m/n/10 UIP($[]$), i-UIP-Greedy, i-UIP-Inclusive, and i-UIP-Exclusive o
-n
+Underfull \hbox (badness 1215) in paragraph at lines 115--115
+[]$\OT1/cmr/m/n/10 , $[]$, $[]$, and $[]$ on
  []
 
 
-Overfull \hbox (17.4187pt too wide) in paragraph at lines 121--122
-\OT1/cmr/m/n/10 We eval-u-ated five con-fig-u-ra-tions (i-UIP-PURE, i-UIP, i-UI
-P-Greedy, i-UIP-Inclusive,
+Overfull \hbox (30.1181pt too wide) in paragraph at lines 120--121
+\OT1/cmr/m/n/10 We eval-u-ated 1-UIP learn-ing and five $[]$ con-fig-u-ra-tions
+ ( $[]$, $[]$,
+ []
+
+
+Overfull \hbox (0.23077pt too wide) in paragraph at lines 122--123
+[]\OT1/cmr/m/n/10 Fig. 7[] sum-ma-rizes the re-sult of the ex-per-i-ment. Learn
+-ing scheme $[]$
  []
 
 [9] [10 <./figures/proof_size_compare.png>]
-Overfull \hbox (20.31308pt too wide) in paragraph at lines 136--169
+Overfull \hbox (20.31308pt too wide) in paragraph at lines 130--182
  [] 
  []
 
 
-Overfull \hbox (1.05536pt too wide) in paragraph at lines 175--176
-[][]\OT1/cmr/m/n/10 Benchmark re-sults from run-ning $[]$ are harder
+Overfull \hbox (15.62044pt too wide) in paragraph at lines 187--188
+\OT1/cmr/m/n/10 SAT 2017 race win-ner, $[]$. More specif-i-cally, $[]$, $[]$,
  []
 
-[11]
-Overfull \hbox (2.62799pt too wide) in paragraph at lines 178--179
-\OT1/cmr/m/n/10 solvers. All three con-fig-u-ra-tions of $[]$ out-per-formed 1-
-UIP on $[]$.
- []
 
-) [12] (./paper.aux)
+Underfull \vbox (badness 5802) has occurred while \output is active []
+
+ [11])
+Underfull \vbox (badness 5105) has occurred while \output is active []
+
+ [12]
+[13] (./paper.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -934,10 +940,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 6439 strings out of 493029
- 91377 string characters out of 6136233
- 189817 words of memory out of 5000000
- 9826 multiletter control sequences out of 15000+600000
+ 6441 strings out of 493029
+ 91382 string characters out of 6136233
+ 195817 words of memory out of 5000000
+ 9828 multiletter control sequences out of 15000+600000
  14707 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  44i,16n,42p,1511b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -960,10 +966,10 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf
 onts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmtt9.pfb>
-Output written on paper.pdf (12 pages, 337597 bytes).
+Output written on paper.pdf (13 pages, 342716 bytes).
 PDF statistics:
- 130 PDF objects out of 1000 (max. 8388607)
- 89 compressed objects within 1 object stream
+ 134 PDF objects out of 1000 (max. 8388607)
+ 92 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
