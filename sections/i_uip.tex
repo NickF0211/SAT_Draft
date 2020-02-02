@@ -50,6 +50,29 @@ The algorithm first initializes $\iUIPClause$ with the minimized\cite{} $\oneUIP
   When $\IUIP$ cannot resolve away a literal $p$ without increasing $\iUIPClause$'s LBD, instead of skipping the entire decision level $i$, another solution $\IUIPMIN$  simply marks literal $p$ and keep it  in $\iUIPClause$ (line~\ref{ln:mark}). The learning scheme then continue the resolutions at level $i$. $\IUIPMIN$ will ignore all the unsolvable literals and find the "local" unique implication point at every decision level.  The algorithm terminates when there is exactly one unmarked literal left for each decision level of $\iUIPClause$, representing the local unique implication points. The clause $\iUIPClause$ learnt by
   $\IUIPMIN$ is minimized\footnote{clause size cannot be reduced via minimization techniques\cite{}.}, we defer the proof of minimization to Appendix~\ref{}.  
 
+\begin{example}
+Consider the assertion trail $\assertionTrail = {..a_2,b_2,c_2,d_2..e_5,f_5,g_5,h_6,i_6,j_6,k_6..}$ where literals $a_2 ... k_{6}$ are asserted in order with decision level shown as the underscript. Let $L_{ext}$ denote the set of literals on $\assertionTrail$ outside of decision level 2,5,6 and 10, and $l^{*}_{ext}$ be some literal in $L_{ext}$. The reasoning clauses involved in building $\assertionTrail$ are:
+\begin{enumerate}
+  \item[] $C_k = \{\neg{f_5} \vee \neg{j_6} \vee k_6\}$,
+  $C_j = \{\neg{f_5} \vee \neg{i_6} \vee j_6\}$, 
+  $C_i = \{\neg{e_5} \vee \neg{h_6} \vee i_6\}$,
+  $C_g = \{\neg{a_2} \vee \neg{f_5} \vee g_5\}$
+  $C_f = \{\neg{l^{*}_{ext}} \vee \neg{e_5} \vee f_5\}$,
+  $C_d = \{\neg{b_2} \vee \neg{c_2} \vee d_2\}$,
+  $C_c = \{\neg{a_2} \vee \neg{b_2} \vee c_2 \}$,
+  $C_b = \{\neg{l^{*}_{ext}} \vee \neg{a_2} \vee b_2\}$
+\end{enumerate}
+Suppose 1-UIP learning produces clause 
+$\oneUIPClause = \{\neg{m_{10}} \vee \neg{k_6} \vee \neg{j_6} \vee \neg{i_6} \vee \neg{h_6} \vee \neg{g_5} \vee \neg{d_2} \vee \neg{c_2}\}$ where $\neg{k_{10}}$ is the UIP from the conflicting level. $\IUIP$ first tries to find the UIP for level 6 by resolving $\oneUIPClause$ with $C_k$, $C_j$ and, $C_i$ in order and produces clause 
+$\iUIPClause = \{\neg{m_{10}} \vee \neg{h_6} \vee \neg{g_5} \vee \neg{f_5} \vee \neg{e_5} \vee \neg{d_2} \vee  \neg{c_2} \}$ where $\neg{h_6}$ is the UIP.
+
+$\IUIP$ attempts to find the UIP for level 5 by resolving $C_i$ with 
+$C_g$ and $C_f$ in order. However, resolving with $C_f$ will introduce $\neg{l^{*}_{ext}}$ into 
+$C_i$ and increase the clause's LBD. $\IUIPPURE$ undoes all resolutions at level 5 and skips the entire level, whereas $\IUIPMIN$ only skips the resolution with $C_f$ and tries to find the UIP by ignoring $\neg{f_5}$.  After level 5, $\IUIPPURE$ preserves the same clause and $\IUIPMIN$ produces $\iUIPClause = \{\neg{m_{10}} \vee \neg{h_6} \vee \neg{f_5} \vee \neg{e_5} \vee \neg{d_2} \vee \neg{c_2} \vee \neg{a_2}\}$ where $\neg{e_5}$ is the UIP when $\neg{f_5}$ is ignored. The same $\IUIP$ procedure is then performed on level 2 to produce the final $\iUIPClause$. 
+
+$\IUIPPURE$ learned $\iUIPClause = \{\neg{m_{10}} \vee \neg{h_6} \vee \neg{g_5} \vee \neg{f_5} \vee \neg{e_5} \vee \neg{d_2} \vee  \neg{c_2} \}$ and reduces the learnt clause size by 1. $\IUIPMIN$ learned $\iUIPClause = \{\neg{m_{10}} \vee \neg{h_6} \vee \neg{f_5} \vee \neg{e_5} \vee \neg{b_2} \vee \neg{a_2}\}$ and reduces the learnt clause size by 2. 
+\end{example}
+
 The core algorithm of $\IUIP$ as a clause reduction technique is simple. However, to make the algorithm a practical learning scheme that is compatible with modern SAT solvers, a number of issues need to be addressed. The rest of the section details the key optimizations and augmentations of $\IUIP$ as a practical clause learning scheme.
 
 \subsection{Control i-UIP Learning}
