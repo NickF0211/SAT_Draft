@@ -1,0 +1,57 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{DBLP:conf/aaai/BayardoS97}
+Jr., R.J.B., Schrag, R.: Using {CSP} look-back techniques to solve real-world
+  {SAT} instances. In: Kuipers, B., Webber, B.L. (eds.) Proceedings of the
+  Fourteenth National Conference on Artificial Intelligence and Ninth
+  Innovative Applications of Artificial Intelligence Conference, {AAAI} 97,
+  {IAAI} 97, July 27-31, 1997, Providence, Rhode Island, {USA}. pp. 203--208.
+  {AAAI} Press / The {MIT} Press (1997),
+  \url{http://www.aaai.org/Library/AAAI/1997/aaai97-032.php}
+
+\bibitem{DBLP:conf/sat/KatebiSS11}
+Katebi, H., Sakallah, K.A., Silva, J.P.M.: Empirical study of the anatomy of
+  modern sat solvers. In: Sakallah, K.A., Simon, L. (eds.) Theory and
+  Applications of Satisfiability Testing - {SAT} 2011 - 14th International
+  Conference, {SAT} 2011, Ann Arbor, MI, USA, June 19-22, 2011. Proceedings.
+  Lecture Notes in Computer Science, vol.~6695, pp. 343--356. Springer (2011).
+  \doi{10.1007/978-3-642-21581-0\_27},
+  \url{https://doi.org/10.1007/978-3-642-21581-0\_27}
+
+\bibitem{DBLP:conf/dac/MoskewiczMZZM01}
+Moskewicz, M.W., Madigan, C.F., Zhao, Y., Zhang, L., Malik, S.: Chaff:
+  Engineering an efficient {SAT} solver. In: Proceedings of the 38th Design
+  Automation Conference, {DAC} 2001, Las Vegas, NV, USA, June 18-22, 2001. pp.
+  530--535. {ACM} (2001). \doi{10.1145/378239.379017},
+  \url{https://doi.org/10.1145/378239.379017}
+
+\bibitem{DBLP:series/faia/SilvaLM09}
+Silva, J.P.M., Lynce, I., Malik, S.: Conflict-driven clause learning {SAT}
+  solvers. In: Handbook of Satisfiability, pp. 131--153. IOS Press (2009),
+  \url{https://doi.org/10.3233/978-1-58603-929-5-131}
+
+\bibitem{DBLP:conf/iccad/SilvaS96}
+Silva, J.P.M., Sakallah, K.A.: {GRASP} - a new search algorithm for
+  satisfiability. In: Rutenbar, R.A., Otten, R.H.J.M. (eds.) Proceedings of the
+  1996 {IEEE/ACM} International Conference on Computer-Aided Design, {ICCAD}
+  1996, San Jose, CA, USA, November 10-14, 1996. pp. 220--227. {IEEE} Computer
+  Society / {ACM} (1996). \doi{10.1109/ICCAD.1996.569607},
+  \url{https://doi.org/10.1109/ICCAD.1996.569607}
+
+\bibitem{DBLP:journals/tc/Marques-SilvaS99}
+Silva, J.P.M., Sakallah, K.A.: {GRASP:} {A} search algorithm for propositional
+  satisfiability. {IEEE} Trans. Computers  \textbf{48}(5),  506--521 (1999).
+  \doi{10.1109/12.769433}, \url{https://doi.org/10.1109/12.769433}
+
+\bibitem{DBLP:conf/iccad/ZhangMMM01}
+Zhang, L., Madigan, C.F., Moskewicz, M.W., Malik, S.: Efficient conflict driven
+  learning in boolean satisfiability solver. In: Ernst, R. (ed.) Proceedings of
+  the 2001 {IEEE/ACM} International Conference on Computer-Aided Design,
+  {ICCAD} 2001, San Jose, CA, USA, November 4-8, 2001. pp. 279--285. {IEEE}
+  Computer Society (2001). \doi{10.1109/ICCAD.2001.968634},
+  \url{https://doi.org/10.1109/ICCAD.2001.968634}
+
+\end{thebibliography}

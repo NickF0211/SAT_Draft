@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2019)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: paper.aux
+The style file: splncs04.bst
+Database file #1: sat.bib
+Warning--I didn't find a database entry for "DBLP:conf/sat/SorenssonB09"
+Warning--I didn't find a database entry for ""
+You've used 7 entries,
+            2850 wiz_defined-function locations,
+            668 strings with 7236 characters,
+and the built_in function-call counts, 5103 in all, are:
+= -- 454
+> -- 144
+< -- 9
++ -- 56
+- -- 49
+* -- 344
+:= -- 640
+add.period$ -- 23
+call.type$ -- 7
+change.case$ -- 54
+chr.to.int$ -- 0
+cite$ -- 7
+duplicate$ -- 434
+empty$ -- 451
+format.name$ -- 59
+if$ -- 1139
+int.to.chr$ -- 0
+int.to.str$ -- 7
+missing$ -- 85
+newline$ -- 27
+num.names$ -- 22
+pop$ -- 154
+preamble$ -- 1
+purify$ -- 35
+quote$ -- 0
+skip$ -- 145
+stack$ -- 0
+substring$ -- 315
+swap$ -- 252
+text.length$ -- 9
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 28
+warning$ -- 0
+while$ -- 46
+width$ -- 8
+write$ -- 99
+(There were 2 warnings)
