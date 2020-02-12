@@ -3,7 +3,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{algorithm}
-\usepackage{algpseudocode}
+\usepackage[noend]{algpseudocode}
 %\usepackage[ruled,linesnumbered,noend,oldcommands]{algorithm2e}
 \usepackage{xspace}
 \usepackage{mathtools}
@@ -11,26 +11,34 @@
 \usepackage{array}
 \usepackage{xcolor}
 \usepackage{theorem}
-\usepackage[T1,hyphens]{url}
-
-\begin{document}
-\title{$i$-UIP Clause Learning}
+\usepackage[T1]{fontenc}
+% \usepackage[T1,hyphens]{url}
+\usepackage{hyperref}
+%\PassOptionsToPackage{hypnens}{url}
+\title{Clause size reduction with $i$-UIP Learning}
 \author{Nick Feng \and Fahiem Bacchus}
 \authorrunning{N. Feng and F. Bacchus}
 \institute{Department of Computer Science, University of Toronto, Canada, 
   \email{\{nfeng,fbacchus\}@cs.toronto.edu}}
 
+\algrenewcommand\algorithmicprocedure{}
+\algrenewcommand\algorithmicthen{}
+\algrenewcommand\algorithmicdo{}
+
+\newcommand{\fs}[1]{\fontsize{#1}{#1}\selectfont}
+\newcommand{\fss}[2]{\fontsize{#1}{#2}\selectfont}
 \newcommand{\sat}{SAT\xspace}
 \newcommand{\code}[1]{\text{#1}}
 \newcommand{\inputF}{\ensuremath{F}}
 \newcommand{\oneUIPClause}{\ensuremath{C_{1}}}
 \newcommand{\iUIPClause}{\ensuremath{C_{i}}}
-\newcommand{\assertionTrail}{\ensuremath{\phi}}
+\newcommand{\assertionTrail}{\trail}
 \newcommand{\LBD}{\text{LBD}}
 \newcommand{\GAP}{\text{Gap}}
-\newcommand{\IUIP}{\textbf{$i$-UIP}}
-\newcommand{\IUIPPURE}{\textbf{Pure-i-UIP}}
-\newcommand{\IUIPMIN}{\textbf{Min-i-UIP}}
+\newcommand{\IUIP}{\textbf{LBDstable-$i$UIP}}
+\newcommand{\tryuiplevel}{\textbf{try-uip-level}\xspace}
+\newcommand{\IUIPPURE}{\textbf{Pure-$i$UIP}}
+\newcommand{\IUIPMIN}{\textbf{Min-$i$UIP}}
 \newcommand{\IUIPGreedy}{\textbf{i-UIP-Greedy}}
 \newcommand{\IUIPActive}{\textbf{i-UIP-Inclusive}}
 \newcommand{\IUIPDist}{\textbf{i-UIP-Exclusive}}
@@ -44,17 +52,26 @@
 \newcommand{\MapleIUIPPURE}{\text{Maple-\IUIPPURE}}
 \newcommand{\MapleIUIMIN}{\text{Maple-\IUIPMIN}}
 \newcommand{\MapleEightShort}{\textit{MapleCB}}
-\newcommand\Set[2]{\{\,#1\mid#2\,\}}
-\newcommand\Array[2]{[\,#1\mid#2\,]}
-\newcommand\target{\textbf{Succ_t}}
-\newcommand\trail{\ensuremath{\mathcal{T}}}
-\newcommand\trailIdx[1]{\ensuremath{\iota(#1)}}
-\newcommand\var{\text{var}}
-\newcommand\true{\textsc{true}\xspace}
-\newcommand\false{\textsc{false}\xspace}
-\newcommand\reason{\textit{reason}}
+\newcommand{\Set}[2]{\{\,#1\mid#2\,\}}
+\newcommand{\Array}[2]{[\,#1\mid#2\,]}
+\newcommand{\target}{\textbf{Succ_t}}
+\newcommand{\trail}{\ensuremath{\mathcal{T}}}
+\newcommand{\trailIdx}[1]{\ensuremath{\iota(#1)}}
+\newcommand{\dlevel}[1]{\ensuremath{\mathit{decLvl}(#1)}}
+\newcommand{\dlevels}{\ensuremath{\mathit{decLvls}}}
+\newcommand{\var}{\text{var}}
+\newcommand{\true}{\textsc{true}\xspace}
+\newcommand{\false}{\textsc{false}\xspace}
+\newcommand{\reason}[1]{\ensuremath{\mathit{reason}(#1)}}
+\newcommand{\resolve}{\bowtie}
+\renewcommand{\implies}{\rightarrow}
+\newcommand{\ctry}{C_{\mathit{try}}}
+\newcommand{\type}{\textit{type}}
+\newcommand{\unmarked}{\textbf{unmarked}}
+\newcommand{\mrk}{\textbf{mark}}
 \setlength{\theorempreskipamount}{3pt}
 \setlength{\theorempostskipamount}{3pt}
+
 \newtheorem{Obs}{Observation}
 \newtheorem{Cor}{Corollary}
 \newtheorem{defn}{Definition}
@@ -62,22 +79,22 @@
 
 \newcommand{\whitebox}{\raisebox{.5ex}{\fbox{\hspace*{.2ex}}}}
 
-
 %Comments
 \newcommand{\nf}[1]{\textcolor{red}{#1}}
 \newcommand{\fb}[1]{\textcolor{blue}{#1}}
 
+\begin{document}
 \maketitle              % typeset the header of the contribution
 % 
 \begin{abstract}
 \end{abstract}
 
 \section{Introduction}
-Clause learning is an essential technique in \sat solvers. And there
-is good empirical evidence that clause learning is, in fact, the most
-important technique used in modern \sat solvers
-\cite{DBLP:conf/sat/KatebiSS11}. In early \sat research a number of
-different clause learning techniques were proposed
+Clause learning is an essential technique in \sat solvers. There is good
+evidence to indicate that it is, in fact, the most important technique
+used in modern \sat solvers \cite{DBLP:conf/sat/KatebiSS11}. In early
+\sat research a number of different clause learning techniques were
+proposed
 \cite{DBLP:conf/iccad/ZhangMMM01,DBLP:conf/iccad/SilvaS96,DBLP:journals/tc/Marques-SilvaS99,DBLP:conf/aaai/BayardoS97}.
 However, following the revolutionary performance improvements achieved
 by the Chaff \sat solver, the field has converged on using the 1-UIP
@@ -92,239 +109,578 @@ have employed the 1-UIP clause learning scheme, along with clause
 minimization \cite{DBLP:conf/sat/SorenssonB09}, as their primary
 method for learning new clauses.
 
-However, as this early work showed, other clause learning schemes can
-be used in SAT solvers without changes to their main data
-structures. Furthermore, advances in our understanding allow us to
-better understand the potential advantages and disadvantages of these
-alternate schemes. In this paper we reexamine some of these previous
-clause learning schemes, with a focus on the $i$-UIP schme described
-in \cite{DBLP:conf/iccad/ZhangMMM01}. With current ideas we can see
-that in its original form $i$-UIP clause learning suffers a
-significant disadvantages over 1-UIP clause learning. We present a
-number of different methods to impove $i$-UIP clause learning so as to
-over come these disadvantages. We show that these different methods
-for $i$-UIP clause learning can provide useful performance gains over
-the standard 1-UIP scheme.
+However, other clause learning schemes can be used in SAT solvers
+without changes to their main data structures. Furthermore, advances
+in our understanding allow us to better understand the potential
+advantages and disadvantages of these alternate schemes. In this paper
+we reexamine some of these previous clause learning schemes, with a
+focus on the schemes described in
+\cite{DBLP:conf/iccad/ZhangMMM01}. Improved understanding of \sat
+solvers, obtained from the last decade of research, allows us to see
+that in their original form these other clause learning schemes suffer
+significant disadvantages over 1-UIP clause learning.
 
-\section{Background}
-We assume the reader has some familiarity with Conjunctive Normal Form
-(CNF) formulas, conflict-driven clause learning (CDCL) \sat solvers
-\cite{DBLP:series/faia/SilvaLM09}, unit-propagation, and conflict
-analysis.
+One of the previously proposed schemes was the $i$-UIP scheme
+\cite{DBLP:conf/iccad/ZhangMMM01}. In this paper we propose a new way
+to exploit the main ideas of this scheme that avoids its main
+disadvantages. In particular, we propose to use a $i$-UIP like clause
+learning scheme to generate smaller learnt clauses which retain the
+good properties of standard 1-UIP clauses. Our method is related to,
+but not the same as various clause mininimization methods that aim to
+remove literals from the 1-UIP clause, e.g.,
+\cite{DBLP:conf/sat/SorenssonB09,DBLP:conf/ijcai/LuoLXML17,DBLP:conf/sat/WieringaH13}.
+Our method is orthogonal to clause minimization. In particular, 
+our approach can learn a clause that is completely different from the
+1-UIP clause but which still serves all of the same purposes as the 1-UIP
+clause. Like the 1-UIP clause, various minimization techniques can be
+applied on top of our method to further reduce the size of the clauses
+we learn.
 
-\begin{enumerate}
-\item Trail; Reasons and their properties; decision levels, trail order.
-\item conflict clause. Trail has the property that conflict exists
-    only at the deepest level.
-\item Clauses derived by trail resolution. Identified by variables
-    appearing on the trail.
-\item No point in doing this in non-trail order.
-\item a specific case of trivial resolutions.
-\item Clause derived by trail resolution iff it is a cut in the
-    implication graph.
-\item Note that all implemented clause learning techniques use
-    sequences of trail resolutions. In particular, they all start with
-    a specific conflict and resolve only with reason clauses.
-    This includes clause minimization.
-\item Asserting clause---one lit at deepest level of trail. Only
-    asserting clauses are gauranteed to be new.
-\item 1-UIP is asserting clause generated with fewest trail resolution
-    steps. Each trail resolution step can only increase the number of
-    levels in the clause. So LBD is minimized by 1-UIP clauses.
-\item Description of i-uip, all-uip, all decisions (useful in some cases)
-\end{enumerate}
+We present various versions of our method and show that these variants
+are often capable of learning shorter clauses that the 1-UIP scheme,
+and that this can lead to useful performance gains in state of the art
+\sat solvers.
 
-CDCL \sat solvers maintain a \textbf{trail} which is a sequence of
-literals that have been assigned \true by the solver. Literals newly
-assigned \true are placed at the end of the trail, and literals are
-always unassigned and removed from the end of the trail first;
-i.e. the trail acts as a stack.
+\section{Clause Learning Framework}
+We first provide some background and a framework for understanding
+clause learning as typically used in CDCL \sat solvers. A
+propositional formula $F$ expressed in Conjunctive Normal Form (CNF),
+contains a set of variables $V$. A literal is a variable $v\in V$ or
+its negation $\lnot v$. For a literal $\ell$ we let $\var(\ell)$
+denote its underlying variable. A CNF consists of a conjunction of
+clauses, each if which is a disjunction of literals. We often view a
+clause as being a set of literals and employ set notation, e.g.,
+$\ell\in C$ and $C'\subset C$. 
 
-Let $\trail$ be the trail. For any literal $\ell$ we let
-$\trailIdx{\ell}$ be the index of $\ell$ in $\trail$. That is,
-$\trail[\trailIdx{\ell}] = \ell$. If $\ell$ is not in the trail, then
-$\trailIdx{\ell} = \varnothing$, and we use the convention that
-$\trail[\varnothing] = \varnothing$. The literals on \trail are
-sequenced in the order they were assigned \true. Hence
-$\trailIdx{\ell} < \trailIdx{\ell'}$ implies that $\ell$ was assigned
-\true before $\ell'$. When $\trailIdx{\ell} < \trailIdx{\ell'}$ we say
-that $\ell$ \textit{appears above} $\ell'$ on the trail. We use the
-convention that $\trailIdx{\ell} < \trailIdx{\ell'}$ whenever $\ell$
-is in the trail and $\ell'$ is not; i.e., $i < \varnothing$ for any
-index $i$.
+Two clauses $c_1$ and $c_2$ can be \textit{resolved} when they contain
+conflicting literals $\ell\in c_1$ and $\lnot \ell \in c_2$. Their
+resolvant $c_1 \resolve c_2$ is the new clause
+$(c_1 \cup c_2) - \{\ell, \lnot \ell\}$. The resolvant is tautological
+if $c_1$ and $c_2$ contain more than one pair of conflicting literals.
 
-The literals on $\trail$ have been assigned \true by the solver by
-either (a) having been set as a decisions or (b) having forced by
-unit-propagation. If $\ell\in \trail$ was was set by unit-propgation
-it will have an associated reason clause $\reason(\ell)$. This clause
-has two properties (1) $\ell\in \reason(\ell)$ and (2) for every
-$x\in \reason(\ell)$ we have that
-$\trailIdx{\lnot x} < \trailIdx{\ell}$. That is, $\reason(\ell)$ is a
-clause that implies that $\ell$ must assigned \true because every
-other literal in it has been assigned \false above $\ell$ in
-$\trail$. Literals $\ell$ set as decsions do not have reason clauses
-and we let $\reason(\ell) = \varnothing$.
+We assume the reader is familiar with the operations of CDCL \sat
+solvers, and the main data structures used in such solvers. A good
+source for this background is \cite{DBLP:series/faia/SilvaLM09}.
 
-CDCL \sat solvers perform clause learning when the literals on the
-trail falsify a clause $c$. '
+\paragraph{The Trail.}
+CDCL \sat solvers maintain a \textbf{trail}, $\trail$, which is a
+\textit{non-contradictory, non-redundant sequence of literals} that
+have been assigned \true by the solver; i.e.
+$\ell\in\trail \implies \lnot\ell \not\in\trail$, and $\trail$
+contains no duplicates. Newly assigned literals are added to the end
+of the trail, and on backtrack literals are removed from the end of
+the trail and unassigned.  If literal $\ell$ is on the trail let
+$\trailIdx{\ell}$ denote its index on the trail sequence
+($\trail[\trailIdx{\ell}] = \ell$). For convenience, we also let
+$\trailIdx{\ell} = \trailIdx{\lnot \ell} = \trailIdx{\var(\ell)}$,
+where $\var(\ell)$ is $\ell$'s variable, even though $\lnot \ell$ nor
+$\var(\ell)$ are actually on $\trail$. If $x$ and $y$ are both on the
+trail and $\trailIdx{x} < \trailIdx{y}$ we say that \textit{$x$
+  appears before $y$ on the trail}. In a slight abuse of notation we
+also use $\trailIdx{v}$ on a variable $v$ where
+$\trailIdx{v}=\trailIdx{\ell}$ and $\ell$ a literal of $v$ on the
+trail.
 
-\section{Find i-uip Clause}
+Two types of true literals appear on the trail: decision literals that
+have been assumed to be true by the solver, and unit propagated
+literals that are forced to be true because they are the sole remining
+unfalsified literal of a clause. Each literal $\ell\in\trail$ has a
+decision level $\dlevel{\ell}$ which is equal to the number of
+decision literals appearing before $\ell$ on the trail plus one;
+hence, $\dlevel{d}=1$ for the first decision literal $d\in\trail$.
+The set of literals on $\trail$ that have the same decision level
+forms a contiguous subsequence of $\trail$ that starts with a decision
+literal $d_i$ and ends just before the next decision literal
+$d_{i+1}$. If $\dlevel{d_i} = i$ we call this subsequence of $\trail$
+the \textit{$i$-th decision level}.
+
+Each literal $\ell\in\trail$ also has a clausal reason
+$\reason{\ell}$. If $\ell$ is a unit propgated literal,
+$\reason{\ell}$ is a clause of the formula such that
+$\ell \in \reason{\ell}$ and
+$\forall x \in \reason{\ell}.\, x\neq \ell \implies (\lnot x \in
+\trail \land \trailIdx{\lnot x} < \trailIdx{\ell}$. That is,
+$\reason{\ell}$ is a clause that has become unit implying $\ell$ due
+to the literals on the trail above $\ell$. If $\ell$ is a decision
+literal then $\reason{\ell} = \varnothing$.
+
+In most \sat solver implementations clause learning is initiated as
+soon as a clause is falsified by $\trail$. In this paper we will be
+concerned with the subsequent clause learning process which uses
+$\trail$ to derive a new clause that can be added to the formula. In
+some implementations the trail might be altered during clause
+learning. Here, however, we will assume that $\trail$ remains intact
+during clause learning and is only changed after the new clause is
+derived. After the new clause is lerned the $\trail$ will be changed by backtracking.
+
+Say that $\trail$ falsifies a clause $c_I$, and that the last decision
+literal $d_k$ in $\trail$ has decision level $k$. Consider
+$\trail_{k-1}$ the prefix of $\trail$ above the last decision level,
+i.e., the sequence of literals
+$\trail[0]$---$\trail[\trailIdx{d_k}-1]$. We will assume that
+$\trail_{k-1}$ is \textbf{propagation complete}, although the full
+trail $\trail$ might not be. This means that (a) no clause was
+falsified by $\trail_{k-1}$. And (b) if $c_u$ is a clause containing
+the literal $x$ and all literals in $c_u$ except for $x$ are falsified
+by $\trail_{k-1}$, then $x\in \trail_{k-1}$ and
+$\dlevel{x} \leq\max\{\dlevel{y} | y\in c_u \land y\neq x\}$. This
+means that if $x$ appears in a clause made unit it must have been
+added to the trail, and added at the first decision level that this
+occurred.  Note, however, $x$ might appear in more than one clause.
+The less than equal condition above ensures that $x$ must appear in
+$\trail_{k-1}$ at the first decision level any of these clauses were
+made unit.
+
+Any clause falsified by $\trail$ is called a \textbf{conflict}. When a
+conflict is found, the final level of the trail, $k$, need not be
+propagation complete as the solver typically stops propagation as soon
+as it finds a conflict. This means that (a) other clauses might be
+falsified by $\trail$ besides the conflict found, and (b) other
+literals might be unit implied by $\trail$ but not added to $\trail$.
+
+\begin{defn}[Trail Resolvant]
+    A trail resolvant is a clause arising from resolving a conflict
+    against the reason clause of some literal $\ell \in \trail$ where
+    $\reason{\ell}\neq \varnothing$. Every trail resolvant is also a
+    conflict.
+\end{defn}
+
+The following things can be noted about trail resolvants: (1) trail
+resolvants are never tautological, as the polarity of all literals in
+$\reason{\ell}$ other than $\ell$ must agree with the polarity of all
+literals in the conflict (they are all falsified by $\trail$); (2) one
+polarity of the variable $\var(\ell)$ resolved on must be a unit
+propagated literal whose negation appears in the conflict; and (3) any
+literal in the conflict that is unit progagated in $\trail$ can be
+resolved upon (the corresponding variable must appear in different
+polarities in the conflict and in $\trail$).
+
+\begin{defn}[Trail Resolution]
+    A trail resolution is a sequence of trail resolvants applied to an
+    initial conflict $c_I$ yielding a new conflict $c_L$.  A trail
+    resolution is \textbf{ordered} if the sequence of variables $v_1$,
+    \dots, $v_m$ resolved have strictly decreasing trail indicies:
+    $\trailIdx{v_i} > \trailIdx{v_{i+1}}$ ($1\leq i < m$). (Note that
+    this implies that no variable is resolved on more than once).
+\end{defn}
+
+Ordered trail resolutions resolve unit propagated literals from the
+end of the trail to the beginning. Without lost of generality, we can
+require that all trail resolutions be ordered.
+
+\begin{Obs}
+    If the unordered trail resolution $U$ yields the conflict clause
+    $c_L$ from an initial conflict $c_I$, then there exists an ordered
+    trail resolution $O$ that yields a conflict clause $c'_L$ such
+    that $c'_L\subseteq c_L$.
+\end{Obs}
+\noindent
+\textbf{Proof.} Let $U$ be the sequence of clauses $c_I = c_0$, $c_1$,
+$\ldots$, $c_m= c_L$ obtained by resolving on the sequence of
+variables $v_1$, $\ldots$, $v_m$ whose corresponding literals on
+$\trail$ are $l_1$, $\ldots$, $l_m$. Reordering these resolution steps
+so that the variables are resolved in order of decreasing trail index
+and removing duplicates yields an ordered trail resolution $O$ with
+the desired properties. Since no reason clause contains literals with
+higher trail indicies, $O$ must be a valid trail resolution if $U$
+was, and furthermore $O$ yields the clause
+$c'_L = \bigcup_{i=1}^m \reason{l_i} - \{l_1, \lnot l_1, \ldots, l_m,
+\lnot l_m\}$. Since $U$ resolves on the same variables (in a different
+order) we must that that the clause it produces $c_L\subseteq
+c'_L$. But $c_L$ might retain one or more of the literals $\lnot l_1$,
+$\ldots$, $\lnot l_m$, since resolving on a literal $l_j$ with higher
+trail index might reintroduce a literal $\lnot l_i$ with lower trail
+index that was previously resolved away by an earlier resolution.
+\whitebox
+
+The relevance of trail resolutions is that all proposed clause
+learning schemes we are aware of use trail resolutions to produce
+learnt clauses. Furthermore, the commonly used technique for clause
+minimization \cite{DBLP:conf/sat/SorenssonB09} is also equivalent to a
+trail resolution that yields the minimized clause from the
+un-minimized clause. Interestingly, it is standard in \sat solver
+implementations to perform resolution going backwards along the
+trail. That is, these implementations are typically using ordered
+trail resolutions. The above observation shows that this in fact the
+right way to do this.
+
+Ordered trail resolutions are a special case of \textit{trivial
+  resolutions} \cite{DBLP:journals/jair/BeameKS04}. Trail resolutions
+are specific to the trail data structure typically used in \sat
+solvers. If $\trail$ falsifies a clause at its last decision level,
+then its associated implication graph
+\cite{DBLP:journals/tc/Marques-SilvaS99} contains a conflict
+node. Cuts in the implication graph that separate the conflict from
+the rest of the graph correspond to conflict clauses
+\cite{DBLP:journals/jair/BeameKS04}. It is not difficult to see that
+the proof Proposition~4 of \cite{DBLP:journals/jair/BeameKS04} applies
+also to trail resolutions. This means that \textit{any conflict clause
+  in the trail's implication graph can be derived using a trail
+  resolution.}
+
+\subsection{Some alternate Clause Learning Schemes}
+A number of different clause learning schemes for generating a new
+learnt clause from the initial conflict have been presented in prior
+work, e.g.,
+\cite{DBLP:conf/iccad/ZhangMMM01,DBLP:conf/iccad/SilvaS96,DBLP:journals/tc/Marques-SilvaS99,DBLP:conf/aaai/BayardoS97}.
+Figure~\ref{fig:cl_schemes} gives a specification of some of these
+methods: (a) the all-decision scheme which resolves away all implied
+literals leaving a learnt clause over only decision literals; (c) the
+1-UIP scheme which resolves away literals from the deepest decision
+level leaving a learnt clause with a single literal at the deepest
+level; (d) the all-UIP scheme which resolves away literals from each
+decision level leaving a learnt clause with a single literal at each
+decision level; and (e) the $i$-UIP scheme which resolves away
+literals from the $i$ deepest decision levels leaving a learnt clause
+with a single literal at its $i$ deepest decision levels. It should be
+noted that when resolving away literals at decision level $i$ new
+literals at decision levels less than $i$ might be introduced into the
+clause. Hence, it is important in the $i$-UIP and all-UIP schemes to
+use ordered trail resolutions.
+
+Both the all-decision and all-UIP schemes yield a clause with only one
+literal at each decision level, and the all-UIP clause will be no
+larger that the all-decision clause. Furthermore, it is known
+\cite{DBLP:journals/tc/Marques-SilvaS99} that once we reduce the
+number of literals at a decision level $d$ to one, we could continue
+performing resolutions and later achieve a different single literal at
+the level $d$. In particular, a decision level might contain more than
+one unique implication point. The algorithms given in
+Figure~\ref{fig:cl_schemes} stop at the first UIP of a level, except
+for the all-decision schemes with stops at the last UIP of each level.
+
+\begin{figure}[t!]
+{\fss{8pt}{10pt}
+\begin{tabular}[t]{|l|c|l|}
+  \cline{1-1}\cline{3-3}
+  \begin{minipage}[t]{0.48\textwidth}
+    \textbf{(a) All Decision Clause\rule{0pt}{1.1\topskip}}
+    \begin{algorithmic}[0]
+        \State \hspace*{-1em}\textbf{all\_decision}($C_I$)
+        \State $C\gets C_I$
+        \While{$\{l\,|\, l\in C \land\reason{l} \neq\varnothing\} \neq \emptyset$}
+        \State \begin{tabular}{ll}
+                 $\ell \gets \mbox{}$ & literal with highest trail index in\\
+                                      & $\{l\,|\, l\in C \land\reason{l} \neq\varnothing\}$
+               \end{tabular}
+        \State $C \gets C\resolve \reason{\lnot \ell}$
+        \EndWhile
+        \State \textbf{return} $C$
+    \end{algorithmic}
+  \end{minipage}
+  & &
+  \begin{minipage}[t]{0.475\textwidth}
+      \textbf{(b) Make level $i$ contain a single literal\rule{0pt}{1.1\topskip}}
+      \begin{algorithmic}[0]
+          \State \hspace*{-1em} \textbf{UIP\_level}($C$, $i$)
+          \While{$\left|\left\{\ell \left| \begin{array}{l}\ell \in C\\
+                                           \mbox{}\land \reason{l} \neq \varnothing \\
+                                           \mbox{}\land \dlevel{l} = i\end{array}\right.\right\}\right| > 1$}
+          \State \begin{tabular}{ll}
+                   $l \gets \mbox{}$ & literal with highest trail index in\\
+                                        & $\left\{\ell \left| \begin{array}{l}\ell \in C
+                                          \land \reason{l} \neq \varnothing \\
+                                          \mbox{}\land \dlevel{l} = i\end{array}\right.\right\}$
+                 \end{tabular}
+          \State $C \gets C\resolve \reason{\lnot l}$
+          \EndWhile
+          \State \textbf{return} $C$\strut
+      \end{algorithmic}
+  \end{minipage}
+  \\\cline{1-1}\cline{3-3}
+   \multicolumn{1}{c}{\vspace*{-7pt}}\\\cline{1-1}\cline{3-3}
+  \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}{\textwidth}
+        \textbf{(c) First UIP Clause \rule{0pt}{1.1\topskip}}
+        \begin{algorithmic}[0]
+            \State \hspace*{-1em}\textbf{1-UIP}($C_I$)
+            \State $i\gets \max\{\dlevel{l}\, |\, l \in C_I\}$
+            \State \textbf{return} \textbf{UIP\_level}($C_I$, i)
+        \end{algorithmic}
+        \vspace*{5pt}
+    \end{minipage}\\[5pt]
+    \hspace*{-1.8pt}\rule{1.03\textwidth}{.4pt}\\[5pt]
+    \begin{minipage}{\textwidth}
+        \textbf{(d) All UIP Clause \rule{0pt}{1.1\topskip}}
+        \begin{algorithmic}[0]
+          \State \hspace*{-1em}\textbf{all-UIP}($C_I$, $i$)
+          \State $i = \bigl|\{\dlevel{l} \,|\, l \in \trail\}\bigl|$
+          \State \textbf{return} \textbf{$i$-UIP}(C, i)
+      \end{algorithmic}
+      \end{minipage}
+  \end{minipage}
+ & &
+  \begin{minipage}[t]{0.48\textwidth}
+      \vspace*{-20pt}
+      \textbf{(e) $i$-UIP Clause}
+      \begin{algorithmic}[0]
+          \State \hspace*{-1em}\textbf{$i$-UIP}($C_I$, $i$)
+          \State $C\gets C_I$
+          \State $d\gets \max\{\dlevel{l}\,|\, l \in C\}$
+          \For{($j \gets 1$; $j\leq i$; $j\gets j+1$)}
+          \State \textbf{if} ($d = \varnothing$): \textbf{break}
+          \State $C\gets\mbox{}$ \textbf{UIP\_level(C, d)}
+          \State $d\gets \max\left\{\dlevel{l} \left|\begin{array}{l}l\in C \\ \mbox{} \land \dlevel{l}<d
+                                                  \end{array}\right.\right\}$
+          \EndFor
+          \State \textbf{return} $C$\strut
+      \end{algorithmic}
+      \vspace*{3pt}
+      \textit{Maximum of an empty set is $\varnothing$ \strut}
+  \end{minipage}
+\\\cline{1-1}\cline{3-3}
+\end{tabular}
+}
+\caption{Some different clause learning schemes. All use the
+      current trail $\trail$ and take as input an initial clause $C_I$
+      falsified by $\trail$ at its deepest level.\label{fig:cl_schemes}}
+\end{figure}
+
+ %   \floatstyle{boxed}
+ %   \restylefloat{figure}
+
+
+\subsection{Asserting Clauses and LBD---Reasons to prefer 1-UIP
+  clauses}
+An \textbf{asserting clause} \cite{DBLP:journals/ai/PipatsrisawatD11}
+is a conflict clause $C_L$ that has exactly one literal $\ell$ at its
+deepest level, i.e.,
+$\forall l\in C_L. \dlevel{l} \leq \dlevel{\ell} \land (\dlevel{l} =
+\ell \implies l = \ell$). All of the clause learning schemes in
+Figure~\ref{fig:cl_schemes} produced learnt clauses that are asserting.
+
+The main advantage of asserting clauses is that they are 1-Empowering
+\cite{DBLP:journals/ai/PipatsrisawatD11}, i.e., they allow unit
+propagation to derive a new forced literal. Hence, asserting clauses
+can be used to guide backtracking---the solver can backtrack from the
+current deepest level to the point the learnt clause first becomes
+unit and then use the learnt clause to add a new unit implicant to the
+trail. Since all but the deepest level was propagation complete, this
+means that the asserting clause must be a brand new clause; otherwise
+that unit implication would already have been made. On the other hand,
+if the learnt clause $C_L$ is not asserting then \emph{it could be
+  that it is a duplicate of another clause already in the formula}. In
+particular, $C_L$ contains at least two literals at the deepest level
+since it is not asserting. If two of its literals at the deepest level
+were were not completely unit propagated (unit propagation is aborted
+as soon as a conflict is found), then $C_L$ could already be in the
+formula: it's two watches might not be fully propagated and $C_L$
+could be a falsified clause not detected by the solver. (In general,
+more than one clause might be falsified by $\trail$ and the \sat
+solver will generally stop when it finds the first one).
+
+The LBD of the learnt clause $C_L$ is the number of different decision
+levels in it:
+$\LBD(C_L)=\left|\big\{\dlevel{l}\,|\,l \in C_L\big\}\right|$
+\cite{DBLP:conf/ijcai/AudemardS09}. Empirically LBD is a empirically
+successful predictor of clause usefulness: clauses with lower LBD tend
+to be more useful. As noted in \cite{DBLP:conf/ijcai/AudemardS09} from
+the initial falsified clause $C_I$ the 1-UIP scheme will produce a
+clause $C_L$ whose LBD is minimum amongst all asserting clauses that
+can be learnt from $C_I$. If $C'$ is a trail resolvant of $C$ and a
+reason clause $\reason{l}$ ($l\in C$), then $\LBD(C') \geq \LBD(C)$
+since $\reason{l}$ must contain at least one other literal with the
+same decision level as $l$. That is, each trail resolution step can
+only increase the LBD of the learnt clause. The 1-UIP scheme performs
+the minimum number of trail resolution steps required to generate an
+asserting clause.
+
+Putting these two observations together we see that the 1-UIP scheme
+produces asserting clauses with lowest possible LBD. This is a
+compelling reasons for using this scheme. Hence, it is not surprising
+that modern \sat sovlers almost exclusively use 1-UIP clause
+learning.\footnote{Knuth in his sat13 CDCL solver \cite{Knuth:Sat13}
+  uses an all-decision clause when the 1-UIP clause is too large. In
+  this context an all-UIP clause could also be used as it would be no
+  larger than the all decision clause.}
+
+
+\section{Using $i$-UIP Clause Learning}
 \label{sec:i-uip}
-Classical CDCL SAT solvers analyze each conflict with 1-UIP resolution
-learning scheme to derive an asserting clause $\oneUIPClause$. Even
-though prior studies shows that further resolutions on $\oneUIPClause$
-against the assertion trail $\assertionTrail$ cannot reduce the
-clause's literal block distance ($\LBD$), the resolutions could
-potentially reduce the clause's size. Clause size is an important
-quality measurement because a smaller clause 1) consumes less memory,
-2) requires less steps to force a literal and 3) decreases the size of
-future conflict clauses.
+Although learning clauses with low LBD has been shown to be important
+in \sat solving \cite{DBLP:conf/ijcai/AudemardS09}, clause size is
+also important. Smaller clauses consume less memory and help to
+decrease the size of future learnt clauses. They are also semantically
+stronger than longer clauses.
 
-Inspired by both $\LBD$ and clause size, i-UIP resolution learning
-attempts to resolve away literals in $\oneUIPClause$ against the
-assertion trail $\assertionTrail$ to minimize the clause size without
-increasing the clause's $\LBD$. The goal of i-UIP learning is to find
-a clause $\iUIPClause$ whose literals are either the unique
-implication points in their respective decision levels or are directly
-implied by literals from a foreign decision
-level. Alg. ~\ref{alg:i-uip} is a pseudo-code implementation of i-UIP
-learning.
+The $i$-UIP scheme will tend to produce small clauses since the
+clauses can contain at most one literal per decision level. However,
+since more trail resolution steps are required to generate them they
+will also tend to contain more decision levels and thus have higher
+LBD. They will, however, be asserting.
 
+Since, $\LBD$ has shown itself to be more important than size our
+approach is to use $i$-UIP learning when, and only when, it succeeds
+in reducing the size of the clause \emph{without increasing its
+  LBD}. It can be noted that the $i$-UIP scheme first computes the
+1-UIP clause when it reduces the deepest level to a single UIP
+literal. It then proceeds to reducing the shallower levels (see $i$-UIP's
+for loop in Figure~\ref{fig:cl_schemes}). So our approach will start
+with the normal 1-UIP clause and then try to apply $i$-UIP learning to
+reduce other levels to single literals. As noted above, clause
+minimization is orthogonal to our approach, so we also first apply
+standard clause minimization \cite{DBLP:conf/sat/SorenssonB09} to the
+1-UIP clause. That is, our algorithm will start with the clause that
+most \sat solvers learn from a conflict (a minimized 1-UIP
+clause). Our approach is specified in Alg. ~\ref{alg:i-uip}.
 
 \begin{algorithm}[t]
 \caption{\IUIP}\label{alg:i-uip}
 \begin{algorithmic}[1]
-\Require  $\oneUIPClause$ is a valid and minimized 1-UIP clause
-\Require  $\assertionTrail$ is a valid assertion trail
-\Procedure{\IUIP}{$\oneUIPClause, \assertionTrail$} 
-    \State $\iUIPClause \gets \oneUIPClause $ \Comment{initialize i-UIP clause} \label{ln:init}
-    \State \code{DecisionLvs} $\gets$ Decision levels in $\oneUIPClause$ in descending order
-\For{$i \in \code{DecisionLvs}$} \label{ln:iterDecisionLvls}
-    \State $L_{i} \gets \Set{l}{\code{level}(l) = i \wedge l \in \iUIPClause}$
-    \While{$|\code{unmarked}(L_i)| > 1$} \label{ln:uip}
-        \State $p \gets \text{lit with the highest trail position in } L_{i} $ \label{ln:trailaccess}
-        \If{$\exists q \in \code{Reason}(\neg{p}, \assertionTrail) \cdot \code{level}(q) \not\in$ \code{DecisionLvs}} \label{ln:resolvable}
-            \If{$\IUIPPURE$}
-                \State Unresolve literals at level $i$  \label{ln:unresolve}
-                \State Go to the next decision level $i$ \label{ln:abondon}
-            \ElsIf{$\IUIPMIN$}
-                \State $\code{Mark}(p)$ \label{ln:mark}
-            \EndIf
-        \Else 
-            \State  $\iUIPClause \gets (\oneUIPClause ) \bowtie \code{Reason}(\neg{p}, \assertionTrail)$
-           \State  $\code{Update}(L_{i})$
+\Require $\oneUIPClause$ is minimized 1-UIP clause
+\Procedure{\IUIP}{$\oneUIPClause, \assertionTrail$, \type} 
+    \State $\iUIPClause \gets \oneUIPClause$
+    \State $\dlevels \gets\mbox{}$ decision levels in $C_i$ in descending order
+           \Comment{These never change}
+    \For{($i=1$; $i < |\dlevels|$; $i$++)} \Comment{skip the deepest level $\dlevels[0]$}
+       \State $C_i\gets\mbox{}$\tryuiplevel($C_i$, $\dlevels[i]$, \type)
+              \Comment{Try to reduce this level to UIP}
+       \If{$\bigl|\{\ell\,|\,\ell \in C_i \land \dlevel{\ell} \leq i\}\bigr|
+                    + (|\dlevels| - (i+1)) \geq |\oneUIPClause|$}
+           \State \textbf{return} $\oneUIPClause$.\label{ln:earlyTerminate} \Comment{can't generate smaller clause}
+       \EndIf
+    \EndFor
+    \State \textbf{if} ($\type = \IUIPPURE$) $C_i \gets \mathbf{miminize}(C_i)$\label{ln:puremin}
+    \State \textbf{return} if $|\iUIPClause| < |\oneUIPClause|$) then  $\iUIPClause$ else  $\oneUIPClause$\label{ln:returnmin}
+\EndProcedure
+\Statex
+\Procedure{\tryuiplevel}{$C_i$, $i$, \type}\Comment{Do not add new decision levels}
+    \State $\ctry = C_i$
+    \State $L_i = \left\{\ell \left| \ell \in \ctry 
+                         \land \dlevel{l} = i\right.\right\}$\label{ln:litsati1}
+    \While{$|L_i| > 1$}
+        \State $p \gets\mbox{}$ \textbf{remove} lit with the highest trail index from $L_i$ 
+        \If{($\exists q \in \reason{\lnot p}.\, \dlevel{q} \not \in \mathit{decLvls}$)}\label{ln:newdlevel}
+        \Comment{Would add new decision levels}
+             \If{($\type = \IUIPPURE$)}
+                 \State \textbf{return} $C_i$ \Comment{Abort, can't UIP this level}
+             \ElsIf{($\type = \IUIPMIN$)}
+                 \State \textbf{continue} \Comment{Don't try to resolve away $p$}
+             \EndIf
+        \Else\label{ln:nonewdlevel}
+            \State $\ctry \gets \ctry \resolve \reason{\lnot p}$
+            \State $L_i = L_i \cup \{\ell\,|\, 
+                                     \ell\in\reason{\lnot p} \land \ell\neq \lnot p \land \dlevel{\ell} = i
+                                    \}$\label{ln:litsati2}
         \EndIf
-    \EndWhile
-\EndFor \label{ln:endCompleteResolution}
-\\
-\If{$\IUIPPURE$}\label{ln: 2ndMinStart}   \Comment{$\iUIPClause$ from $\IUIPPURE$ can be minimized}
-    \State $\iUIPClause  \gets \textbf{Minimize}(\iUIPClause)$ 
-\EndIf\label{ln: 2ndMinEnd}
-\\
-\If{$|\iUIPClause| < |\oneUIPClause|$} \label{ln:checkSize}
-    \State \textbf{return} $\iUIPClause$
-\Else
-    \State \textbf{return} $\oneUIPClause$
-\EndIf  \label{ln:cSizeCheck}
+     \EndWhile
+    \State \textbf{return} $\ctry$
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
 
-The algorithm $\IUIP$ computes $\iUIPClause$ from (line~\ref{ln:init}
-to \ref{ln:endCompleteResolution}), and then returns the smaller
-clause between $\oneUIPClause$ and $\iUIPClause$
-(line~\ref{ln:checkSize} to \ref{ln:cSizeCheck}).  The algorithm first
-initializes $\iUIPClause$ with the minimized\cite{}
-$\oneUIPClause$. Next, the algorithm iterate through the decision
-levels of $\iUIPClause$ in descending order
-(line~\ref{ln:iterDecisionLvls}) and tries to find the unique
-implication point in each level (line~\ref{ln:uip}). Since $\IUIP$
-needs to preserve $\iUIPClause$'s $\LBD$ during resolutions, before
-resolving away a target literal $p$, the algorithm preemptively checks
-whether the reasoning clause of $\neg{p}$ contains any literal $q$
-from an unseen decision level (line~\ref{ln:resolvable}). If such a
-literal $q$ exists, then the algorithm cannot find the unique
-implication point (UIP) at the current level $i$ because resolving
-away $p$ will introduce $q$ into the clause and increases $\LBD$. One
-solution is to abandon level $i$ by reverting back to the state before
-any literal at level $i$ is resolved away (line~\ref{ln:unresolve}),
-and then move on to the next level (line~\ref{ln:abondon}). We denote
-$\IUIP$ learning with this solution as $\IUIPPURE$. The final
-$\iUIPClause$ produced by $\IUIPPURE$ will contains exactly one
-literal for levels where the LBD-persevering UIP exist. However,
-$\IUIPPURE$ does not minimize the number of literals in the decision
-levels where the LBD-preserving UIP does not exist, and clause
-minimization techniques\cite{} can be used to further reduce the
-clause size (line~\ref{ln: 2ndMinStart} to \ref{ln: 2ndMinEnd}).
+The Algorithm $\IUIP$ attempts to reduce each level in the 1-UIP
+clause to a single literal (a UIP). The 1-UIP clause  has only
+one literal at its deepest level, so that level, $\dlevels[0]$, can be
+skipped. The subroutine \tryuiplevel is used to reduce each level. It
+uses trail resoluions to achieve this, subject to the constraint that
+no new decision levels can be introduced in the clause. In particular,
+\tryuiplevel($C_i$, $i$) attempts to resolve away the literals at
+decision level $i$ in the clause $C_i$, i.e., those in the set $L_i$
+(line~\ref{ln:litsati1}), in order of decreasing trail index, until only
+one literal at level $i$ remains. If the resolution step will not
+introduce any new decision levels (line~\ref{ln:nonewdlevel}), it is
+performed updating $\ctry$. In addition, all new literals at level $i$
+are added to $L_i$. These can only be lits at level $i$ in the reason
+clause.
 
-When $\IUIP$ cannot resolve away a literal $p$ without increasing
-$\iUIPClause$'s LBD, instead of skipping the entire decision level
-$i$, another solution $\IUIPMIN$ simply marks literal $p$ and keep it
-in $\iUIPClause$ (line~\ref{ln:mark}). The learning scheme then
-continue the resolutions at level $i$. $\IUIPMIN$ will ignore all the
-unsolvable literals and find the "local" unique implication point at
-every decision level.  The algorithm terminates when there is exactly
-one unmarked literal left for each decision level of $\iUIPClause$,
-representing the local unique implication points. The clause
-$\iUIPClause$ learnt by $\IUIPMIN$ is minimized\footnote{clause size
-  cannot be reduced via minimization techniques\cite{}.}, we defer the
-proof of minimization to Appendix~\ref{}.
+On the other hand, if the resolution step would introduce new decision
+levels (line~\ref{ln:newdlevel}) then there are two options.  The
+first option we call $\IUIPPURE$. With $\IUIPPURE$ we abort our
+attempt to UIP this level and return the clause with level $i$
+unchanged. In the second option, called $\IUIPMIN$, we continue
+without performing the resolution, \textit{keeping} the current
+literal $p$ in $\ctry$. $\IUIPMIN$ will continue to try to resolve
+away the other literals in $L_i$ (note that $p$ is no longer in $L_i$)
+until $L_i$ is reduced to a single literal. Hence, $\IUIPMIN$ can
+leave multiple literals at level $i$---all of those with reasons
+containing new levels along with one other. Note that since the sole
+remaining literal $u\in L_i$ is at a lower trail index than all of the
+kept literals, so there is no point in trying to resolve away
+$u$---either it will be the decision clause for level $i$ having no
+reason, or its reason will contain at least one other literal at level
+$i$.
+
+After trying to UIP each level the clause $C_i$ is obtained. If we
+were using $\IUIPPURE$ we can once again apply minimization
+(line~\ref{ln:puremin}). Recursive clause minimization
+\cite{DBLP:conf/sat/SorenssonB09} would be useless for the $\IUIPMIN$
+clause as all but one literal of each level introduces a new level and
+thus cannot be recursively removed.\footnote{Other more powerful
+  minimization techniques could still be applied.} 
+
+Finally, the Algorithm returns the shorter of the initial 1-UIP clause
+and the newly computed clause (line~\ref{ln:returnmin}). Because we
+return the newly computed clause only when it is shorter an early
+termination test can be used (line~\ref{ln:earlyTerminate}). After the
+algorithm has finished processing levels $\dlevels[0]$--$\dlevels[i]$
+the literals at those levels cannot be further changed. Furthermore,
+we know that the best that can be done is to reduce the remaining
+$|\dlevels| - (i+1)$ levels down to a single literal each. These two
+observations give a lower bound on the size of the resulting clause,
+and if that lower bound is as large as the size of the initial 1-UIP
+clause we can terminate and return the initial 1-UIP clause.
 
 \begin{example}
-    Consider the assertion trail
-    $\assertionTrail =
-    {..a_2,b_2,c_2,d_2..e_5,f_5,g_5,h_6,i_6,j_6,k_6..}$ where literals
-    $a_2 ... k_{6}$ are asserted in order with decision level shown as
-    the underscript. Let $L_{ext}$ denote the set of literals on
-    $\assertionTrail$ outside of decision level 2,5,6 and 10, and
-    $l^{*}_{ext}$ be some literal in $L_{ext}$. The reasoning clauses
-    involved in building $\assertionTrail$ are:
-\begin{enumerate}
-  \item[] $C_k = \{\neg{f_5} \vee \neg{j_6} \vee k_6\}$,
-  $C_j = \{\neg{f_5} \vee \neg{i_6} \vee j_6\}$, 
-  $C_i = \{\neg{e_5} \vee \neg{h_6} \vee i_6\}$,
-  $C_g = \{\neg{a_2} \vee \neg{f_5} \vee g_5\}$
-  $C_f = \{\neg{l^{*}_{ext}} \vee \neg{e_5} \vee f_5\}$,
-  $C_d = \{\neg{b_2} \vee \neg{c_2} \vee d_2\}$,
-  $C_c = \{\neg{a_2} \vee \neg{b_2} \vee c_2 \}$,
-  $C_b = \{\neg{l^{*}_{ext}} \vee \neg{a_2} \vee b_2\}$
-\end{enumerate}
-Suppose 1-UIP learning produces clause
-$\oneUIPClause = \{\neg{m_{10}} \vee \neg{k_6} \vee \neg{j_6} \vee
-\neg{i_6} \vee \neg{h_6} \vee \neg{g_5} \vee \neg{d_2} \vee
-\neg{c_2}\}$ where $\neg{k_{10}}$ is the UIP from the conflicting
-level. $\IUIP$ first tries to find the UIP for level 6 by resolving
-$\oneUIPClause$ with $C_k$, $C_j$ and, $C_i$ in order and produces
-clause
-$\iUIPClause = \{\neg{m_{10}} \vee \neg{h_6} \vee \neg{g_5} \vee
-\neg{f_5} \vee \neg{e_5} \vee \neg{d_2} \vee \neg{c_2} \}$ where
-$\neg{h_6}$ is the UIP.
+    Consider the trail $\assertionTrail = \ldots$, $\ell_1$, $a_2$, $b_2$,
+    $c_2$,$d_2$, $\ldots$, $\ldots$, $e_5$, $f_5$, $g_5$,
+    $h_6$, $i_6$, $j_6$, $k_6$, $\ldots$, $m_{10}$,
+    $\ldots$ where the subscript indicates the decision level of each
+    literal and the literals are in order of increasing trail
+    index. Let the clauses
+    $C_x$ denote the reason clause for literal $x_i$ with 
+    \[\begin{array}{|l|l|l|}\hline
+      C_{a} = \varnothing 
+      & C_{b} =  (b_2, \lnot \ell_3, \lnot a_2)
+      & C_{c} =  (c_2, \lnot a_2, \lnot b_2) \\\hline
+      C_{d} =  (d_2, \lnot b_2, \lnot c_2) 
+      & C_{\ell} =\varnothing
+      & C_{e} =\varnothing \\\hline
+      C_{f} =  (f_5, \lnot e_5,\lnot \ell_1)
+      & C_{g} = (g_5, \lnot a_2, \lnot f_5)
+      & C_{h} =\varnothing \\\hline
+      C_{i} =  (i_6, \lnot e_5, \lnot h_6)
+      & C_{j} = (j_6, \lnot f_5, \lnot i_6 )
+      & C_{k} = (k_6, \lnot f_5, \lnot j_6) \\\hline
+      \end{array}
+  \]
+  Suppose 1-UIP learning yields the clause
+  $\oneUIPClause = (\neg{m_{10}}$, $\neg{k_6}$, $\neg{j_6}$, $\neg{i_6}$,
+  $\neg{h_6}$, $\neg{g_5}$, $\neg{d_2}$, $\neg{c_2})$ where $\neg{m_{10}}$
+  is the UIP from the conflicting level. $\IUIP$ first tries to find
+  the UIP for level 6 by resolving $\oneUIPClause$ with $C_k$, $C_j$
+  and then $C_i$ producing the clause
+  $C^* = (\neg{m_{10}}$, $\neg{h_6}$, $\neg{g_5}$,
+  $\neg{f_5}$, $\neg{e_5}$, $\neg{d_2}$, $\neg{c_2})$ where
+  $\neg{h_6}$ is the UIP for level 6.
 
-$\IUIP$ attempts to find the UIP for level 5 by resolving $C_i$ with
-$C_g$ and $C_f$ in order. However, resolving with $C_f$ will introduce
-$\neg{l^{*}_{ext}}$ into $C_i$ and increase the clause's
-LBD. $\IUIPPURE$ undoes all resolutions at level 5 and skips the
-entire level, whereas $\IUIPMIN$ only skips the resolution with $C_f$
-and tries to find the UIP by ignoring $\neg{f_5}$.  After level 5,
-$\IUIPPURE$ preserves the same clause and $\IUIPMIN$ produces
-$\iUIPClause = \{\neg{m_{10}} \vee \neg{h_6} \vee \neg{f_5} \vee
-\neg{e_5} \vee \neg{d_2} \vee \neg{c_2} \vee \neg{a_2}\}$ where
-$\neg{e_5}$ is the UIP when $\neg{f_5}$ is ignored. The same $\IUIP$
-procedure is then performed on level 2 to produce the final
-$\iUIPClause$.
+  $\IUIP$ then attempts to find the UIP for level 5 by resolving $C^*$
+  with $C_g$ and then $C_f$. However, resolving with $C_f$ would
+  introduce $\ell_1$ and a new decision level into $C^*$. $\IUIPPURE$
+  thus leaves level 5 unchanged . $\IUIPMIN$, on the other hand, skips
+  the resolution with $C_f$  leaving $f_5$ in $C^*$. Besides $f_5$
+  only one other literal at level 5 remains in the clause, $e_5$,
+  so $\IUIPMIN$ does not do any further resolutions at this level. Hence,
+  $\IUIPPURE$ yields $C^*$ unchanged, while $\IUIPMIN$ yeilds
+  $C^*_{\mathit{min}} = (\neg{m_{10}}$, $\neg{h_6}$, $\neg{f_5}$,
+  $\neg{e_5}$, $\neg{d_2}$, $\neg{c_2}, \lnot a_2)$.
 
-$\IUIPPURE$ learned
-$\iUIPClause = \{\neg{m_{10}} \vee \neg{h_6} \vee \neg{g_5} \vee
-\neg{f_5} \vee \neg{e_5} \vee \neg{d_2} \vee \neg{c_2} \}$ and reduces
-the learnt clause size by 1. $\IUIPMIN$ learned
-$\iUIPClause = \{\neg{m_{10}} \vee \neg{h_6} \vee \neg{f_5} \vee
-\neg{e_5} \vee \neg{b_2} \vee \neg{a_2}\}$ and reduces the learnt
-clause size by 2.
+  Finally, $\IUIP$ processes level 2. Resolving away $d_2$ and then
+  $c_2$ will lead to an attempt to resolve away $b_2$. But again this
+  would introduce a new decision level with the literal $\ell_1$. So
+  $\IUIPPURE$ will leave level 2 unchanged and $\IUIPMIN$ will leave
+  $b_2$ unresolved. The final clauses produced by $\IUIPPURE$ would be
+  $(\neg{m_{10}}$, $\neg{h_6}$, $\neg{f_5}$, $\neg{e_5}$, $\neg{d_2}$,
+  $\neg{c_2}$, $\neg{a_2})$, a reduction of 1 over the 1-UIP clause,
+  and by $\IUIPMIN$ would be $(\neg{m_{10}}$, $\neg{h_6}$,
+  $\neg{f_5}$, $\neg{e_5}$, $\neg{b_2}$, $\neg{a_2})$, a reduction of
+  2 over the 1-UIP clause.
+\whitebox
 \end{example}
 
 The core algorithm of $\IUIP$ as a clause reduction technique is
 simple. However, to make the algorithm a practical learning scheme
-that is compatible with modern SAT solvers, a number of issues need to
+that is compatible with modern SAT solvers some further issues need to
 be addressed. The rest of the section details the key optimizations
 and augmentations of $\IUIP$ as a practical clause learning scheme.
 
@@ -341,7 +697,7 @@ achieve cost effective results. Therefore, we propose a heuristic
 based approach to to enable and disable $\IUIP$ learning based on
 input clause's $\GAP$.
 
-\begin{algorithm}[t]
+\begin{algorithm}[b]
 \caption{Control-$\IUIP$}\label{alg:enableCondition}
 \begin{algorithmic}[1]
 \Require  $\oneUIPClause$ is a valid 1-UIP clause
@@ -596,16 +952,24 @@ and the size reduction is more significant for instances with large
 average 1-UIP clause size. Moreover, $\IUIPMIN$ clauses (indicated in
 green) is consistently smaller than $\IUIPPURE$ clauses.
 
-\begin{figure}
+2\begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{figures/clause_reduction_PDF.png}
-    \caption{ Relative clause size reduction distribution. X axis indicates the relative size of difference between i-uip and 1-uip clauses (calculated as $\dfrac{|\oneUIPClause|-|\iUIPClause|}{|\oneUIPClause|}$ ) for each instance, and Y axis shows the probability density.}
+    \includegraphics[width=0.8\textwidth]{figures/clause_reduction_PDF}
+    \caption{ Relative clause size reduction distribution. X axis
+      indicates the relative size of difference between i-uip and
+      1-uip clauses (calculated as
+      $\dfrac{|\oneUIPClause|-|\iUIPClause|}{|\oneUIPClause|}$ ) for
+      each instance, and Y axis shows the probability density.}
      \label{fig:len_pdf}
 \end{figure}
 \begin{figure} \label{fig:len_compare}
     \centering
-    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{i-uip-sizes-compare.png}
-    \caption{Average clause size comparison plot. Each point in the plot represents an instance. X and Y axis shows the clause length from $\IUIP$ and 1-UIP, respectively. Each green (red) dot represents an compared instance between $\MapleBase$ and $\MapleIUIMIN$ ($\IUIPPURE$). }
+    \includegraphics[width=0.8\textwidth]{figures/i-uip-sizes-compare.pdf}
+    \caption{Average clause size comparison plot. Each point in the
+      plot represents an instance. X and Y axis shows the clause
+      length from $\IUIP$ and 1-UIP, respectively. Each green (red)
+      dot represents an compared instance between $\MapleBase$ and
+      $\MapleIUIMIN$ ($\IUIPPURE$). }
     \label{fig:len_compare}
 \end{figure}
 \nf{ Do we need this?  We additionally looked at the 14 instances
@@ -665,7 +1029,7 @@ $\MapleIUIMIN$ & 413.2 & 17.18\% \\
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{proof_size_compare.png}
+    \includegraphics[width=0.8\textwidth]{figures/proof_size_compare.pdf}
     \caption{Average optimized proof size between 1-uip and $\IUIPMIN$.}
     \label{fig:proof_compare}
 \end{figure}
@@ -851,6 +1215,5 @@ overcompensation.
 
 \bibliography{sat}{}
 \bibliographystyle{splncs04}
-
 \end{document}
 

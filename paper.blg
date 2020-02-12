@@ -3,47 +3,46 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: paper.aux
 The style file: splncs04.bst
 Database file #1: sat.bib
-Warning--I didn't find a database entry for "DBLP:conf/sat/SorenssonB09"
 Warning--I didn't find a database entry for ""
-You've used 7 entries,
+You've used 14 entries,
             2850 wiz_defined-function locations,
-            668 strings with 7236 characters,
-and the built_in function-call counts, 5103 in all, are:
-= -- 454
-> -- 144
-< -- 9
-+ -- 56
-- -- 49
-* -- 344
-:= -- 640
-add.period$ -- 23
-call.type$ -- 7
-change.case$ -- 54
+            720 strings with 9209 characters,
+and the built_in function-call counts, 9453 in all, are:
+= -- 828
+> -- 262
+< -- 19
++ -- 103
+- -- 88
+* -- 625
+:= -- 1174
+add.period$ -- 31
+call.type$ -- 14
+change.case$ -- 101
 chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 434
-empty$ -- 451
-format.name$ -- 59
-if$ -- 1139
+cite$ -- 14
+duplicate$ -- 821
+empty$ -- 840
+format.name$ -- 105
+if$ -- 2104
 int.to.chr$ -- 0
-int.to.str$ -- 7
-missing$ -- 85
-newline$ -- 27
-num.names$ -- 22
-pop$ -- 154
+int.to.str$ -- 14
+missing$ -- 162
+newline$ -- 48
+num.names$ -- 44
+pop$ -- 292
 preamble$ -- 1
-purify$ -- 35
+purify$ -- 66
 quote$ -- 0
-skip$ -- 145
+skip$ -- 275
 stack$ -- 0
-substring$ -- 315
-swap$ -- 252
-text.length$ -- 9
+substring$ -- 593
+swap$ -- 483
+text.length$ -- 19
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 28
+type$ -- 56
 warning$ -- 0
-while$ -- 46
-width$ -- 8
-write$ -- 99
-(There were 2 warnings)
+while$ -- 88
+width$ -- 16
+write$ -- 167
+(There was 1 warning)

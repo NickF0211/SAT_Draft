@@ -1,7 +1,19 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
 \providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{DBLP:conf/ijcai/AudemardS09}
+Audemard, G., Simon, L.: Predicting learnt clauses quality in modern {SAT}
+  solvers. In: Boutilier, C. (ed.) {IJCAI} 2009, Proceedings of the 21st
+  International Joint Conference on Artificial Intelligence, Pasadena,
+  California, USA, July 11-17, 2009. pp. 399--404 (2009),
+  \url{http://ijcai.org/Proceedings/09/Papers/074.pdf}
+
+\bibitem{DBLP:journals/jair/BeameKS04}
+Beame, P., Kautz, H.A., Sabharwal, A.: Towards understanding and harnessing the
+  potential of clause learning. J. Artif. Intell. Res.  \textbf{22},  319--351
+  (2004), \url{https://doi.org/10.1613/jair.1410}
 
 \bibitem{DBLP:conf/aaai/BayardoS97}
 Jr., R.J.B., Schrag, R.: Using {CSP} look-back techniques to solve real-world
@@ -17,16 +29,31 @@ Katebi, H., Sakallah, K.A., Silva, J.P.M.: Empirical study of the anatomy of
   modern sat solvers. In: Sakallah, K.A., Simon, L. (eds.) Theory and
   Applications of Satisfiability Testing - {SAT} 2011 - 14th International
   Conference, {SAT} 2011, Ann Arbor, MI, USA, June 19-22, 2011. Proceedings.
-  Lecture Notes in Computer Science, vol.~6695, pp. 343--356. Springer (2011).
-  \doi{10.1007/978-3-642-21581-0\_27},
+  Lecture Notes in Computer Science, vol.~6695, pp. 343--356. Springer (2011),
   \url{https://doi.org/10.1007/978-3-642-21581-0\_27}
+
+\bibitem{Knuth:Sat13}
+Knuth, D.E.: Implementation of algorithm 7.2.2.2c (conflict-driven clause
+  learning sat solver),
+  \url{https://www-cs-faculty.stanford.edu/~knuth/programs/sat13.w}
+
+\bibitem{DBLP:conf/ijcai/LuoLXML17}
+Luo, M., Li, C., Xiao, F., Many{\`{a}}, F., L{\"{u}}, Z.: An effective learnt
+  clause minimization approach for {CDCL} {SAT} solvers. In: Sierra, C. (ed.)
+  Proceedings of the Twenty-Sixth International Joint Conference on Artificial
+  Intelligence, {IJCAI} 2017, Melbourne, Australia, August 19-25, 2017. pp.
+  703--711. ijcai.org (2017), \url{https://doi.org/10.24963/ijcai.2017/98}
 
 \bibitem{DBLP:conf/dac/MoskewiczMZZM01}
 Moskewicz, M.W., Madigan, C.F., Zhao, Y., Zhang, L., Malik, S.: Chaff:
   Engineering an efficient {SAT} solver. In: Proceedings of the 38th Design
   Automation Conference, {DAC} 2001, Las Vegas, NV, USA, June 18-22, 2001. pp.
-  530--535. {ACM} (2001). \doi{10.1145/378239.379017},
-  \url{https://doi.org/10.1145/378239.379017}
+  530--535. {ACM} (2001), \url{https://doi.org/10.1145/378239.379017}
+
+\bibitem{DBLP:journals/ai/PipatsrisawatD11}
+Pipatsrisawat, K., Darwiche, A.: On the power of clause-learning {SAT} solvers
+  as resolution engines. Artif. Intell.  \textbf{175}(2),  512--525 (2011),
+  \url{https://doi.org/10.1016/j.artint.2010.10.002}
 
 \bibitem{DBLP:series/faia/SilvaLM09}
 Silva, J.P.M., Lynce, I., Malik, S.: Conflict-driven clause learning {SAT}
@@ -38,20 +65,33 @@ Silva, J.P.M., Sakallah, K.A.: {GRASP} - a new search algorithm for
   satisfiability. In: Rutenbar, R.A., Otten, R.H.J.M. (eds.) Proceedings of the
   1996 {IEEE/ACM} International Conference on Computer-Aided Design, {ICCAD}
   1996, San Jose, CA, USA, November 10-14, 1996. pp. 220--227. {IEEE} Computer
-  Society / {ACM} (1996). \doi{10.1109/ICCAD.1996.569607},
-  \url{https://doi.org/10.1109/ICCAD.1996.569607}
+  Society / {ACM} (1996), \url{https://doi.org/10.1109/ICCAD.1996.569607}
 
 \bibitem{DBLP:journals/tc/Marques-SilvaS99}
 Silva, J.P.M., Sakallah, K.A.: {GRASP:} {A} search algorithm for propositional
-  satisfiability. {IEEE} Trans. Computers  \textbf{48}(5),  506--521 (1999).
-  \doi{10.1109/12.769433}, \url{https://doi.org/10.1109/12.769433}
+  satisfiability. {IEEE} Trans. Computers  \textbf{48}(5),  506--521 (1999),
+  \url{https://doi.org/10.1109/12.769433}
+
+\bibitem{DBLP:conf/sat/SorenssonB09}
+S{\"{o}}rensson, N., Biere, A.: Minimizing learned clauses. In: Kullmann, O.
+  (ed.) Theory and Applications of Satisfiability Testing - {SAT} 2009, 12th
+  International Conference, {SAT} 2009, Swansea, UK, June 30 - July 3, 2009.
+  Proceedings. Lecture Notes in Computer Science, vol.~5584, pp. 237--243.
+  Springer (2009), \url{https://doi.org/10.1007/978-3-642-02777-2\_23}
+
+\bibitem{DBLP:conf/sat/WieringaH13}
+Wieringa, S., Heljanko, K.: Concurrent clause strengthening. In:
+  J{\"{a}}rvisalo, M., Gelder, A.V. (eds.) Theory and Applications of
+  Satisfiability Testing - {SAT} 2013 - 16th International Conference,
+  Helsinki, Finland, July 8-12, 2013. Proceedings. Lecture Notes in Computer
+  Science, vol.~7962, pp. 116--132. Springer (2013),
+  \url{https://doi.org/10.1007/978-3-642-39071-5\_10}
 
 \bibitem{DBLP:conf/iccad/ZhangMMM01}
 Zhang, L., Madigan, C.F., Moskewicz, M.W., Malik, S.: Efficient conflict driven
   learning in boolean satisfiability solver. In: Ernst, R. (ed.) Proceedings of
   the 2001 {IEEE/ACM} International Conference on Computer-Aided Design,
   {ICCAD} 2001, San Jose, CA, USA, November 4-8, 2001. pp. 279--285. {IEEE}
-  Computer Society (2001). \doi{10.1109/ICCAD.2001.968634},
-  \url{https://doi.org/10.1109/ICCAD.2001.968634}
+  Computer Society (2001), \url{https://doi.org/10.1109/ICCAD.2001.968634}
 
 \end{thebibliography}
