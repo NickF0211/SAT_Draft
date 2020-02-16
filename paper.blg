@@ -4,45 +4,45 @@ The top-level auxiliary file: paper.aux
 The style file: splncs04.bst
 Database file #1: sat.bib
 Warning--I didn't find a database entry for ""
-You've used 14 entries,
+You've used 17 entries,
             2850 wiz_defined-function locations,
-            720 strings with 9209 characters,
-and the built_in function-call counts, 9453 in all, are:
-= -- 828
-> -- 262
-< -- 19
-+ -- 103
-- -- 88
-* -- 625
-:= -- 1174
-add.period$ -- 31
-call.type$ -- 14
-change.case$ -- 101
+            750 strings with 10396 characters,
+and the built_in function-call counts, 11765 in all, are:
+= -- 1027
+> -- 329
+< -- 25
++ -- 128
+- -- 110
+* -- 786
+:= -- 1453
+add.period$ -- 40
+call.type$ -- 17
+change.case$ -- 124
 chr.to.int$ -- 0
-cite$ -- 14
-duplicate$ -- 821
-empty$ -- 840
-format.name$ -- 105
-if$ -- 2104
+cite$ -- 17
+duplicate$ -- 1026
+empty$ -- 1043
+format.name$ -- 133
+if$ -- 2619
 int.to.chr$ -- 0
-int.to.str$ -- 14
-missing$ -- 162
-newline$ -- 48
-num.names$ -- 44
-pop$ -- 292
+int.to.str$ -- 17
+missing$ -- 206
+newline$ -- 57
+num.names$ -- 56
+pop$ -- 368
 preamble$ -- 1
-purify$ -- 66
+purify$ -- 80
 quote$ -- 0
-skip$ -- 275
+skip$ -- 338
 stack$ -- 0
-substring$ -- 593
-swap$ -- 483
-text.length$ -- 19
+substring$ -- 728
+swap$ -- 610
+text.length$ -- 25
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 56
+type$ -- 68
 warning$ -- 0
-while$ -- 88
-width$ -- 16
-write$ -- 167
+while$ -- 109
+width$ -- 19
+write$ -- 206
 (There was 1 warning)

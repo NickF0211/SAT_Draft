@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  12 FEB 2020 18:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  16 FEB 2020 14:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -551,164 +551,150 @@ LaTeX Font Info:    Try loading font information for T1+pcr on input line 89.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 89.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 89.
-
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 89.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 92.
-[1
+ [1
 
 {/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 166.
-
-[2]
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 168.
+ [2]
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 261.
-
-Underfull \vbox (badness 1466) has occurred while \output is active []
-
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 259.
  [3]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 357.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 354.
 
-Overfull \hbox (3.14636pt too wide) in paragraph at lines 393--411
+Overfull \hbox (3.14636pt too wide) in paragraph at lines 390--410
 | [] 
  []
 
 
-Overfull \hbox (1.18086pt too wide) in paragraph at lines 423--425
+Overfull \hbox (1.18086pt too wide) in paragraph at lines 422--424
 [] $\OML/cmm/m/it/8 d \OMS/cmsy/m/n/8   [] []$ 
  []
 
 [4]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1953) has occurred while \output is active []
 
  [5]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 528.
-LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <9> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 531.
+put line 533.
 
-Overfull \hbox (2.84348pt too wide) in paragraph at lines 587--603
+Overfull \hbox (2.84348pt too wide) in paragraph at lines 605--632
 []\T1/ptm/m/n/10 On the other hand, if the res-o-lu-tion step would in-tro-duce
- new de-ci-sion lev-els (line []15[])
+ new de-ci-sion lev-els (line []20[])
  []
 
 [6]
-Underfull \vbox (badness 1194) has occurred while \output is active []
+Overfull \hbox (1.83932pt too wide) in paragraph at lines 633--640
+[]\T1/ptm/m/n/10 After try-ing to UIP each level the clause $\OML/cmm/m/it/10 C
+[]$ \T1/ptm/m/n/10 is ob-tained. If we were us-ing $[]$
+ []
 
- [7]
-[8] [9]
+[7] [8]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 732.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 732.
+ [9]
+Overfull \hbox (19.65378pt too wide) detected at line 794
+[]
+ []
 
-LaTeX Warning: Reference `ln:trailaccess' on page 10 undefined on input line 83
-6.
 
-[10] [11]
-Overfull \hbox (10.7094pt too wide) in paragraph at lines 921--932
+Overfull \hbox (9.82256pt too wide) in paragraph at lines 821--827
+ []\T1/ptm/b/n/10 Clause Re-duc-tion with $[]$.[] \T1/ptm/m/n/10 We im-ple-ment
+ed our new clause learn-ing schemes
+ []
+
+[10]
+Overfull \hbox (10.7094pt too wide) in paragraph at lines 869--880
  [] 
  []
 
-<figures/clause_reduction_PDF.pdf, id=222, 462.52798pt x 346.89601pt>
+<figures/clause_reduction_PDF.pdf, id=224, 462.52798pt x 346.89601pt>
 File: figures/clause_reduction_PDF.pdf Graphic file (type pdf)
 <use figures/clause_reduction_PDF.pdf>
 Package pdftex.def Info: figures/clause_reduction_PDF.pdf  used on input line 9
-57.
+05.
 (pdftex.def)             Requested size: 277.69987pt x 208.28212pt.
-<figures/i-uip-sizes-compare.pdf, id=223, 614.295pt x 794.97pt>
+<figures/i-uip-sizes-compare.pdf, id=225, 462.52798pt x 346.89601pt>
 File: figures/i-uip-sizes-compare.pdf Graphic file (type pdf)
 <use figures/i-uip-sizes-compare.pdf>
-Package pdftex.def Info: figures/i-uip-sizes-compare.pdf  used on input line 96
-7.
-(pdftex.def)             Requested size: 277.69987pt x 359.3829pt.
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 989--990
-[]|$[]$ \T1/ptm/m/n/9 suc-cess
- []
+Package pdftex.def Info: figures/i-uip-sizes-compare.pdf  used on input line 91
+5.
+(pdftex.def)             Requested size: 277.69987pt x 208.28212pt.
 
-
-Overfull \hbox (4.30946pt too wide) in paragraph at lines 987--996
+Overfull \hbox (4.30946pt too wide) in paragraph at lines 935--944
  [] 
  []
 
+[11] [12 <./figures/clause_reduction_PDF.pdf> <./figures/i-uip-sizes-compare.pd
+f
 
-Overfull \hbox (4.30946pt too wide) in paragraph at lines 1014--1025
+pdfTeX warning: pdflatex (file ./figures/i-uip-sizes-compare.pdf): PDF inclusio
+n: multiple pdfs with page group included in a single page
+>]
+Overfull \hbox (4.30946pt too wide) in paragraph at lines 962--973
  [] 
  []
 
-<figures/proof_size_compare.pdf, id=235, 614.295pt x 794.97pt>
+<figures/proof_size_compare.pdf, id=326, 462.52798pt x 346.89601pt>
 File: figures/proof_size_compare.pdf Graphic file (type pdf)
 <use figures/proof_size_compare.pdf>
-Package pdftex.def Info: figures/proof_size_compare.pdf  used on input line 103
-2.
-(pdftex.def)             Requested size: 277.69987pt x 359.3829pt.
+Package pdftex.def Info: figures/proof_size_compare.pdf  used on input line 980
+.
+(pdftex.def)             Requested size: 277.69987pt x 208.28212pt.
 
-Overfull \hbox (14.62262pt too wide) in paragraph at lines 1040--1057
+Overfull \hbox (14.62262pt too wide) in paragraph at lines 988--1005
  [] 
  []
 
 
-Underfull \hbox (badness 3219) in paragraph at lines 1059--1059
+Underfull \hbox (badness 1622) in paragraph at lines 1007--1007
 []\T1/ptm/b/n/9 Fig.8. []\T1/ptm/m/n/9 Benchmark re-sults of $[]$ with 1-UIP, $
 []$, $[]$,
  []
 
 
-Overfull \hbox (11.3376pt too wide) in paragraph at lines 1064--1071
-\T1/ptm/m/n/10 To eval-u-ate $[]$'s ef-fec-tive-ness as a clause learn-ing sche
-me, we re-implement
- []
-
-
-Overfull \hbox (15.28828pt too wide) in paragraph at lines 1064--1071
+Overfull \hbox (8.09267pt too wide) in paragraph at lines 1012--1019
 \T1/ptm/m/n/10 eval-u-ated 1-UIP learn-ing and five $[]$ con-fig-u-ra-tions ( $
 []$, $[]$,
  []
 
-[13 <./figures/clause_reduction_PDF.pdf>] [14 <./figures/i-uip-sizes-compare.pd
-f>] [15 <./figures/proof_size_compare.pdf>]
-Overfull \hbox (2.89769pt too wide) in paragraph at lines 1083--1096
-\T1/ptm/m/n/10 To val-i-date $[]$ as a gen-er-al-iz-able learn-ing scheme on mo
-d-ern SAT solvers,
+
+Overfull \hbox (0.27318pt too wide) in paragraph at lines 1020--1028
+[]\T1/ptm/m/n/10 Fig. []8[] sum-ma-rizes the re-sult of the ex-per-i-ment. Lear
+n-ing scheme $[]$ solved
  []
 
 
-Overfull \hbox (8.35318pt too wide) in paragraph at lines 1083--1096
+Overfull \hbox (8.35318pt too wide) in paragraph at lines 1031--1044
 \T1/ptm/m/n/10 2019 SAT race which uses ran-dom walk sim-u-la-tion to help bran
 ch-ing. We chose $[]$
  []
 
-
-Overfull \hbox (20.31308pt too wide) in paragraph at lines 1099--1151
+[13] [14 <./figures/proof_size_compare.pdf>]
+Overfull \hbox (20.31308pt too wide) in paragraph at lines 1047--1099
  [] 
  []
 
-
-Overfull \hbox (16.42783pt too wide) in paragraph at lines 1156--1170
-\T1/ptm/m/n/10 for both solved in-stances and clause size re-duc-tion. This may
- sug-gests that $[]$
- []
-
-[16] [17]
-Overfull \hbox (10.9784pt too wide) in paragraph at lines 1188--1199
-[]$[]$ \T1/ptm/m/n/10 learn-ing schemes showed sig-nif-i-cant im-prove-ment for
- $[]$.
+[15]
+Overfull \hbox (7.8924pt too wide) in paragraph at lines 1119--1135
+\T1/ptm/m/n/10 log-i-cal back-track-ing (CB) for long dis-tance back-tracks. Th
+ere-fore, we used $[]$-
  []
 
 
-Overfull \hbox (11.96138pt too wide) in paragraph at lines 1200--1215
-[]$ \T1/ptm/m/n/10 schemes could eas-ily over-com-pen-sate vari-able ac-tiv-i-t
-ies for i-UIP clauses,
+Overfull \hbox (9.402pt too wide) in paragraph at lines 1148--1163
+\T1/ptm/m/n/10 schemes could eas-ily over-com-pen-sate vari-able ac-tiv-i-ties 
+for i-UIP clauses, and $[]$'s
  []
 
-(./paper.bbl [18]
+(./paper.bbl [16]
 Underfull \hbox (badness 2922) in paragraph at lines 36--39
 []\T1/ptm/m/n/9 Knuth, D.E.: Im-ple-men-ta-tion of al-go-rithm 7.2.2.2c (confli
 ct-driven clause learn-ing
@@ -720,33 +706,30 @@ Underfull \hbox (badness 2111) in paragraph at lines 36--39
 anford . edu / ~knuth / programs /
  []
 
-)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1218.
- [19]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1218.
+[17])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1166.
+ [18]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1166.
  (./paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1218.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1218.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1166.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1166.
 
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 5D181F9C664CBBAF4AB6F0662890A874;76.
-
-
-LaTeX Warning: There were undefined references.
+(rerunfilecheck)             Checksum: 08CEB035148B7FE61B41542D54B6A1DC;78.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1218.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1166.
  ) 
 Here is how much of TeX's memory you used:
- 8573 strings out of 492616
- 121446 string characters out of 6129482
- 246588 words of memory out of 5000000
- 12255 multiletter control sequences out of 15000+600000
- 106849 words of font info for 123 fonts, out of 8000000 for 9000
+ 8533 strings out of 492616
+ 120966 string characters out of 6129482
+ 239205 words of memory out of 5000000
+ 12223 multiletter control sequences out of 15000+600000
+ 80852 words of font info for 100 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,25n,35p,490b,523s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,25n,35p,505b,523s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/tex
 live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texl
@@ -757,7 +740,6 @@ l/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local
 exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/tex
 live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texli
 ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive
-/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive
 /2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2
 019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2019
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2019/te
@@ -776,10 +758,10 @@ ype1/urw/courier/ucrr8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/urw
 /times/utmb8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/urw/times/utm
 bi8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
 /usr/local/texlive/2019/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (19 pages, 462988 bytes).
+Output written on paper.pdf (18 pages, 389722 bytes).
 PDF statistics:
- 453 PDF objects out of 1000 (max. 8388607)
- 354 compressed objects within 4 object streams
- 73 named destinations out of 1000 (max. 500000)
+ 528 PDF objects out of 1000 (max. 8388607)
+ 340 compressed objects within 4 object streams
+ 74 named destinations out of 1000 (max. 500000)
  24 words of extra memory for PDF output out of 10000 (max. 10000000)
 
