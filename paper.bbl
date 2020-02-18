@@ -45,12 +45,26 @@ Liang, J.H., Ganesh, V., Poupart, P., Czarnecki, K.: Learning rate based
   Lecture Notes in Computer Science, vol.~9710, pp. 123--140. Springer (2016),
   \url{https://doi.org/10.1007/978-3-319-40970-2\_9}
 
+\bibitem{liang2016maple}
+Liang, J.H., Oh, C., Ganesh, V., Czarnecki, K., Poupart, P.: Maple-comsps,
+  maplecomsps lrb, maplecomsps chb. SAT Competition p.~52
+
 \bibitem{DBLP:conf/ijcai/LuoLXML17}
 Luo, M., Li, C., Xiao, F., Many{\`{a}}, F., L{\"{u}}, Z.: An effective learnt
   clause minimization approach for {CDCL} {SAT} solvers. In: Sierra, C. (ed.)
   Proceedings of the Twenty-Sixth International Joint Conference on Artificial
   Intelligence, {IJCAI} 2017, Melbourne, Australia, August 19-25, 2017. pp.
   703--711. ijcai.org (2017), \url{https://doi.org/10.24963/ijcai.2017/98}
+
+\bibitem{luo2017effective}
+Luo, M., Li, C.M., Xiao, F., Manya, F., L{\"u}, Z.: An effective learnt clause
+  minimization approach for cdcl sat solvers. In: Proceedings of the 26th
+  International Joint Conference on Artificial Intelligence. pp. 703--711
+  (2017)
+
+\bibitem{MdSolimul2019expMalpe}
+Md~Solimul, M., Jia-Huai: Four cdcl sat solvers based on exploration and glue
+  variable bumping. Proceedings of SAT competition p.~17 (2019)
 
 \bibitem{DBLP:conf/sat/MohleB19}
 M{\"{o}}hle, S., Biere, A.: Backing backtracking. In: Janota, M., Lynce, I.
@@ -78,6 +92,10 @@ Pipatsrisawat, K., Darwiche, A.: On the power of clause-learning {SAT} solvers
   as resolution engines. Artif. Intell.  \textbf{175}(2),  512--525 (2011),
   \url{https://doi.org/10.1016/j.artint.2010.10.002}
 
+\bibitem{ryvchin2018maple}
+Ryvchin, V., Nadel, A.: Maple\_lcm\_dist chronobt: Featuring chronological
+  backtracking. Proceedings of SAT competition p.~29 (2018)
+
 \bibitem{DBLP:series/faia/SilvaLM09}
 Silva, J.P.M., Lynce, I., Malik, S.: Conflict-driven clause learning {SAT}
   solvers. In: Handbook of Satisfiability, pp. 131--153. IOS Press (2009),
@@ -101,6 +119,17 @@ S{\"{o}}rensson, N., Biere, A.: Minimizing learned clauses. In: Kullmann, O.
   International Conference, {SAT} 2009, Swansea, UK, June 30 - July 3, 2009.
   Proceedings. Lecture Notes in Computer Science, vol.~5584, pp. 237--243.
   Springer (2009), \url{https://doi.org/10.1007/978-3-642-02777-2\_23}
+
+\bibitem{Stepan2019MapleLCMDistChronoBT}
+Stepan, Oleg, V., Alexander: Maplelcmdistchronobt-dl, duplicate learnts
+  heuristic-aided solvers at the sat race 2019. Proceedings of SAT competition
+  p.~24 (2019)
+
+\bibitem{wetzler2014drat}
+Wetzler, N., Heule, M.J., Hunt, W.A.: Drat-trim: Efficient checking and
+  trimming using expressive clausal proofs. In: International Conference on
+  Theory and Applications of Satisfiability Testing. pp. 422--429. Springer
+  (2014)
 
 \bibitem{DBLP:conf/sat/WieringaH13}
 Wieringa, S., Heljanko, K.: Concurrent clause strengthening. In:
