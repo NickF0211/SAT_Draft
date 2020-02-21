@@ -15,11 +15,6 @@
 % \usepackage[T1,hyphens]{url}
 \usepackage{hyperref}
 %\PassOptionsToPackage{hypnens}{url}
-\title{Clause size reduction with all-UIP Learning}
-\author{Nick Feng \and Fahiem Bacchus}
-\authorrunning{N. Feng and F. Bacchus}
-\institute{Department of Computer Science, University of Toronto, Canada, 
-  \email{\{nfeng,fbacchus\}@cs.toronto.edu}}
 
 \algrenewcommand\algorithmicprocedure{}
 \algrenewcommand\algorithmicthen{}
@@ -83,10 +78,35 @@
 \newcommand{\nf}[1]{{\color{red}{#1}}}
 \newcommand{\fb}[1]{{\color{blue}{#1}}}
 
+\title{Clause size reduction with all-UIP Learning}
+\author{Nick Feng \and Fahiem Bacchus}
+\authorrunning{N. Feng and F. Bacchus}
+\institute{Department of Computer Science, University of Toronto, Canada, 
+  \email{\{nfeng,fbacchus\}@cs.toronto.edu}}
+
+
 \begin{document}
 \maketitle              % typeset the header of the contribution
 % 
 \begin{abstract}
+    Almost all CDCL \sat solvers use the 1-UIP clause learning scheme
+    to learn new clauses from conflicts, and our current understanding
+    of \sat solving provides good reasons for using that scheme. In
+    particular, the 1-UIP scheme yields asserting clauses, and these
+    asserting clauses have minimum LBD among all possible asserting
+    clauses. As a result of these advantages other clause learning
+    schemes, like $i$-UIP and all-UIP, that had been proposed in early
+    work are not used in modern solvers. In this paper, we propose a
+    new technique for exploiting the all-UIP scheme in clause
+    learning. Our technique is to employ all-UIP learning under the
+    constraint that the clause's LBD does not increase (over the
+    minimum established by the 1-UIP clause). Our method can generate
+    clauses that are significantly smaller that the 1-UIP clause while
+    not increasing the LBD. Unlike previous clause minimization
+    methods, our technique is not limited to learning a sub-clause of
+    the 1-UIP clause. It can instead learn a completely different
+    clause. We show empirically that our method can improve the
+    performance of state of the art solvers.
 \end{abstract}
 
 \section{Introduction}
