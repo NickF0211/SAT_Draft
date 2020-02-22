@@ -89,26 +89,25 @@
 \maketitle              % typeset the header of the contribution
 % 
 \begin{abstract}
-    Clause learning is an essential technique in \sat solvers.
-    Most of modern CDCL \sat solvers use the 1-UIP 
+    Almost all CDCL \sat solvers use the 1-UIP 
     clause learning scheme for learning new clauses from conflicts, 
     and our current understanding
     of \sat solving provides good reasons for using that scheme. In
     particular, the 1-UIP scheme yields asserting clauses, and these
     asserting clauses have minimum LBD among all possible asserting
     clauses. As a result of these advantages, other clause learning
-    schemes, like $i$-UIP and all-UIP, that had been proposed in prior
+    schemes, like $i$-UIP and all-UIP, that were proposed in early
     work are not used in modern solvers. In this paper, we propose a
     new technique for exploiting the all-UIP clause learning scheme. 
-    Our technique $\allUip$ employs all-UIP learning under the
+    Our technique is to employ all-UIP learning under the
     constraint that the learnt clause's LBD does not increase (over the
-    minimum established by the 1-UIP clause). $\allUip$ can learn
+    minimum established by the 1-UIP clause). Our method can learn
     clauses that are significantly smaller than the 1-UIP clause while
     preserving the minimum LBD. Unlike previous clause minimization
     methods, our technique is not limited to learning a sub-clause of
     the 1-UIP clause. It can instead learn a completely different
-    clause with the same asserting literal. We show empirically 
-    that $\allUip$ can improve the performance of state of the art solvers.
+    clause. We show empirically 
+    that our method can improve the performance of state of the art solvers.
 \end{abstract}
 
 \section{Introduction}
