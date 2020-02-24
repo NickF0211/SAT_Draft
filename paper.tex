@@ -1013,7 +1013,7 @@ attempted algorithm~\ref{alg:i-uip} more frequently than $\allUipPure$ (28.8\% v
 %\end{figure}
 \subsubsection{Proof Reduction with $\allUip$}
 A learning scheme yields smaller clauses (lemmas) may construct smaller causal proofs. For
-UNSAT instances, we additionally compare the size of the optimized DRAT proof from $\allUipPure$, $\allUipMin$ and 1-UIP schemes. We used DART-trim \cite{wetzler2014drat} with 10000 second timeout to check and optimize every DRAT proof once \footnote{Applying DART-trim multiple times can further reduce the proof size until fix-point, but the full optimization is time consuming and impractical for our experiments.}.
+UNSAT instances, we additionally compare the size of the optimized DRAT proof from $\allUipPure$, $\allUipMin$ and 1-UIP schemes. We used DART-trim \cite{DBLP:conf/sat/WetzlerHH14} with 10000 second timeout to check and optimize every DRAT proof once \footnote{Applying DART-trim multiple times can further reduce the proof size until fix-point, but the full optimization is time consuming and impractical for our experiments.}.
 
 The average optimized DRAT proof from $\allUipMin$ and $\allUipPure$ are 413.2MB and 487.2MB, respectively. Both sizes are significantly smaller than the average optimized proof size from 1-UIP, 613.9MB.  The average relative proof size reduction per instance of $\allUipMin$ and $\allUipPure$ are 17.18\% and 6.9\% compare to 1-UIP, which roughly correlate to the observation from relative clause reduction plot in Fig~\ref{fig:len_pdf}. Moreover, comparing the absolute proof size between $\allUipMin$ and 1-UIP yields a similar trend as clause size comparison in Fig~\ref{fig:len_compare}.  
 
@@ -1067,7 +1067,7 @@ The average optimized DRAT proof from $\allUipMin$ and $\allUipPure$ are 413.2MB
 \subsubsection{$\allUip$ on Modern SAT solvers}
 To validate $\allUip$ as practical learning schemes on modern SAT
 solvers, we re-implement $\allUip$ on the winners of 2017, 2018 and 2019
-SAT Race\cite{luo2017effective,ryvchin2018maple,Stepan2019MapleLCMDistChronoBT} and $\expSAT$\cite{MdSolimul2019expMalpe} ($\expSATShort$). $\expSATShort$
+SAT Race\cite{DBLP:conf/ijcai/LuoLXML17,ryvchin2018maple,Stepan2019MapleLCMDistChronoBT} and $\expSAT$\cite{MdSolimul2019expMalpe} ($\expSATShort$). $\expSATShort$
 is a top ten solver from 2019 SAT race which uses random walk
 simulation to help branching. We chose $\expSATShort$ because 1) it is
 a top solver in the 2019 SAT Race without using chronological

@@ -3,46 +3,48 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: paper.aux
 The style file: splncs04.bst
 Database file #1: sat.bib
+Warning--empty booktitle in liang2016maple
+Warning--missing publisher in liang2016maple
 Warning--empty year in liang2016maple
-You've used 23 entries,
+You've used 22 entries,
             2850 wiz_defined-function locations,
-            780 strings with 11513 characters,
-and the built_in function-call counts, 15094 in all, are:
-= -- 1301
-> -- 436
-< -- 31
-+ -- 173
-- -- 148
-* -- 971
-:= -- 1877
+            778 strings with 11668 characters,
+and the built_in function-call counts, 14600 in all, are:
+= -- 1225
+> -- 446
+< -- 27
++ -- 172
+- -- 149
+* -- 977
+:= -- 1826
 add.period$ -- 49
-call.type$ -- 23
-change.case$ -- 165
+call.type$ -- 22
+change.case$ -- 161
 chr.to.int$ -- 0
-cite$ -- 24
-duplicate$ -- 1340
-empty$ -- 1337
-format.name$ -- 177
-if$ -- 3357
+cite$ -- 25
+duplicate$ -- 1293
+empty$ -- 1311
+format.name$ -- 181
+if$ -- 3219
 int.to.chr$ -- 0
-int.to.str$ -- 23
-missing$ -- 267
-newline$ -- 75
-num.names$ -- 68
-pop$ -- 504
+int.to.str$ -- 22
+missing$ -- 265
+newline$ -- 72
+num.names$ -- 74
+pop$ -- 493
 preamble$ -- 1
-purify$ -- 111
+purify$ -- 104
 quote$ -- 0
-skip$ -- 437
+skip$ -- 398
 stack$ -- 0
-substring$ -- 879
-swap$ -- 769
-text.length$ -- 31
+substring$ -- 817
+swap$ -- 744
+text.length$ -- 27
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 92
-warning$ -- 1
-while$ -- 136
-width$ -- 25
-write$ -- 266
-(There was 1 warning)
+type$ -- 88
+warning$ -- 3
+while$ -- 130
+width$ -- 24
+write$ -- 255
+(There were 3 warnings)

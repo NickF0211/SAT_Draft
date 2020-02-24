@@ -47,7 +47,7 @@ Liang, J.H., Ganesh, V., Poupart, P., Czarnecki, K.: Learning rate based
 
 \bibitem{liang2016maple}
 Liang, J.H., Oh, C., Ganesh, V., Czarnecki, K., Poupart, P.: Maple-comsps,
-  maplecomsps lrb, maplecomsps chb. SAT Competition p.~52
+  maplecomsps\_lrb, maplecomsps\_chb
 
 \bibitem{DBLP:conf/ijcai/LuoLXML17}
 Luo, M., Li, C., Xiao, F., Many{\`{a}}, F., L{\"{u}}, Z.: An effective learnt
@@ -56,15 +56,11 @@ Luo, M., Li, C., Xiao, F., Many{\`{a}}, F., L{\"{u}}, Z.: An effective learnt
   Intelligence, {IJCAI} 2017, Melbourne, Australia, August 19-25, 2017. pp.
   703--711. ijcai.org (2017), \url{https://doi.org/10.24963/ijcai.2017/98}
 
-\bibitem{luo2017effective}
-Luo, M., Li, C.M., Xiao, F., Manya, F., L{\"u}, Z.: An effective learnt clause
-  minimization approach for cdcl sat solvers. In: Proceedings of the 26th
-  International Joint Conference on Artificial Intelligence. pp. 703--711
-  (2017)
-
 \bibitem{MdSolimul2019expMalpe}
 Md~Solimul, M., Jia-Huai: Four cdcl sat solvers based on exploration and glue
-  variable bumping. Proceedings of SAT competition p.~17 (2019)
+  variable bumping. In: Heule, M.J.H., Järvisalo, M., Suda, M. (eds.)
+  Proceedings of SAT COMPETITION 2019 Solver and Benchmark Descriptions.
+  University of Helsinki (2019)
 
 \bibitem{DBLP:conf/sat/MohleB19}
 M{\"{o}}hle, S., Biere, A.: Backing backtracking. In: Janota, M., Lynce, I.
@@ -94,7 +90,9 @@ Pipatsrisawat, K., Darwiche, A.: On the power of clause-learning {SAT} solvers
 
 \bibitem{ryvchin2018maple}
 Ryvchin, V., Nadel, A.: Maple\_lcm\_dist chronobt: Featuring chronological
-  backtracking. Proceedings of SAT competition p.~29 (2018)
+  backtracking. In: Heule, M.J.H., Järvisalo, M., Suda, M. (eds.) Proceedings
+  of SAT COMPETITION 2018 Solver and Benchmark Descriptions. University of
+  Helsinki (2018)
 
 \bibitem{DBLP:series/faia/SilvaLM09}
 Silva, J.P.M., Lynce, I., Malik, S.: Conflict-driven clause learning {SAT}
@@ -122,14 +120,18 @@ S{\"{o}}rensson, N., Biere, A.: Minimizing learned clauses. In: Kullmann, O.
 
 \bibitem{Stepan2019MapleLCMDistChronoBT}
 Stepan, Oleg, V., Alexander: Maplelcmdistchronobt-dl, duplicate learnts
-  heuristic-aided solvers at the sat race 2019. Proceedings of SAT competition
-  p.~24 (2019)
+  heuristic-aided solvers at the sat race 2019. In: Heule, M.J.H., Järvisalo,
+  M., Suda, M. (eds.) Proceedings of SAT COMPETITION 2019 Solver and Benchmark
+  Descriptions. University of Helsinki (2019)
 
-\bibitem{wetzler2014drat}
-Wetzler, N., Heule, M.J., Hunt, W.A.: Drat-trim: Efficient checking and
-  trimming using expressive clausal proofs. In: International Conference on
-  Theory and Applications of Satisfiability Testing. pp. 422--429. Springer
-  (2014)
+\bibitem{DBLP:conf/sat/WetzlerHH14}
+Wetzler, N., Heule, M., Jr., W.A.H.: Drat-trim: Efficient checking and trimming
+  using expressive clausal proofs. In: Sinz, C., Egly, U. (eds.) Theory and
+  Applications of Satisfiability Testing - {SAT} 2014 - 17th International
+  Conference, Held as Part of the Vienna Summer of Logic, {VSL} 2014, Vienna,
+  Austria, July 14-17, 2014. Proceedings. Lecture Notes in Computer Science,
+  vol.~8561, pp. 422--429. Springer (2014),
+  \url{https://doi.org/10.1007/978-3-319-09284-3\_31}
 
 \bibitem{DBLP:conf/sat/WieringaH13}
 Wieringa, S., Heljanko, K.: Concurrent clause strengthening. In:
