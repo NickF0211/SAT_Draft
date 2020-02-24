@@ -497,7 +497,7 @@ predictor of clause usefulness: clauses with lower LBD tend to be more
 useful. As noted in \cite{DBLP:conf/ijcai/AudemardS09}, from the
 initial falsified clause $C_I$ the 1-UIP scheme will produce a clause
 $C_L$ whose LBD is minimum among all asserting clauses that can be
-learnt from $C_I$. If $C'$ is a trail resolvant of $C$ and a reason
+learnt from $C_I$. If $C'$ is a trail resolvent of $C$ and a reason
 clause $\reason{l}$, then $\LBD(C') \geq \LBD(C)$ since $\reason{l}$
 must contain at least one other literal with the same decision level
 as $l$ and might contain literals with decision levels not in
@@ -766,7 +766,7 @@ clause $C_i$ and the original 1-UIP clause $C_1$. The new clause $C_i$
 will be returned only if it is both smaller and has higher average
 variable activity than the original 1-UIP clause. There are, of
 course, generalizations of this approach where one has a weighted
-tradeoff between these factors that allows preferring the new clause
+trade-off between these factors that allows preferring the new clause
 when it has large gains in one metric even though it has small losses
 in the other. We did not, however, experiment with such
 generalizations.
@@ -1035,20 +1035,21 @@ results.
 
 \subsubsection{Reduced Proof sizes with $\allUip$.}
 A learning scheme that yields smaller clauses (lemmas) might also
-construct smaller causal proofs. For UNSAT instances, we additionally
-compare the size of the optimized DRAT proof from $\allUipPure$,
-$\allUipMin$ and 1-UIP schemes. We used the DART-trim tool
-\cite{DBLP:conf/sat/WetzlerHH14} with a 10000 second timeout to check and
+construct smaller causal proofs. For 88 UNSAT instances solved mutually
+by $\allUipPure$, $\allUipMin$ and 1-UIP schemes, we additionally
+compare the size of the optimized DRAT proof from the three learning schemes. 
+We used the DART-trim tool
+\cite{DBLP:conf/sat/WetzlerHH14} with a 30000 second timeout to check and
 optimize every DRAT proof once \footnote{Applying DART-trim multiple
   times can further reduce the proof size until a fix-point. However,
   the full optimization is time consuming and was impractical for our
   experiments.}.
 
 The average optimized DRAT proof from $\allUipMin$ and $\allUipPure$
-are 413.2MB and 487.2MB, respectively. Both sizes are significantly
-smaller than the average optimized proof size from 1-UIP, 613.9MB.
+are 556.6MB and 654.4MB, respectively. Both sizes are significantly
+smaller than the average optimized proof size from 1-UIP, 824.9MB.
 The average proof size reduction per instance for $\allUipMin$ and
-$\allUipPure$ was 17.18\% and 6.9\% compared with 1-UIP, which roughly
+$\allUipPure$ was 16.5\% and 4.6\% compared with 1-UIP, which roughly
 correlate with our observed clause size observation in
 Fig~\ref{fig:len_pdf}.
 
