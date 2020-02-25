@@ -562,7 +562,9 @@ approach is specified in Alg. ~\ref{alg:i-uip}.
 \Require $\tgap\geq 0$ is global parameter, $\ntries$ and $\nsuc$
          are globals used to configure $\tgap$
 \Procedure{\allUip}{$C_1, \assertionTrail$, \type} 
-    \State \textbf{if} ($|C_1| - \LBD(C_1) < \tgap$) \textbf{return} $C_1$\label{ln:control}
+    \State \textbf{if} ($|C_1| - \LBD(C_1) < \tgap$) \textbf{return}
+    $C_1$\label{ln:control}
+    \nf{\State $\ntries$++\label{ln:try}} 
     \State $C_i \gets C_1$
     \State $\dlevels \gets\mbox{}$ decision levels in $C_i$ in descending order
            \Comment{These never change}
@@ -575,7 +577,7 @@ approach is specified in Alg. ~\ref{alg:i-uip}.
        \EndIf
     \EndFor
     \State \textbf{if} ($\type = \allUipPure$) $C_i \gets \mathbf{minimize}(C_i)$\label{ln:puremin}
-    \State $\ntries$++\label{ln:try}
+    %\State $\ntries$++\label{ln:try}% 
     \State \textbf{if} ($|C_i| < |C_1|$) $\nsuc$++, \textbf{return} $C_i$ 
            \label{ln:returnmin}\label{ln:suc}
     \State \textcolor{gray}{$\triangleright\mbox{}$ Use next line instead for} \allUipAct
