@@ -486,7 +486,7 @@ that unit implication would already have been made. On the other hand,
 if the learnt clause $C_L$ is not asserting then \emph{it could be
   that it is a duplicate of another clause already in the formula}. In
 particular, $C_L$ contains at least two literals at the deepest level.
-If two of its literals at the deepest level were were not completely
+If two of its literals at the deepest level were \nf{forced but} not completely
 unit propagated (unit propagation is aborted as soon as a conflict is
 found), then $C_L$ could already be in the formula: its two watches
 might not be fully propagated and $C_L$ could be a falsified clause
