@@ -114,7 +114,7 @@
 Clause learning is an essential technique in \sat solvers. There is good
 evidence to indicate that it is, in fact, the most important technique
 used in modern \sat solvers \cite{DBLP:conf/sat/KatebiSS11}. In early
-\sat research a number of different clause learning techniques were
+\sat research \nf{,} a number of different clause learning techniques were
 proposed
 \cite{DBLP:conf/iccad/ZhangMMM01,DBLP:conf/iccad/SilvaS96,DBLP:journals/tc/Marques-SilvaS99,DBLP:conf/aaai/BayardoS97}.
 However, following the revolutionary performance improvements achieved
@@ -131,14 +131,18 @@ minimization \cite{DBLP:conf/sat/SorenssonB09}, as their primary
 method for learning new clauses.
 
 However, other clause learning schemes can be used in SAT solvers
-without changes to their main data structures. Furthermore, advances
+without %changes%
+\nf{alternations} to %their%
+\nf{solvers'} main data structures. Furthermore, advances
 in our understanding allow us to better understand the potential
 advantages and disadvantages of these alternate schemes. In this paper
-we reexamine these previous clause learning schemes, with a
+we reexamine these %previous clause learning schemes,%
+\nf{previously proposed alternative schemes,} with a
 focus on the schemes described in
 \cite{DBLP:conf/iccad/ZhangMMM01}. Improved understanding of \sat
 solvers, obtained from the last decade of research, allows us to see
-that in their original form these other clause learning schemes suffer
+that in their original form these %other%
+\nf{alternative} clause learning schemes suffer
 significant disadvantages over 1-UIP clause learning.
 
 One of the previously proposed schemes was the all-UIP scheme
@@ -155,10 +159,11 @@ Our method is orthogonal to clause minimization. In particular, our
 approach can learn a clause that is not a subset of the 1-UIP clause but
 which still serves all of the same purposes as the 1-UIP clause.
 Various minimization techniques can be applied on top of our method to
-remove redundant literals from the clauses we learn.
+remove redundant literals from the clauses %we learn%
+\nf{we have learnt}.
 
 We present various versions of our method and show that these variants
-are often capable of learning shorter clauses that the 1-UIP scheme,
+are often capable of learning shorter clauses than the 1-UIP scheme,
 and that this can lead to useful performance gains in state of the art
 \sat solvers.
 
@@ -207,7 +212,7 @@ Two types of true literals appear on the trail: \emph{decision
 they are the sole remaining unfalsified literal of a clause. Each
 literal $\ell\in\trail$ has a decision level $\dlevel{\ell}$ which is
 equal to the number of decision literals appearing before $\ell$ on
-the trail plus one; hence, $\dlevel{d}=1$ for the first decision
+the trail and plus one \nf{if $\ell$ is a decision literal}; hence, $\dlevel{d}=1$ for the first decision
 literal $d\in\trail$.  The set of literals on $\trail$ that have the
 same decision level forms a contiguous subsequence of $\trail$ that
 starts with a decision literal $d_i$ and ends just before the next
@@ -224,10 +229,10 @@ $\reason{\ell}$ is a clause that has become unit implying $\ell$ due
 to the literals on the trail above $\ell$. If $\ell$ is a decision
 literal then $\reason{\ell} = \varnothing$.
 
-In most \sat solvers clause learning is initiated as soon as a clause
+In most \sat solvers\nf{,} clause learning is initiated as soon as a clause
 is falsified by $\trail$. In this paper we will be concerned with the
 subsequent clause learning process which uses $\trail$ to derive a new
-clause. In some implementations the trail might be altered during
+clause. In some implementations\nf{,} the trail might be altered during
 clause learning. Here, however, we will assume that $\trail$
 \emph{remains intact during clause learning} and is only changed after
 the new clause is learnt. After the new clause is learnt $\trail$
@@ -258,14 +263,14 @@ as it finds a conflict. This means that (a) other clauses might be
 falsified by $\trail$ besides the conflict found, and (b) other
 literals might be unit implied by $\trail$ but not added to $\trail$.
 
-\begin{defn}[Trail Resolvant]
-    A trail resolvant is a clause arising from resolving a conflict
+\begin{defn}[Trail resolvent]
+    A trail resolvent is a clause arising from resolving a conflict
     against the reason clause of some literal $\ell \in \trail$. Every
-    trail resolvant is also a conflict.
+    trail resolvent is also a conflict.
 \end{defn}
 
-The following things can be noted about trail resolvants: (1) trail
-resolvants are never tautological, as the polarity of all literals in
+The following things can be noted about trail resolvents: (1) trail
+resolvents are never tautological, as the polarity of all literals in
 $\reason{\ell}$ other than $\ell$ must agree with the polarity of all
 literals in the conflict (they are all falsified by $\trail$); (2) one
 polarity of the variable $\var(\ell)$ resolved on must be a unit
@@ -275,7 +280,7 @@ resolved upon (the variable must appear in different polarities in the
 conflict and in $\trail$).
 
 \begin{defn}[Trail Resolution]
-    A trail resolution is a sequence of trail resolvants applied to an
+    A trail resolution is a sequence of trail resolvents applied to an
     initial conflict $C_I$ yielding a new conflict $C_L$.  A trail
     resolution is \textbf{ordered} if the sequence of variables $v_1$,
     \dots, $v_m$ resolved have strictly decreasing trail indices:
@@ -351,7 +356,7 @@ decision level leaving a learnt clause with a single literal at each
 decision level; and (e) the $i$-UIP scheme which resolves away
 literals from the $i$ deepest decision levels leaving a learnt clause
 with a single literal at its $i$ deepest decision levels. It should be
-noted that when resolving away literals at decision level $i$ new
+noted that when resolving away literals at decision level $i$\nf{,} new
 literals at decision levels less than $i$ might be introduced into the
 clause. Hence, it is important in the $i$-UIP and all-UIP schemes to
 use ordered trail resolutions.
@@ -474,7 +479,7 @@ The main advantage of asserting clauses is that they are 1-Empowering
 propagation to derive a new forced literal. Hence, asserting clauses
 can be used to guide backtracking---the solver can backtrack from the
 current deepest level to the point the learnt clause first becomes
-unit and then use the learnt clause to add a new unit implicant to the
+unit\nf{,} and then use the learnt clause to add a new unit implicant to the
 trail. Since all but the deepest level was propagation complete, this
 means that the asserting clause must be a brand new clause; otherwise
 that unit implication would already have been made. On the other hand,
@@ -641,7 +646,7 @@ containing new levels along with one other.\footnote{Since the sole
   level $i$.} Observe that the number of literals at level $i$ can not
 be increased after processing it with \allUipPure. \allUipMin can,
 however, potentially increase the number of literals at level $i$. In
-resolving away a literal $l$ at level $i$ more literals might be
+resolving away a literal $l$ at level $i$\nf{,} more literals might be
 introduced into level $i$, and some of these might not be removable by
 \allUipMin if their reasons contain new levels. However, both
 \allUipPure and \allUipMin can increase the number of literals at
@@ -659,9 +664,9 @@ clause as all but one literal of each level introduces a new level and
 thus cannot be recursively removed.\footnote{Other more powerful
   minimization techniques could still be applied.} 
 
-Finally, the Algorithm returns the shorter of the initial 1-UIP clause
+Finally, the \nf{a}lgorithm returns the shorter of the initial 1-UIP clause
 and the newly computed clause (line~\ref{ln:returnmin}). Because we
-return the newly computed clause only when it is shorter an early
+return the newly computed clause only when it is shorter\nf{,} an early
 termination test can be used (line~\ref{ln:earlyTerminate}). After the
 algorithm has finished processing levels $\dlevels[0]$--$\dlevels[i]$
 the literals at those levels will not be further changed. Furthermore,
@@ -669,10 +674,13 @@ we know that the best that can be done is to reduce the remaining
 $|\dlevels| - (i+1)$ levels down to a single literal each. These two
 observations give a lower bound on the size of the resulting clause,
 and if that lower bound is as large as the size of the initial 1-UIP
-clause we can terminate and return the initial 1-UIP clause. As
-observed above, \allUipPure cannot trigger this early termination
-condition (it cannot increase the size of any processed level), but
-\allUipMin can.
+clause\nf{,} we can terminate and return the initial 1-UIP clause. As
+observed above, \nf{this termination condition does not account for the 
+final clause minimization(line~\ref{ln:puremin}) for \allUipPure, and it could
+prematurely terminates the algorithm which would otherwise yield a shorter clause. However, we discovered such false negative is indeed rare, and applying early termination on \allUipPure generally improves performance.}
+%\allUipPure cannot trigger this early termination
+%condition (it cannot increase the size of any processed level), but
+%\allUipMin can.
 
 \paragraph{$\tgap$:}
 $\allUip$ can produce significantly smaller clause. However, when it
@@ -817,7 +825,7 @@ experimented with were
 We tested our new clause learning schemes on solvers that utilized
 Chronological Backtracking
 \cite{DBLP:conf/sat/NadelR18,DBLP:conf/sat/MohleB19}. When
-chronological backtracking is used the literals on the trail might no
+chronological backtracking is used\nf{,} the literals on the trail might no
 longer be sorted by decision level. So resolving literals in the
 conflict by highest trail index first no longer works. However, we can
 define a new ordering on the literals to replace the trail index
@@ -828,7 +836,7 @@ $\dlevel{l_1} > \dlevel{l_2} \lor (\dlevel{l_1} = \dlevel{l_2} \land
 decision level come first, and if that is equal then the literal with
 higher trail index comes first.
 
-Exploiting the analysis of \cite{DBLP:conf/sat/MohleB19} it can be
+Exploiting the analysis of \cite{DBLP:conf/sat/MohleB19}\nf{,} it can be
 observed that all clause learning schemes continue to work as long as
 literals are resolved away from the initial conflict in decreasing
 $>_{\mathit{chron}}$ order. In our implementation we used a heap
@@ -1257,4 +1265,5 @@ of $\allUip$ schemes significantly.
 \bibliography{sat}{}
 \bibliographystyle{splncs04}
 \end{document}
+
 
