@@ -1264,6 +1264,12 @@ of $\allUip$ schemes significantly.
 %use future search information to mitigate the negative effects of our
 %overcompensation.
 
+\section{Conclusion}We introduced $\allUip$, a new kind of clause learning schemes that combines the strengths of the existing all-UIP and 1-UIP learning scheme to learn shorter asserting clauses while preserving the minimum LBDs. As our experiments have shown, employing $\allUip$ and its variants in modern CDCL solvers achieves significant clause reduction and yields useful performance gains.  
+
+Our scheme extends 1-UIP learning by performing further resolution beyond the deepest decision level to find the UIP for each involved level. Since resolutions may increase the clause's LBD through introducing literals from new decision level, we presented two methods to block off these literals. Although our learning scheme is conceptually simple, implementing it as an efficient clause learning scheme for modern solvers is not straight forward. Therefore, we presented optimizations to reduce and balance the learning cost. We additionally presented variants of our schemes to account for features (e.g. local branching heuristics and chronological backtracking) used in state of the art solvers.
+
+Although the field of SAT solving has long converged on using 1-UIP learning scheme, we've shown the possibility of developing an effective alternative through understanding 1-UIP and other existing schemes' strengths and weaknesses.  Our learning scheme can be generalized and further improved by exploring more fine-grained trade-offs between different clause quality metrics beyond clause size and LBD. We also plan to study the interaction between clause learning and variable branching. Since most of the branching heuristics are tailored for 1-UIP scheme, the interactions with other learning schemes still need further exploration which could advance our understanding of SAT solving.  
+
 \bibliography{sat}{}
 \bibliographystyle{splncs04}
 \end{document}
