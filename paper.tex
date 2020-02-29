@@ -696,7 +696,7 @@ $\gap(C_1) < \tgap$ we do not attempt to reduce the clause
 number of times $\allUip$ is attempted ($\ntries$) and the number of
 times it successfully yields a shorter clause ($\nsuc$)
 (line~\ref{ln:try} and \ref{ln:suc}). On every restart if the success
-rate is greater  than 80\%, we decrease $\tgap$ by one (not allowing it to
+rate since the last restart is greater than 80\%, we decrease $\tgap$ by one (not allowing it to
 become negative), and if it is less than 80\% we increase $\tgap$
 by one.
 
