@@ -78,7 +78,7 @@
 \newcommand{\nf}[1]{{\color{red}{#1}}}
 \newcommand{\fb}[1]{{\color{blue}{#1}}}
 
-\title{Clause size reduction with all-UIP Learning}
+\title{Clause Size Reduction with all-UIP Learning}
 \author{Nick Feng \and Fahiem Bacchus}
 \authorrunning{N. Feng and F. Bacchus}
 \institute{Department of Computer Science, University of Toronto, Canada, 
@@ -175,8 +175,8 @@ $\ell\in C$ and $C'\subset C$.
 
 Two clauses $C_1$ and $C_2$ can be \emph{resolved} when they contain
 \emph{conflicting} literals $\ell\in C_1$ and $\lnot \ell \in
-C_2$. Their resolvant $C_1 \resolve C_2$ is the new clause
-$(C_1 \cup C_2) - \{\ell, \lnot \ell\}$. The resolvant will be a
+C_2$. Their resolvent $C_1 \resolve C_2$ is the new clause
+$(C_1 \cup C_2) - \{\ell, \lnot \ell\}$. The resolvent will be a
 tautology (i.e., a clause containing a literal $x$ and its negation
 $\lnot x$) if $C_1$ and $C_2$ contain more than one pair of
 conflicting literals.
@@ -258,7 +258,7 @@ as it finds a conflict. This means that (a) other clauses might be
 falsified by $\trail$ besides the conflict found, and (b) other
 literals might be unit implied by $\trail$ but not added to $\trail$.
 
-\begin{defn}[Trail resolvent]
+\begin{defn}[Trail Resolvent]
     A trail resolvent is a clause arising from resolving a conflict
     against the reason clause of some literal $\ell \in \trail$. Every
     trail resolvent is also a conflict.
@@ -336,7 +336,7 @@ also to trail resolutions. This means that \textit{any conflict clause
   in the trail's implication graph can be derived using a trail
   resolution.}
 
-\subsection{Some alternate Clause Learning Schemes}
+\subsection{Some Alternate Clause Learning Schemes}
 A number of different clause learning schemes for generating a new
 learnt clause from the initial conflict have been presented in prior
 work, e.g.,
@@ -460,8 +460,8 @@ for the all-decision schemes with stops at the last UIP of each level.
  %   \restylefloat{figure}
 
 
-\subsection{Asserting Clauses and LBD---Reasons to prefer 1-UIP
-  clauses}
+\subsection{Asserting Clauses and LBD---Reasons to Prefer 1-UIP
+  Clauses}
 An \textbf{asserting clause} \cite{DBLP:journals/ai/PipatsrisawatD11}
 is a conflict clause $C_L$ that has exactly one literal $\ell$ at its
 deepest level, i.e.,
@@ -779,7 +779,7 @@ when it has large gains in one metric even though it has small losses
 in the other. We did not, however, experiment with such
 generalizations.
 
-\subsubsection{Adjust Variable Activity.} \label{sec: varajust} An
+\subsubsection{Adjust Variable Activity} \label{sec: varajust} An
 alternative to filtering clauses with low average variable
 ($\allUipAct$) is to alter the way variable activities are updated to
 account for our new clause learning method. The popular branching
@@ -821,7 +821,7 @@ experimented with were
   \end{array}
 \]
 
-\subsubsection{Chronological Backtracking.}
+\subsubsection{Chronological Backtracking}
 We tested our new clause learning schemes on solvers that utilized
 Chronological Backtracking
 \cite{DBLP:conf/sat/NadelR18,DBLP:conf/sat/MohleB19}. When
@@ -1041,14 +1041,14 @@ results.
 %\label{fig:t2}
 %\end{figure}
 
-\subsubsection{Reduced Proof sizes with $\allUip$.}
+\subsubsection{Reduced Proof Sizes with $\allUip$.}
 A learning scheme that yields smaller clauses (lemmas) might also
 construct smaller causal proofs. For 88 UNSAT instances solved mutually
 by $\allUipPure$, $\allUipMin$ and 1-UIP schemes, we additionally
 compare the size of the optimized DRAT proof from the three learning schemes. 
-We used the DART-trim tool
+We used the DRAT-trim tool
 \cite{DBLP:conf/sat/WetzlerHH14} with a 30000 second timeout to check and
-optimize every DRAT proof once \footnote{Applying DART-trim multiple
+optimize every DRAT proof once \footnote{Applying DRAT-trim multiple
   times can further reduce the proof size until a fix-point. However,
   the full optimization is time consuming and was impractical for our
   experiments.}.
