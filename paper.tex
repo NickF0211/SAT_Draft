@@ -812,28 +812,29 @@ by one.
 We also developed and experimented with a few variants of the
 $\stablealluip$ algorithm which we describe below.
 
-\subsubsection{$\allUipAct$: Clauses with Active
-  Variables.} \label{sec:active} $\stablealluip$ learning might introduce
-literals with low variable activity into $C_i$. Low activity variables
-are variables that have had low recent participation in clause
-learning. Hence, clauses with variables of low activity might not be
-as currently useful to the solver. Our variant $\allUipAct$, shown as
-the optional line~\ref{ln:activity} in Algorithm~\ref{alg:i-uip},
-computes the average variable activity of the newly produced \alluip
-clause $C_i$ and the original \oneuip clause $C_1$. The new clause $C_i$
-will be returned only if it is both smaller and has higher average
-variable activity than the original \oneuip clause. There are, of
-course, generalizations of this approach where one has a weighted
-trade-off between these factors that allows preferring the new clause
-when it has large gains in one metric even though it has small losses
-in the other. We did not, however, experiment with such
-generalizations.
+\subsubsection{$\allUipAct$: Clauses with Active Variables.}
+\label{sec:active} $\stablealluip$ learning might
+introduce literals with low variable activity into $C_i$. Low activity
+variables are variables that have had low recent participation in
+clause learning. Hence, clauses with variables of low activity might
+not be as currently useful to the solver. Our variant $\allUipAct$,
+shown as the optional line~\ref{ln:activity} in
+Algorithm~\ref{alg:i-uip}, computes the average variable activity of
+the newly produced \alluip clause $C_i$ and the original \oneuip
+clause $C_1$. The new clause $C_i$ will be returned only if it is both
+smaller and has higher average variable activity than the original
+\oneuip clause. There are, of course, generalizations of this approach
+where one has a weighted trade-off between these factors that allows
+preferring the new clause when it has large gains in one metric even
+though it has small losses in the other. We did not, however,
+experiment with such generalizations.
 
-\subsubsection{Adjust Variable Activity} \label{sec: varajust} An
-alternative to filtering clauses with low average variable
-($\allUipAct$) is to alter the way variable activities are updated to
-account for our new clause learning method. The popular branching
-heuristics VSIDS \cite{DBLP:conf/dac/MoskewiczMZZM01} and LBR
+\subsubsection{Adjust Variable Activity.}
+\label{sec: varajust} An alternative to filtering clauses with low
+average variable ($\allUipAct$) is to alter the way variable
+activities are updated to account for our new clause learning
+method. The popular branching heuristics VSIDS
+\cite{DBLP:conf/dac/MoskewiczMZZM01} and LBR
 \cite{DBLP:conf/sat/LiangGPC16} bump the variable activity for all
 literals appearing in the learnt clause $C_L$ and all literals
 resolved away during the conflict analysis that yielded $C_L$ from the
@@ -871,7 +872,7 @@ experimented with were
   \end{array}
 \]
 
-\subsubsection{Chronological Backtracking}
+\subsubsection{Chronological Backtracking.}
 We tested our new clause learning schemes on solvers that utilized
 Chronological Backtracking
 \cite{DBLP:conf/sat/NadelR18,DBLP:conf/sat/MohleB19}. When
@@ -1091,7 +1092,7 @@ results.
 %\label{fig:t2}
 %\end{figure}
 
-\subsubsection{Reduced Proof Sizes with $\stablealluip$}
+\subsubsection{Reduced Proof Sizes with $\stablealluip$.}
 A learning scheme that yields smaller clauses (lemmas) might also
 construct smaller causal proofs. For 88 UNSAT instances solved mutually
 by $\allUipPure$, $\allUipMin$ and \oneuip schemes, we additionally
@@ -1220,7 +1221,7 @@ $\expSATShort$-all-inclusive & \textbf{245} (\textbf{146}, 99) +8 & 4475.76 & \t
 \end{figure}
 
 
-\subsubsection{$\stablealluip$ in Modern SAT solvers}
+\subsubsection{$\stablealluip$ in Modern SAT solvers.}
 \begin{sloppypar}
 To validate $\stablealluip$ as a practical learning scheme for modern
 SAT solvers, we implemented $\stablealluip$ in the winners of 2017,
