@@ -47,7 +47,10 @@ Liang, J.H., Ganesh, V., Poupart, P., Czarnecki, K.: Learning rate based
 
 \bibitem{liang2016maple}
 Liang, J.H., Oh, C., Ganesh, V., Czarnecki, K., Poupart, P.: Maple-comsps,
-  maplecomsps\_lrb, maplecomsps\_chb
+  maplecomsps\_lrb, maplecomsps\_chb. In: Balyo, T., Heule, M.J.H.,
+  J{\"{a}}rvisalo, M.J. (eds.) Proceedings of SAT Competition 2016 Solver and
+  Benchmark Descriptions. University of Helsinki (2016),
+  \url{http://hdl.handle.net/10138/164630}
 
 \bibitem{DBLP:conf/ijcai/LuoLXML17}
 Luo, M., Li, C., Xiao, F., Many{\`{a}}, F., L{\"{u}}, Z.: An effective learnt
@@ -58,9 +61,9 @@ Luo, M., Li, C., Xiao, F., Many{\`{a}}, F., L{\"{u}}, Z.: An effective learnt
 
 \bibitem{MdSolimul2019expMalpe}
 Md~Solimul, M., Jia-Huai: Four cdcl sat solvers based on exploration and glue
-  variable bumping. In: Heule, M.J.H., Järvisalo, M., Suda, M. (eds.)
-  Proceedings of SAT COMPETITION 2019 Solver and Benchmark Descriptions.
-  University of Helsinki (2019)
+  variable bumping. In: Heule, M.J.H., J{\"{a}}rvisalo, M., Suda, M. (eds.)
+  Proceedings of SAT Competition 2019 Solver and Benchmark Descriptions.
+  University of Helsinki (2019), \url{http://hdl.handle.net/10138/306988}
 
 \bibitem{DBLP:conf/sat/MohleB19}
 M{\"{o}}hle, S., Biere, A.: Backing backtracking. In: Janota, M., Lynce, I.
@@ -90,9 +93,9 @@ Pipatsrisawat, K., Darwiche, A.: On the power of clause-learning {SAT} solvers
 
 \bibitem{ryvchin2018maple}
 Ryvchin, V., Nadel, A.: Maple\_lcm\_dist chronobt: Featuring chronological
-  backtracking. In: Heule, M.J.H., Järvisalo, M., Suda, M. (eds.) Proceedings
-  of SAT COMPETITION 2018 Solver and Benchmark Descriptions. University of
-  Helsinki (2018)
+  backtracking. In: Heule, M.J.H., J{\"{a}}rvisalo, M., Suda, M. (eds.)
+  Proceedings of SAT Competition 2018 Solver and Benchmark Descriptions.
+  University of Helsinki (2018), \url{https://hdl.handle.net/10138/237063}
 
 \bibitem{DBLP:series/faia/SilvaLM09}
 Silva, J.P.M., Lynce, I., Malik, S.: Conflict-driven clause learning {SAT}
@@ -120,9 +123,10 @@ S{\"{o}}rensson, N., Biere, A.: Minimizing learned clauses. In: Kullmann, O.
 
 \bibitem{Stepan2019MapleLCMDistChronoBT}
 Stepan, Oleg, V., Alexander: Maplelcmdistchronobt-dl, duplicate learnts
-  heuristic-aided solvers at the sat race 2019. In: Heule, M.J.H., Järvisalo,
-  M., Suda, M. (eds.) Proceedings of SAT COMPETITION 2019 Solver and Benchmark
-  Descriptions. University of Helsinki (2019)
+  heuristic-aided solvers at the sat race 2019. In: Heule, M.J.H.,
+  J{\"{a}}rvisalo, M., Suda, M. (eds.) Proceedings of SAT Competition 2019
+  Solver and Benchmark Descriptions. University of Helsinki (2019),
+  \url{http://hdl.handle.net/10138/306988}
 
 \bibitem{DBLP:conf/sat/WetzlerHH14}
 Wetzler, N., Heule, M., Jr., W.A.H.: Drat-trim: Efficient checking and trimming

@@ -25,31 +25,32 @@
 \newcommand{\sat}{SAT\xspace}
 \newcommand{\code}[1]{\text{#1}}
 \newcommand{\assertionTrail}{\trail}
+\newcommand{\oneuip}{1-UIP\xspace}
+\newcommand{\alluip}{all-UIP\xspace}
 \newcommand{\LBD}{\text{LBD}\xspace}
-\newcommand{\gap}{\text{Gap}}
+\newcommand{\gap}{\text{gap}}
 \newcommand{\tgap}{t_{\mathit{gap}}}
 \newcommand{\ntries}{n_{\mathit{tries}}}
 \newcommand{\nsuc}{n_{\mathit{succ}}}
-\newcommand{\allUip}{\textit{stable-allUIP}}
+\newcommand{\stablealluip}{\textit{stable-alluip}}
 \newcommand{\tryuiplevel}{\textit{try-uip-level}\xspace}
-\newcommand{\allUipPure}{\textit{pure-allUIP}\xspace}
-\newcommand{\allUipMin}{\textit{min-allUIP}\xspace}
-\newcommand{\allUipAct}{\textit{allUIP-Active}}
-\newcommand{\allUipIn}{\textit{allUIP-Inclusive}}
-\newcommand{\allUipEx}{\textit{allUIP-Exclusive}}
+\newcommand{\allUipPure}{\textit{pure-alluip}\xspace}
+\newcommand{\allUipMin}{\textit{min-alluip}\xspace}
+\newcommand{\allUipAct}{\textit{alluip-active}}
+\newcommand{\allUipIn}{\textit{alluip-inclusive}}
+\newcommand{\allUipEx}{\textit{alluip-exclusive}}
 \newcommand{\MapleBase}{\textit{MapleCOMSPS\_LRB}}
 \newcommand{\MapleSeven}{\textit{MapleLCMDist}}
 \newcommand{\MapleNine}{\textit{MapleLCMDiscChronoBT-DL-v3} }
 \newcommand{\MapleEight}{\textit{MapleLCMDiscChronoBT}}
 \newcommand{\MapleNineShort}{\textit{MapleCB-DL} }
-\newcommand{\expSAT}{\textit{expMaple\_CM\_GCBumpOnlyLRB} }
+\newcommand{\expSAT}{\textit{expMaple-CM-GCBumpOnlyLRB} }
 \newcommand{\expSATShort}{\textit{expMaple} }
 \newcommand{\MapleIUIPPure}{\text{Maple-\allUipPure}}
 \newcommand{\MapleIUIMin}{\text{Maple-\allUipMin}}
 \newcommand{\MapleEightShort}{\textit{MapleCB}}
 \newcommand{\Set}[2]{\{\,#1\mid#2\,\}}
 \newcommand{\Array}[2]{[\,#1\mid#2\,]}
-\newcommand{\target}{\textbf{Succ_t}}
 \newcommand{\trail}{\ensuremath{\mathcal{T}}}
 \newcommand{\trailIdx}[1]{\ensuremath{\iota(#1)}}
 \newcommand{\dlevel}[1]{\ensuremath{\mathit{decLvl}(#1)}}
@@ -78,7 +79,7 @@
 \newcommand{\nf}[1]{{\color{red}{#1}}}
 \newcommand{\fb}[1]{{\color{blue}{#1}}}
 
-\title{Clause Size Reduction with all-UIP Learning}
+\title{Clause Size Reduction with \alluip Learning}
 \author{Nick Feng \and Fahiem Bacchus}
 \authorrunning{N. Feng and F. Bacchus}
 \institute{Department of Computer Science, University of Toronto, Canada, 
@@ -89,23 +90,23 @@
 \maketitle              % typeset the header of the contribution
 % 
 \begin{abstract}
-    Almost all CDCL \sat solvers use the 1-UIP 
+    Almost all CDCL \sat solvers use the \oneuip 
     clause learning scheme for learning new clauses from conflicts, 
     and our current understanding
     of \sat solving provides good reasons for using that scheme. In
-    particular, the 1-UIP scheme yields asserting clauses, and these
-    asserting clauses have minimum LBD among all possible asserting
+    particular, the \oneuip scheme yields asserting clauses, and these
+    asserting clauses have minimum \LBD among all possible asserting
     clauses. As a result of these advantages, other clause learning
-    schemes, like $i$-UIP and all-UIP, that were proposed in early
+    schemes, like $i$-UIP and \alluip, that were proposed in early
     work are not used in modern solvers. In this paper, we propose a
-    new technique for exploiting the all-UIP clause learning scheme. 
-    Our technique is to employ all-UIP learning under the
-    constraint that the learnt clause's LBD does not increase (over the
-    minimum established by the 1-UIP clause). Our method can learn
-    clauses that are significantly smaller than the 1-UIP clause while
-    preserving the minimum LBD. Unlike previous clause minimization
+    new technique for exploiting the \alluip clause learning scheme. 
+    Our technique is to employ \alluip learning under the
+    constraint that the learnt clause's \LBD does not increase (over the
+    minimum established by the \oneuip clause). Our method can learn
+    clauses that are significantly smaller than the \oneuip clause while
+    preserving the minimum \LBD. Unlike previous clause minimization
     methods, our technique is not limited to learning a sub-clause of
-    the 1-UIP clause. It can instead learn a completely different
+    the \oneuip clause. It can instead learn a completely different
     clause. We show empirically 
     that our method can improve the performance of state of the art solvers.
 \end{abstract}
@@ -118,15 +119,15 @@ technique used in modern \sat solvers
 different clause learning techniques were proposed
 \cite{DBLP:conf/iccad/ZhangMMM01,DBLP:conf/iccad/SilvaS96,DBLP:journals/tc/Marques-SilvaS99,DBLP:conf/aaai/BayardoS97}.
 However, following the revolutionary performance improvements achieved
-by the Chaff \sat solver, the field has converged on using the 1-UIP
+by the Chaff \sat solver, the field has converged on using the \oneuip
 (first Unique Implication Point) scheme
 \cite{DBLP:conf/iccad/ZhangMMM01} employed in Chaff
 \cite{DBLP:conf/dac/MoskewiczMZZM01} (as well as other techniques
 pioneered in the Chaff solver).\footnote{The idea of UIP clauses was
-  first mentioned in \cite{DBLP:journals/tc/Marques-SilvaS99}, and
-  1-UIP clauses along with other UIP clauses were learnt and used in
+  first mentioned in \cite{DBLP:conf/iccad/SilvaS96}, and
+  \oneuip clauses along with other UIP clauses were learnt and used in
   the earlier GRASP \sat solver.} Since then almost all \sat solvers
-have employed the 1-UIP clause learning scheme, along with clause
+have employed the \oneuip clause learning scheme, along with clause
 minimization \cite{DBLP:conf/sat/SorenssonB09}, as their primary
 method for learning new clauses.
 
@@ -139,26 +140,27 @@ schemes described in \cite{DBLP:conf/iccad/ZhangMMM01}. Improved
 understanding of \sat solvers, obtained from the last decade of
 research, allows us to see that in their original form these
 alternative clause learning schemes suffer significant disadvantages
-over 1-UIP clause learning.
+over \oneuip clause learning.
 
-One of the previously proposed schemes was the all-UIP scheme
+One of the previously proposed schemes was the \alluip scheme
 \cite{DBLP:conf/iccad/ZhangMMM01}. In this paper we propose a new way
 to exploit the main ideas of this scheme that avoids its main
-disadvantages. In particular, we propose to use a all-UIP like clause
+disadvantage which is that it can learn clauses with higher \LBD
+scores. In particular, we propose to use a \alluip like clause
 learning scheme to generate smaller learnt clauses which retain the
-good properties of standard 1-UIP clauses. Our method is related to,
+good properties of standard \oneuip clauses. Our method is related to,
 but not the same as, various clause mininimization methods that try to
-remove redundant literals from the 1-UIP clause yielding a clause that
-is a subset of the 1-UIP clause, e.g.,
+remove redundant literals from the \oneuip clause yielding a clause that
+is a subset of the \oneuip clause, e.g.,
 \cite{DBLP:conf/sat/SorenssonB09,DBLP:conf/ijcai/LuoLXML17,DBLP:conf/sat/WieringaH13}.
 Our method is orthogonal to clause minimization. In particular, our
-approach can learn a clause that is not a subset of the 1-UIP clause
-but which still serves all of the same purposes as the 1-UIP clause.
+approach can learn a clause that is not a subset of the \oneuip clause
+but which still serves all of the same purposes as the \oneuip clause.
 Various minimization techniques can be applied on top of our method to
 remove redundant literals from the clauses we have learnt.
 
 We present various versions of our method and show that these variants
-are often capable of learning shorter clauses than the 1-UIP scheme,
+are often capable of learning shorter clauses than the \oneuip scheme,
 and that this can lead to useful performance gains in state of the art
 \sat solvers.
 
@@ -203,16 +205,20 @@ $\trailIdx{x} < \trailIdx{y}$ we say that \textit{$x$ appears before
 
 Two types of true literals appear on the trail: \emph{decision
   literals} that have been assumed to be true by the solver, and
-\emph{unit propagated literals} that are forced to be true because
-they are the sole remaining unfalsified literal of a clause. Each
-literal $\ell\in\trail$ has a decision level $\dlevel{\ell}$ which is
-equal to the number of decision literals appearing before $\ell$ on
-the trail plus one. Hence, $\dlevel{d}=1$ for the first decision
-literal $d\in\trail$.  The set of literals on $\trail$ that have the
-same decision level forms a contiguous subsequence of $\trail$ that
-starts with a decision literal $d_i$ and ends just before the next
-decision literal $d_{i+1}$. If $\dlevel{d_i} = i$ we call this
-subsequence of $\trail$ the \textit{$i$-th decision level}.
+\emph{unit propagated literals} that are \emph{forced to be true}
+because they are the sole remaining unfalsified literal of a
+clause. Each literal $\ell\in\trail$ has a decision level
+$\dlevel{\ell}$. Let $k$ be the number of decision literals appearing
+before $\ell$ on the trail. When $\ell$ is a unit propagated literal
+$\dlevel{\ell}=k$, and when $\ell$ is a decision literal
+$\dlevel{\ell}=k+1$. For example, $\dlevel{d}=1$ for the first
+decision literal $d\in\trail$, and $\dlevel{\ell}=0$ for all literals
+$\ell$ appearing before $d$ on the trail.  The set of literals on
+$\trail$ that have the same decision level forms a contiguous
+subsequence of $\trail$ that starts with a decision literal $d_i$ and
+ends just before the next decision literal $d_{i+1}$. If
+$\dlevel{d_i} = i$ we call this subsequence of $\trail$ the
+\textit{$i$-th decision level}.
 
 Each literal $\ell\in\trail$ also has a clausal reason
 $\reason{\ell}$. If $\ell$ is a unit propagated literal,
@@ -227,19 +233,19 @@ literal then $\reason{\ell} = \varnothing$.
 In most \sat solvers, clause learning is initiated as soon as a clause
 is falsified by $\trail$. In this paper we will be concerned with the
 subsequent clause learning process which uses $\trail$ to derive a new
-clause. In some implementations the trail might be altered during
-clause learning. Here, however, we will assume that $\trail$
-\emph{remains intact during clause learning} and is only changed after
-the new clause is learnt. After the new clause is learnt $\trail$ will
-be changed by backtracking.
+clause. We will try to make as few assumptions about how $\trail$ is
+managed by the \sat solver as possible. One assumption we will make is
+that $\trail$ \emph{remains intact during clause learning} and is only
+changed after the new clause is learnt. After the new clause is learnt
+$\trail$ will be changed by backtracking.
 
 Say that $\trail$ falsifies a clause $C_I$, and that the last decision
 literal $d_k$ in $\trail$ has decision level $k$. Consider
 $\trail_{k-1}$ the prefix of $\trail$ above the last decision level,
 i.e., the sequence of literals
 $\trail[0]$---$\trail[\trailIdx{d_k}-1]$. We will assume that
-$\trail_{k-1}$ is \textbf{propagation complete}, although the full
-trail $\trail$ might not be. This means that (a) no clause was
+$\trail_{k-1}$ is \textbf{unit propagation complete}, although the
+full trail $\trail$ might not be. This means that (a) no clause was
 falsified by $\trail_{k-1}$. And (b) if $C_u$ is a clause containing
 the literal $x$ and all literals in $C_u$ except for $x$ are falsified
 by $\trail_{k-1}$, then $x\in \trail_{k-1}$ and
@@ -252,7 +258,7 @@ forced. This condition ensures that $x$ appears in $\trail$ at or
 before the first decision level it is forced by any clause.
 
 Any clause falsified by $\trail$ is called a \textbf{conflict}. When a
-conflict is found, the final level of the trail, $k$, need not be
+conflict is found, the final level of the trail, $k$, need not be unit
 propagation complete as the solver typically stops propagation as soon
 as it finds a conflict. This means that (a) other clauses might be
 falsified by $\trail$ besides the conflict found, and (b) other
@@ -288,6 +294,7 @@ end of the trail to the beginning. Without lost of generality, we can
 require that all trail resolutions be ordered.
 
 \begin{Obs}
+    \label{obs:ordered}
     If the unordered trail resolution $U$ yields the conflict clause
     $C_L$ from an initial conflict $C_I$, then there exists an ordered
     trail resolution $O$ that yields a conflict clause $C'_L$ such
@@ -319,8 +326,8 @@ trail resolution that yields the minimized clause from the
 un-minimized clause. Interestingly, it is standard in \sat solver
 implementations to perform resolution going backwards along the
 trail. That is, these implementations are typically using ordered
-trail resolutions. The above observation shows that this in fact the
-right way to do this.
+trail resolutions. Observation~\ref{obs:ordered} shows that this in
+fact the right way to do this.
 
 Ordered trail resolutions are a special case of \textit{trivial
   resolutions} \cite{DBLP:journals/jair/BeameKS04}. Trail resolutions
@@ -344,31 +351,35 @@ work, e.g.,
 Figure~\ref{fig:cl_schemes} gives a specification of some of these
 methods: (a) the all-decision scheme which resolves away all implied
 literals leaving a learnt clause over only decision literals; (c) the
-1-UIP scheme which resolves away literals from the deepest decision
+\oneuip scheme which resolves away literals from the deepest decision
 level leaving a learnt clause with a single literal at the deepest
-level; (d) the all-UIP scheme which resolves away literals from each
+level; (d) the \alluip scheme which resolves away literals from each
 decision level leaving a learnt clause with a single literal at each
 decision level; and (e) the $i$-UIP scheme which resolves away
 literals from the $i$ deepest decision levels leaving a learnt clause
 with a single literal at its $i$ deepest decision levels. It should be
 noted that when resolving away literals at decision level $i$, new
 literals at decision levels less than $i$ might be introduced into the
-clause. Hence, it is important in the $i$-UIP and all-UIP schemes to
+clause. Hence, it is important in the $i$-UIP and \alluip schemes to
 use ordered trail resolutions.
 
-Both the all-decision and all-UIP schemes yield a clause with only one
-literal at each decision level, and the all-UIP clause will be no
+Both the all-decision and \alluip schemes yield a clause with only one
+literal at each decision level, and the \alluip clause will be no
 larger that the all-decision clause. Furthermore, it is known
 \cite{DBLP:journals/tc/Marques-SilvaS99} that once we reduce the
 number of literals at a decision level $d$ to one, we could continue
 performing resolutions and later achieve a different single literal at
 the level $d$. In particular, a decision level might contain more than
-one unique implication point. The algorithms given in
-Figure~\ref{fig:cl_schemes} stop at the first UIP of a level, except
-for the all-decision schemes with stops at the last UIP of each level.
+one unique implication point, and in some contexts the term all-UIP is
+used to refer to all the unique implication points that exist in a
+particular decision level \cite{DBLP:conf/sat/SabharwalSS12} rather
+than the \alluip clause learning scheme as is used here. The
+algorithms given in Figure~\ref{fig:cl_schemes} stop at the first UIP
+of a level, except for the all-decision schemes with stops at the last
+UIP of each level.
 
 \begin{figure}[t!]
-{\fss{8pt}{10pt}
+{\fss{9pt}{10pt}
 \begin{tabular}[t]{|l|c|l|}
   \cline{1-1}\cline{3-3}
   \begin{minipage}[t]{0.48\textwidth}
@@ -411,7 +422,7 @@ for the all-decision schemes with stops at the last UIP of each level.
     \begin{minipage}{\textwidth}
         \textbf{(c) First UIP Clause \rule{0pt}{1.1\topskip}}
         \begin{algorithmic}[0]
-            \State \hspace*{-1em}\textbf{1-UIP}($C_I$)
+            \State \hspace*{-1em}\textbf{\oneuip}($C_I$)
             \State $i\gets \max\{\dlevel{l}\, |\, l \in C_I\}$
             \State \textbf{return} \textbf{UIP\_level}($C_I$, i)
         \end{algorithmic}
@@ -419,9 +430,9 @@ for the all-decision schemes with stops at the last UIP of each level.
     \end{minipage}\\[5pt]
     \hspace*{-1.8pt}\rule{1.03\textwidth}{.4pt}\\[5pt]
     \begin{minipage}{\textwidth}
-        \textbf{(d) All UIP Clause \rule{0pt}{1.1\topskip}}
+        \textbf{(d) \alluip Clause \rule{0pt}{1.1\topskip}}
         \begin{algorithmic}[0]
-          \State \hspace*{-1em}\textbf{all-UIP}($C_I$, $i$)
+          \State \hspace*{-1em}\textbf{\alluip}($C_I$, $i$)
           \State $i = \bigl|\{\dlevel{l} \,|\, l \in \trail\}\bigl|$
           \State \Comment{$i$ is large enough to ensure all levels are UIP}
           \State \textbf{return} \textbf{$i$-UIP}(C, i)
@@ -460,7 +471,7 @@ for the all-decision schemes with stops at the last UIP of each level.
  %   \restylefloat{figure}
 
 
-\subsection{Asserting Clauses and LBD---Reasons to Prefer 1-UIP
+\subsection{Asserting Clauses and \LBD---Reasons to Prefer \oneuip
   Clauses}
 An \textbf{asserting clause} \cite{DBLP:journals/ai/PipatsrisawatD11}
 is a conflict clause $C_L$ that has exactly one literal $\ell$ at its
@@ -475,103 +486,137 @@ propagation to derive a new forced literal. Hence, asserting clauses
 can be used to guide backtracking---the solver can backtrack from the
 current deepest level to the point the learnt clause first becomes
 unit, and then use the learnt clause to add a new unit implicant to
-the trail. Since all but the deepest level was propagation complete,
-this means that the asserting clause must be a brand new clause;
-otherwise that unit implication would already have been made. On the
-other hand, if the learnt clause $C_L$ is not asserting then \emph{it
-  could be that it is a duplicate of another clause already in the
-  formula}. In particular, $C_L$ contains at least two literals at the
-deepest level.  If two of its literals at the deepest level were not
-completely unit propagated (unit propagation is aborted as soon as a
-conflict is found), then $C_L$ could already be in the formula: its
-two watches might not be fully propagated and $C_L$ could be a
-falsified clause not detected by the solver. (In general, more than
-one clause might be falsified by $\trail$ and the \sat solver will
-generally stop when it finds the first one).
+the trail. Since all but the deepest level was unit propagation
+complete, this means that the asserting clause must be a brand new
+clause; otherwise that unit implication would already have been
+made. On the other hand, if the learnt clause $C_L$ is not asserting
+then it could be that it is a duplicate of another clause already in
+the formula.
 
-The LBD of the learnt clause $C_L$ is the number of different decision
+\begin{example}
+    Suppose that $a$ is a unit propagated literal and $d$ is a
+    decision literal with $\dlevel{d}>\dlevel{a}$. Let the sequence of
+    clauses watched by $\lnot d$ be $(\lnot d$, $x$, $\lnot a)$,
+    $(\lnot d$, $y$, $\lnot x$, $\lnot a)$, $(\lnot d$, $\lnot y$,
+    $\lnot x$, $\lnot a)$, $(\lnot d$, $\lnot x$, $\lnot a)$. When $d$
+    is unit propagated the clauses on $\lnot d$'s watch list will be
+    checked in this order.
+
+    Hence, unit propagation of $d$ will extend the trail by first
+    adding the unit propagated literal $x$ (with $\reason{x}=(x$,
+    $\lnot d$, $\lnot a)$) and then the unit propagated literal $y$
+    (with $\reason{y}=(y$, $\lnot x$, $\lnot a$, $\lnot d)$). Now the
+    third clause on $\lnot d$'s watch list, $(\lnot d$, $\lnot y$,
+    $\lnot x$, $\lnot a)$ is detected to be a conflict. 
+
+    Clause learning can now be initiated from conflict $C_I=(\lnot d$,
+    $\lnot y$, $\lnot x$, $\lnot a)$. This clause has 3 literals at
+    level $\dlevel{d}=10$. If we stop clause learning before reaching
+    an asserting clause, then it is possible to simply resolve $C_I$
+    with $\reason{y}$ to obtain the learnt clause $C_L = (\lnot d$,
+    $\lnot x$, $\lnot a)$. However, this non-asserting learnt clause
+    is a duplicate of the fourth clause on $\lnot d$'s watch list
+    which is already in the formula.\footnote{In this example, the
+      fourth clause on $\lnot d$'s watch list subsumes the third
+      clause. But it is not difficult to construct more elaborate
+      examples where there are no subsumed clauses and we still obtain
+      learnt clauses that are duplicates of clauses already in the
+      formula.}  This issue can arise whenever $C_L$ contains two or
+    more literals at the deepest level (i.e., whenever $C_L$ is not
+    asserting). In such cases $C_L$ might be a clause already in the
+    formula with its two watches not yet fully unit propagated (and
+    thus $C_L$ is not detected by the \sat solver to be a conflict)
+    since propagation is typically stopped as soon as a conflict is
+    detected.
+
+\end{example}
+
+
+The \LBD of the learnt clause $C_L$ is the number of different decision
 levels in it:
 $\LBD(C_L)=\left|\big\{\dlevel{l}\,|\,l \in C_L\big\}\right|$
-\cite{DBLP:conf/ijcai/AudemardS09}. Empirically LBD is a successful
-predictor of clause usefulness: clauses with lower LBD tend to be more
+\cite{DBLP:conf/ijcai/AudemardS09}. Empirically \LBD is a successful
+predictor of clause usefulness: clauses with lower \LBD tend to be more
 useful. As noted in \cite{DBLP:conf/ijcai/AudemardS09}, from the
-initial falsified clause $C_I$ the 1-UIP scheme will produce a clause
-$C_L$ whose LBD is minimum among all asserting clauses that can be
+initial falsified clause $C_I$ the \oneuip scheme will produce a clause
+$C_L$ whose \LBD is minimum among all asserting clauses that can be
 learnt from $C_I$. If $C'$ is a trail resolvent of $C$ and a reason
 clause $\reason{l}$, then $\LBD(C') \geq \LBD(C)$ since $\reason{l}$
 must contain at least one other literal with the same decision level
 as $l$ and might contain literals with decision levels not in
-$C$. That is, each trail resolution step can only increase the \LBD of
-the learnt clause. Hence, the 1-UIP scheme yields an asserting clause
-with minimum LBD as it performs the minimum number of trail resolutions
-required to generate an asserting clause.
+$C$. That is, the each trail resolution step might increase the \LBD
+of the learnt clause and can never decrease the \LBD. Hence, the \oneuip
+scheme yields an asserting clause with minimum \LBD as it performs the
+minimum number of trail resolutions required to generate an asserting
+clause.
 
 The other schemes must perform more trail resolutions. In fact, all of
-these schemes (all-decision, all-uip, i-uip) use trail resolutions in
-which the 1-UIP clause appears. That is, they all must first generate
-the 1-UIP clause and then continue with further trail resolution
+these schemes (all-decision, all-UIP, i-UIP) use trail resolutions in
+which the \oneuip clause appears. That is, they all must first generate
+the \oneuip clause and then continue with further trail resolution
 steps. These extra resolution steps can introduce many addition
 decision levels into the final clause. Hence, these schemes yield
-learnt clauses whose LBD can be larger, and never smaller, that the
-1-UIP clause.
+learnt clauses whose \LBD can be larger, and never smaller, that the
+\oneuip clause.
 
-Putting these two observations together we see that the 1-UIP scheme
-produces asserting clauses with lowest possible LBD. This is a
+Putting these two observations together we see that the \oneuip scheme
+produces asserting clauses with lowest possible \LBD. This is a
 compelling reasons for using this scheme. Hence, it is not surprising
-that modern \sat solvers almost exclusively use 1-UIP clause
+that modern \sat solvers almost exclusively use \oneuip clause
 learning.\footnote{Knuth in his sat13 CDCL solver \cite{Knuth:Sat13}
-  uses an all-decision clause when the 1-UIP clause is too large. In
-  this context an all-UIP clause could also be used as it would be no
+  uses an all-decision clause when the \oneuip clause is too large. In
+  this context an \alluip clause could also be used as it would be no
   larger than the all decision clause.}
 
-\section{Using all-UIP Clause Learning}
+\section{Using \alluip Clause Learning}
 \label{sec:i-uip}
-Although learning clauses with low LBD has been shown empirically to
+Although learning clauses with low \LBD has been shown empirically to
 be more important in \sat solving than learning short clauses
 \cite{DBLP:conf/ijcai/AudemardS09}, clause size is still
 important. Smaller clauses consume less memory and help to decrease
 the size of future learnt clauses. They are also semantically stronger
 than longer clauses.
 
-The all-UIP scheme will tend to produce small clauses since the
+The \alluip scheme will tend to produce small clauses since the
 clauses contain at most one literal per decision level. However, the
-all-UIP clause can have much higher LBD. Since, $\LBD$ is more important
-than size our approach is to use all-UIP learning when, and only when,
-it succeeds in reducing the size of the clause \emph{without
-  increasing its LBD}. The all-UIP scheme first computes the 1-UIP
-clause when it reduces the deepest level to a single UIP literal. It
-then proceeds to reduce the shallower levels (see all-UIP's for loop
-in Figure~\ref{fig:cl_schemes}). So our approach will start with the
-1-UIP clause and then try to apply all-UIP learning to reduce other
-levels to single literals. As noted above, clause minimization is
-orthogonal to our approach, so we also first apply standard clause
-minimization \cite{DBLP:conf/sat/SorenssonB09} to the 1-UIP
-clause. That is, our algorithm will start with the clause that most
-\sat solvers learn from a conflict, a minimized 1-UIP clause. Our
-approach is specified in Alg. ~\ref{alg:i-uip}.
+\alluip clause can have much higher \LBD. Since $\LBD$ is more
+important than size, our approach is to use \alluip learning when, and
+only when, it succeeds in reducing the size of the clause
+\emph{without increasing its \LBD}. The \alluip scheme first computes
+the \oneuip clause when it reduces the deepest level to a single UIP
+literal. It then proceeds to reduce the shallower levels (see
+\alluip's for loop in Figure~\ref{fig:cl_schemes}). So our approach
+will start with the \oneuip clause and then try to apply \alluip
+learning to reduce other levels to single literals. As noted above,
+clause minimization is orthogonal to our approach, so we also first
+apply standard clause minimization \cite{DBLP:conf/sat/SorenssonB09}
+to the \oneuip clause. That is, our algorithm will start with the
+clause that most \sat solvers learn from a conflict, a minimized
+\oneuip clause. Our approach is specified in Algorithm~\ref{alg:i-uip}
+($\stablealluip$).
 
 \begin{algorithm}[!t]
-\caption{\allUip}\label{alg:i-uip}
+\caption{\stablealluip}\label{alg:i-uip}
 \begin{algorithmic}[1]
-\Require $C_1$ is minimized 1-UIP clause
-\Require $\tgap\geq 0$ is global parameter, $\ntries$ and $\nsuc$
-         are globals used to configure $\tgap$
-\Procedure{\allUip}{$C_1, \assertionTrail$, \type} 
-    \State \textbf{if} ($|C_1| - \LBD(C_1) < \tgap$) \textbf{return}
-    $C_1$\label{ln:control}
-    \State $\ntries$++\label{ln:try}
-    \State $C_i \gets C_1$
-    \State $\dlevels \gets\mbox{}$ decision levels in $C_i$ in descending order
-           \Comment{These never change}
-    \For{($i=1$; $i < |\dlevels|$; $i$++)} \Comment{skip the deepest level $\dlevels[0]$}
-       \State $C_i\gets\mbox{}$\tryuiplevel($C_i$, $\dlevels[i]$, \type)
-              \Comment{Try to reduce this level to UIP}
-       \If{$\bigl|\{\ell\,|\,\ell \in C_i \land \dlevel{\ell} \geq \dlevels[i]\}\bigr|
-                    + (|\dlevels| - (i+1)) \geq |C_1|$}\label{ln:earlyTerminate}
-           \State \textbf{return} $C_1$. \Comment{can't generate smaller clause}
-       \EndIf
-    \EndFor
-    \State \textbf{if} ($\type = \allUipPure$) $C_i \gets \mathbf{minimize}(C_i)$\label{ln:puremin}
+    \Require $C_1$ is minimized \oneuip clause
+    \Require $\tgap\geq 0$ is a global parameter, $\ntries$ and $\nsuc$ are globals used to
+    configure $\tgap$,   \type{} a global determining how the
+    introduction of new decision levels is handled.
+
+    \Procedure{\stablealluip}{$C_1, \assertionTrail$, \type} \State
+    \textbf{if} ($|C_1| - \LBD(C_1) < \tgap$) \textbf{return}
+    $C_1$\label{ln:control} \State $\ntries$++\label{ln:try} \State
+    $C_i \gets C_1$ \State $\dlevels \gets\mbox{}$ decision levels in
+    $C_i$ in descending order \Comment{These never change}
+    \For{($i=1$; $i < |\dlevels|$; $i$++)} \Comment{skip the deepest
+      level $\dlevels[0]$} \State $C_i\gets\mbox{}$\tryuiplevel($C_i$,
+    $\dlevels[i]$, \type) \Comment{Try to reduce this level to UIP}
+    \If{$\bigl|\{\ell\,|\,\ell \in C_i \land \dlevel{\ell} \geq
+      \dlevels[i]\}\bigr| + (|\dlevels| - (i+1)) \geq
+      |C_1|$}\label{ln:earlyTerminate} \State \textbf{return}
+    $C_1$. \Comment{can't generate smaller clause} \EndIf \EndFor
+    \State \textbf{if} ($\type = \allUipPure$)
+    $C_i \gets \mathbf{minimize}(C_i)$\label{ln:puremin}
     %\State $\ntries$++\label{ln:try}% 
     \State \textbf{if} ($|C_i| < |C_1|$) $\nsuc$++, \textbf{return} $C_i$ 
            \label{ln:returnmin}\label{ln:suc}
@@ -584,8 +629,13 @@ approach is specified in Alg. ~\ref{alg:i-uip}.
 %    \State \textbf{return} \textbf{if} $|C_i| < |C_1|$) 
 %           \textbf{then}  $C_i$ \textbf{else}  $C_1$
 \EndProcedure
-\Statex
-\Procedure{\tryuiplevel}{$C_i$, $i$, \type}\Comment{Do not add new decision levels}
+\Statex 
+\Procedure{\tryuiplevel}{$C_i$, $i$, \type}\Comment{
+  \parbox[t]{3in}{
+    Do not add new decision levels, \type{} determines
+    what to do if new decision levels would be introduced
+  }
+}
     \State $\ctry = C_i$
     \State $L_i = \left\{\ell \left| \ell \in \ctry 
                          \land \dlevel{l} = i\right.\right\}$\label{ln:litsati1}
@@ -610,8 +660,8 @@ approach is specified in Alg. ~\ref{alg:i-uip}.
 \end{algorithmic}
 \end{algorithm}
 
-The Algorithm $\allUip$ attempts to reduce each level in the 1-UIP
-clause to a single literal (a UIP). The 1-UIP clause has only one
+Algorithm~\ref{alg:i-uip} attempts to reduce each level in the \oneuip
+clause to a single literal (a UIP). The \oneuip clause has only one
 literal at its deepest level, so that level, $\dlevels[0]$, can be
 skipped. The subroutine \tryuiplevel is used to reduce each level. It
 uses trail resolutions to achieve this, subject to the constraint that
@@ -637,8 +687,8 @@ until $L_i$ is reduced to a single literal. Hence, $\allUipMin$ can
 leave multiple literals at level $i$---all of those with reasons
 containing new levels along with one other.\footnote{Since the sole
   remaining literal $u\in L_i$ is at a lower trail index than all of
-  the other literals  there is no point in trying to resolve away
-  $u$---either it will be the decision clause for level $i$ having no
+  the other literals there is no point in trying to resolve away
+  $u$---either it will be the decision literal for level $i$ having no
   reason, or its reason will contain at least one other literal at
   level $i$.} Observe that the number of literals at level $i$ can not
 be increased after processing it with \allUipPure. \allUipMin can,
@@ -651,7 +701,7 @@ levels less that $i$ as new literals can be introduced into those
 levels when the literals at level $i$ are resolved away. These added
 literals at the lower levels might not be removable from the clause,
 and thus both methods might yield a longer clause than the inputted
-1-UIP clause.
+\oneuip clause.
 
 After trying to UIP each level the clause $C_i$ is obtained. If we
 were using $\allUipPure$ we can once again apply minimization
@@ -661,7 +711,7 @@ clause as all but one literal of each level introduces a new level and
 thus cannot be recursively removed.\footnote{Other more powerful
   minimization techniques could still be applied.} 
 
-Finally, the algorithm returns the shorter of the initial 1-UIP clause
+Finally, the algorithm returns the shorter of the initial \oneuip clause
 and the newly computed clause (line~\ref{ln:returnmin}). Because we
 return the newly computed clause only when it is shorter, an early
 termination test can be used (line~\ref{ln:earlyTerminate}). After the
@@ -670,8 +720,8 @@ the literals at those levels will not be further changed. Furthermore,
 we know that the best that can be done is to reduce the remaining
 $|\dlevels| - (i+1)$ levels down to a single literal each. These two
 observations give a lower bound on the size of the resulting clause,
-and if that lower bound is as large as the size of the initial 1-UIP
-clause we can terminate and return the initial 1-UIP clause.  This
+and if that lower bound is as large as the size of the initial \oneuip
+clause we can terminate and return the initial \oneuip clause.  This
 termination condition does not, however, account for the final clause
 minimization (line~\ref{ln:puremin}) of \allUipPure, and it could
 prematurely terminate processing that would otherwise yield a shorter
@@ -683,17 +733,17 @@ performance.
 %\allUipMin can.
 
 \paragraph{$\tgap$:}
-$\allUip$ can produce significantly smaller clause. However, when it
+$\stablealluip$ can produce significantly smaller clause. However, when it
 does not yield a smaller clause, the cost of the additional resolution
 steps can hurt the solver's performance. Since resolution cannot
 reduce a clause's $\LBD$, the maximum size reduction obtainable from
-$\allUip$ is the difference between the 1-UIP clause's size and its
+$\stablealluip$ is the difference between the \oneuip clause's size and its
 $\LBD$: $\gap(C_1) = |C_1| - \LBD(C_1)$. When $\gap(C_1)$ is small,
-applying $\allUip$ is unlikely to be cost effective. Our approach is
+applying $\stablealluip$ is unlikely to be cost effective. Our approach is
 to dynamically set a threshold on $\gap(C_1)$, $\tgap$, such that when
 $\gap(C_1) < \tgap$ we do not attempt to reduce the clause
 (line~\ref{ln:control}). Initially, $\tgap = 0$, and we count the
-number of times $\allUip$ is attempted ($\ntries$) and the number of
+number of times $\stablealluip$ is attempted ($\ntries$) and the number of
 times it successfully yields a shorter clause ($\nsuc$)
 (line~\ref{ln:try} and \ref{ln:suc}). On every restart if the success
 rate since the last restart is greater than 80\%, we decrease $\tgap$ by one (not allowing it to
@@ -724,17 +774,17 @@ by one.
       & C_{k} = (k_6, \lnot f_5, \lnot j_6) \\\hline
       \end{array}
   \]
-  Suppose 1-UIP learning yields the clause
+  Suppose \oneuip learning yields the clause
   $C_1 = (\neg{m_{10}}$, $\neg{k_6}$, $\neg{j_6}$, $\neg{i_6}$,
   $\neg{h_6}$, $\neg{g_5}$, $\neg{d_2}$, $\neg{c_2})$ where $\neg{m_{10}}$
-  is the UIP from the conflicting level. $\allUip$ first tries to find
+  is the UIP from the conflicting level. $\stablealluip$ first tries to find
   the UIP for level 6 by resolving $C_1$ with $C_k$, $C_j$
   and then $C_i$ producing the clause
   $C^* = (\neg{m_{10}}$, $\neg{h_6}$, $\neg{g_5}$,
   $\neg{f_5}$, $\neg{e_5}$, $\neg{d_2}$, $\neg{c_2})$ where
   $\neg{h_6}$ is the UIP for level 6.
 
-  $\allUip$ then attempts to find the UIP for level 5 by resolving $C^*$
+  $\stablealluip$ then attempts to find the UIP for level 5 by resolving $C^*$
   with $C_g$ and then $C_f$. However, resolving with $C_f$ would
   introduce $\ell_1$ and a new decision level into $C^*$. $\allUipPure$
   thus leaves level 5 unchanged . $\allUipMin$, on the other hand, skips
@@ -745,34 +795,34 @@ by one.
   $C^*_{\mathit{min}} = (\neg{m_{10}}$, $\neg{h_6}$, $\neg{f_5}$,
   $\neg{e_5}$, $\neg{d_2}$, $\neg{c_2}, \lnot a_2)$.
 
-  Finally, $\allUip$ processes level 2. Resolving away $d_2$ and then
+  Finally, $\stablealluip$ processes level 2. Resolving away $d_2$ and then
   $c_2$ will lead to an attempt to resolve away $b_2$. But again this
   would introduce a new decision level with the literal $\ell_1$. So
   $\allUipPure$ will leave level 2 unchanged and $\allUipMin$ will leave
   $b_2$ unresolved. The final clauses produced by $\allUipPure$ would be
   $(\neg{m_{10}}$, $\neg{h_6}$, $\neg{f_5}$, $\neg{e_5}$, $\neg{d_2}$,
-  $\neg{c_2}$, $\neg{a_2})$, a reduction of 1 over the 1-UIP clause,
+  $\neg{c_2}$, $\neg{a_2})$, a reduction of 1 over the \oneuip clause,
   and by $\allUipMin$ would be $(\neg{m_{10}}$, $\neg{h_6}$,
   $\neg{f_5}$, $\neg{e_5}$, $\neg{b_2}$, $\neg{a_2})$, a reduction of
-  2 over the 1-UIP clause.
+  2 over the \oneuip clause.
 \whitebox
 \end{example}
 
-\subsection{Variants of $\allUip$}
+\subsection{Variants of $\stablealluip$}
 We also developed and experimented with a few variants of the
-$\allUip$ algorithm which we describe below.
+$\stablealluip$ algorithm which we describe below.
 
 \subsubsection{$\allUipAct$: Clauses with Active
-  Variables.} \label{sec:active} $\allUip$ learning might introduce
+  Variables.} \label{sec:active} $\stablealluip$ learning might introduce
 literals with low variable activity into $C_i$. Low activity variables
 are variables that have had low recent participation in clause
 learning. Hence, clauses with variables of low activity might not be
 as currently useful to the solver. Our variant $\allUipAct$, shown as
 the optional line~\ref{ln:activity} in Algorithm~\ref{alg:i-uip},
-computes the average variable activity of the newly produced all-UIP
-clause $C_i$ and the original 1-UIP clause $C_1$. The new clause $C_i$
+computes the average variable activity of the newly produced \alluip
+clause $C_i$ and the original \oneuip clause $C_1$. The new clause $C_i$
 will be returned only if it is both smaller and has higher average
-variable activity than the original 1-UIP clause. There are, of
+variable activity than the original \oneuip clause. There are, of
 course, generalizations of this approach where one has a weighted
 trade-off between these factors that allows preferring the new clause
 when it has large gains in one metric even though it has small losses
@@ -789,18 +839,18 @@ literals appearing in the learnt clause $C_L$ and all literals
 resolved away during the conflict analysis that yielded $C_L$ from the
 initially detected conflict $C_I$ (all literals on the conflict side).
 
-We did not apply this approach to the $\allUip$ clause, as we did not
+We did not apply this approach to the $\stablealluip$ clause, as we did not
 want to bump the activity of the literals above the deepest decision
-level that $\allUip$ resolves away. Intuitively, these literals did
+level that $\stablealluip$ resolves away. Intuitively, these literals did
 not directly contribute to generating the conflict. Instead, we tried
 two modifications to the variable activity bumping schemes.
 
-Let $C_1$ be the 1-UIP learnt clause and $C_i$ be the $\allUip$ learnt
+Let $C_1$ be the \oneuip learnt clause and $C_i$ be the $\stablealluip$ learnt
 clause. First, we kept all of the variable activity bumps normally
-done by 1-UIP learning.\footnote{So extra techniques used by the
+done by \oneuip learning.\footnote{So extra techniques used by the
   underlying solver, like reason side rate and locality
   \cite{DBLP:conf/sat/LiangGPC16}, were kept intact.}  Then, when the
-$\allUip$ scheme was successful, i.e., $C_i$ was to be used as the new
+$\stablealluip$ scheme was successful, i.e., $C_i$ was to be used as the new
 learnt clause, we perform further updates to the variable
 activities. In the $\allUipIn$ approach all variables variables
 appearing in $C_i$ that are not in $C_1$ have their activities
@@ -845,10 +895,10 @@ in order to add our new schemes to those solvers using chronological
 backtracking.
 
 \section{Implementation and Experiments}
-%\subsubsection{Clause Reduction with $\allUip$.}
-We implemented $\allUip$ learning schemes on \text{\MapleBase}
+%\subsubsection{Clause Reduction with $\stablealluip$.}
+We implemented $\stablealluip$ learning schemes on \text{\MapleBase}
 \cite{liang2016maple}, the winner of SAT Race 2015 application
-track. We then evaluated these schemes and compare against the 1-UIP
+track. We then evaluated these schemes and compare against the \oneuip
 baseline on the full set of benchmarks from SAT RACE 2019 main track
 which contains 400 instances. We ran our experiments on 2.70 GHz
 XeonE5-2680 CPUs, allowing
@@ -869,7 +919,7 @@ XeonE5-2680 CPUs, allowing
   
   
 
-  %Then a subsubsection on \allUip in modern solvers. Some of our
+  %Then a subsubsection on \stablealluip in modern solvers. Some of our
   %observations have no solid foundation, so check them to make sure
   %that you are just not stating your intuitions without reasonable
   %evidence. We need to to fit into 15 pages total along with a short
@@ -886,9 +936,9 @@ XeonE5-2680 CPUs, allowing
 \begin{center}
 \begin{tabular}{ | m{3.2cm} | m{3.8cm}| m{2cm} | m{2.75cm} |  } 
 \hline
-Solver & \# solved (SAT, UNSAT) & PAR-2 & Avg clause Size \\ 
+Solver & \# solved (SAT, UNSAT) & PAR-2 & avg. clause Size \\ 
 \hline
-1-UIP & 221 (132, 89)  & 5018.89 & 62.6  \\ 
+\oneuip & 221 (132, 89)  & 5018.89 & 62.6  \\ 
 \hline
 $\allUipPure$ &\textbf{228} (135, \bf{93}) +7 & 4867.37 & 49.88 \\
 \hline
@@ -902,7 +952,7 @@ $\allUipEx$ & 223 (134, 89) +2& 5015.23& \textbf{43.2} \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Benchmark results of $\MapleBase$ with 1-UIP, $\allUipPure$, $\allUipMin$, $\allUipAct$,
+\caption{Benchmark results of $\MapleBase$ with \oneuip, $\allUipPure$, $\allUipMin$, $\allUipAct$,
 $\allUipIn$, and $\allUipEx$ on SAT2019 race main track.}
 \label{fig:t4}
 \end{figure}
@@ -910,26 +960,26 @@ $\allUipIn$, and $\allUipEx$ on SAT2019 race main track.}
 
 Fig.~\ref{fig:t4} shows each learning scheme's solved instances count,
 PAR-2 score, and average learnt clause size. We found that the
-$\allUip$ learning schemes improved solved instances, PAR-2 scores,
-and learnt clause size over 1-UIP. More specifically, $\allUipPure$
-solved the most instances (+7 over 1-UIP) and the most UNSAT instances
+$\stablealluip$ learning schemes improved solved instances, PAR-2 scores,
+and learnt clause size over \oneuip. More specifically, $\allUipPure$
+solved the most instances (+7 over \oneuip) and the most UNSAT instances
 (+4); $\allUipIn$ solved the most SAT instances (+6); and $\allUipAct$
-yields the best PAR-2 score (-151 than 1-UIP). In all cases the
-$\allUip$ schemes learnt significantly smaller clauses on average.
+yields the best PAR-2 score ($-$151 than \oneuip). In all cases the
+$\stablealluip$ schemes learnt significantly smaller clauses on average.
 
-\subsubsection{Clause Reduction with $\allUip$.}
-To precisely measure $\allUip$'s clause reduction power, we compare
+\subsubsection{Clause Reduction with $\stablealluip$.}
+To precisely measure $\stablealluip$'s clause reduction power, we compare
 each instance's learnt clause size from $\allUipMin$ and $\allUipPure$
-against 1-UIP. Fig.~\ref{fig:len_pdf} shows the probability density
-distribution (PDF) of the relative clause size of the $\allUip$
+against \oneuip. Fig.~\ref{fig:len_pdf} shows the probability density
+distribution (PDF) of the relative clause size of the $\stablealluip$
 learning schemes ($\allUipMin$ in green and $\allUipPure$ in red) for
 each instance. $\allUipMin$ ($\allUipPure$ resp.) produces shorter
 clauses for 88.5\% (77.7\%) of instances, and the average relative
-reduction ratio over 1-UIP is 18.5\%
+reduction ratio over \oneuip is 18.5\%
 (9.6\%). Fig.~\ref{fig:len_compare} compares the average learnt
-clause size of $\allUipMin$, $\allUipPure$ and 1-UIP per instance.
-Both $\allUip$ schemes generally yield smaller clauses, and the size
-reduction is more significant for instances with larger 1-UIP clauses.
+clause size of $\allUipMin$, $\allUipPure$ and \oneuip per instance.
+Both $\stablealluip$ schemes generally yield smaller clauses, and the size
+reduction is more significant for instances with larger \oneuip clauses.
 
 The results in Fig.~\ref{fig:t4}, ~\ref{fig:len_pdf} and
 \ref{fig:len_compare} indicate $\allUipMin$ often achieves higher
@@ -946,8 +996,8 @@ results.
   \begin{minipage}[t]{0.5\textwidth}
    \includegraphics[width=\textwidth]{figures/clause_reduction_PDF.pdf}
    \caption{Relative clause size reduction distribution. The $X$ axis
-      indicates the relative size of difference between all-uip and
-      1-uip clauses (calculated as
+      indicates the relative size of difference between all-UIP and
+      1-UIP clauses (calculated as
       $\dfrac{|C_1|-|C_i|}{|C_1|}$ ) for
       each instance, and the $Y$ axis shows the probability density.}
        \label{fig:len_pdf}
@@ -957,7 +1007,7 @@ results.
     \includegraphics[width=\textwidth]{figures/clause_size_compare.pdf}
     \caption{Average clause size comparison plot. Each point in the
       plot represents an instance. The $X$ and $Y$ axes shows the clause
-      length from $\allUip$ and 1-UIP, respectively. Each green (red)
+      length from $\stablealluip$ and \oneuip, respectively. Each green (red)
       dot represents an compared instance between $\MapleBase$ and
       $\MapleIUIMin$ ($\allUipPure$).}
       \label{fig:len_compare}
@@ -975,9 +1025,9 @@ results.
 %  obtained through learning all clauses with the target learning
 %  scheme; Therefore, the reduction is cumulative. The %non-cumulative
 %  reduction ratio is obtained by running the target scheme for
-%  measurement only (the minimized 1-UIP clause is learned); Therefore,
+%  measurement only (the minimized \oneuip clause is learned); Therefore,
 %  the reduction is not cumulative. }  for each instances. 
-%For $\MapleIUIPPure$ and $\MapleIUIMin$, we also captures the $\allUip$
+%For $\MapleIUIPPure$ and $\MapleIUIMin$, we also captures the $\stablealluip$
 %learning attempted rate and success rate.
 
 %\begin{figure} 
@@ -995,7 +1045,7 @@ results.
 %\end{tabular}
 %\end{center}
 %\caption{Benchmark results of $\MapleBase$ , $\MapleIUIPPure$  and $\MapleIUIMin$ on SAT2019 %race main track.
-%CL Reduction\% is the clause size reduction ratio comparing to non-minimized 1-UIP clauses, %and the values in the brackets are the non-cumulative reduction ratio.}
+%CL Reduction\% is the clause size reduction ratio comparing to non-minimized \oneuip clauses, %and the values in the brackets are the non-cumulative reduction ratio.}
 %\label{fig:t1}
 %\end{figure}
 
@@ -1003,24 +1053,24 @@ results.
 %(five) more instances than the baseline solver with lower PAR-2
 %scores. $\allUipPure$ has marginally lower PAR-2 score than
 %$\allUipPure$. Both $\allUipPure$ and $\allUipMin$ produce clause with
-%significantly smaller size than 1-UIP by 20.4\% and 27.7\%,
+%significantly smaller size than \oneuip by 20.4\% and 27.7\%,
 %respectively. Fig.~\ref{fig:len_pdf} shows the probability density
 %distribution (PDF) of the relative clause size of both i-uip learning
 %schemes ($\allUipPure$ in red and $\allUipMin$ in green) for each
 %instance. $\allUipPure$ ($\allUipMin$) produces shorter clauses for 77.7\%
-%(88.5\%) of instances, and average relative reduction from 1-UIP is
+%(88.5\%) of instances, and average relative reduction from \oneuip is
 %16.7\% (18.6\%). Fig.~\ref{fig:len_compare} compares the absolute
-%clause size of $\allUipMin$, $\allUipPure$ and 1-UIP, and it shows that
+%clause size of $\allUipMin$, $\allUipPure$ and \oneuip, and it shows that
 %both i-UIP learning schemes in general produce the smaller clauses,
 %and the size reduction is more significant for instances with large
-%average 1-UIP clause size. Moreover, $\allUipMin$ clauses (indicated in
+%average \oneuip clause size. Moreover, $\allUipMin$ clauses (indicated in
 %5green) is consistently smaller than $\allUipPure$ clauses.
 
 %\nf{ Do we need this?  We additionally looked at the 14 instances
-%  solved by $\allUipMin$ but not by 1-UIP. $\allUipMin$ produces smaller
+%  solved by $\allUipMin$ but not by \oneuip. $\allUipMin$ produces smaller
 %  clauses for all of them with average relative reduction of 22\% and
 %  maximum 77\% (30 vs 135). Seven out of 14 instances has size
-%  relative reduction over 30\%. For the 9 instances solved by 1-UIP
+%  relative reduction over 30\%. For the 9 instances solved by \oneuip
 %  but not by $\allUipMin$, $\allUipMin$ only produce smaller clause for
 %  three instances and with average relative reduction of 3.3\%.}
 
@@ -1029,7 +1079,7 @@ results.
 %\begin{center} 
 %\begin{tabular}{ | m{3.5cm} | m{5cm}| m{3.5cm} | } 
 %\hline
-%Solver & $\allUip$ attempt rate & $\allUip$ success rate  \\ 
+%Solver & $\stablealluip$ attempt rate & $\stablealluip$ success rate  \\ 
 %\hline
 %$\MapleIUIPPure$ & 16.1\% & 43.4\% \\ 
 %\hline
@@ -1037,14 +1087,14 @@ results.
 %\hline
 %\end{tabular}
 %\end{center}
-%\caption{Compare $\allUipPure$ and $\allUipMin$ i-uip attempt rate and success rate. %$\allUipMin$ scheme attempted $\allUip$ more frequently, and it is more likely to %successfully produce smaller $C_i$ clause .}
+%\caption{Compare $\allUipPure$ and $\allUipMin$ i-uip attempt rate and success rate. %$\allUipMin$ scheme attempted $\stablealluip$ more frequently, and it is more likely to %successfully produce smaller $C_i$ clause .}
 %\label{fig:t2}
 %\end{figure}
 
-\subsubsection{Reduced Proof Sizes with $\allUip$}
+\subsubsection{Reduced Proof Sizes with $\stablealluip$}
 A learning scheme that yields smaller clauses (lemmas) might also
 construct smaller causal proofs. For 88 UNSAT instances solved mutually
-by $\allUipPure$, $\allUipMin$ and 1-UIP schemes, we additionally
+by $\allUipPure$, $\allUipMin$ and \oneuip schemes, we additionally
 compare the size of the optimized DRAT proof from the three learning schemes. 
 We used the DRAT-trim tool
 \cite{DBLP:conf/sat/WetzlerHH14} with a 30000 second timeout to check and
@@ -1055,14 +1105,14 @@ optimize every DRAT proof once \footnote{Applying DRAT-trim multiple
 
 The average optimized DRAT proof from $\allUipMin$ and $\allUipPure$
 are 556.6MB and 698.5MB, respectively. Both sizes are significantly
-smaller than the average optimized proof size from 1-UIP, 824.9MB.
+smaller than the average optimized proof size from \oneuip, 824.9MB.
 The average proof size reduction per instance for $\allUipMin$ and
-$\allUipPure$ was 16.5\% and 3.6\% compared with 1-UIP, which roughly
+$\allUipPure$ was 16.5\% and 3.6\% compared with \oneuip, which roughly
 correlate with our observed clause size observation in
 Fig~\ref{fig:len_pdf}.
 
 %Fig.~\ref{fig:proof_compare} shows the
-%absolute proof size comparison between $\allUipMin$ and 1-UIP, and displays a similar trend %as the clause size comparison plot in Fig.~\ref{fig:len_compare}.
+%absolute proof size comparison between $\allUipMin$ and \oneuip, and displays a similar trend %as the clause size comparison plot in Fig.~\ref{fig:len_compare}.
 
 %\begin{figure} 
 %\begin{center} 
@@ -1078,7 +1128,7 @@ Fig~\ref{fig:len_pdf}.
 %\hline
 %\end{tabular}
 %\end{center}
-%\caption{Optimized UNSAT proof comparison for 1-UIP $\allUipPure$ and $\allUipMin$. %Optimized proof size measures the average absolute proof size in MB, and relative reduction %size measures the average relative reduction for all UNSAT instances.}
+%\caption{Optimized UNSAT proof comparison for \oneuip $\allUipPure$ and $\allUipMin$. %Optimized proof size measures the average absolute proof size in MB, and relative reduction %size measures the average relative reduction for all UNSAT instances.}
 %\label{fig:t3}
 %\end{figure}
 
@@ -1089,11 +1139,11 @@ Fig~\ref{fig:len_pdf}.
 %    \label{fig:proof_compare}
 %\end{figure}
 
-%\subsection{$\allUip$ as a Practical Learning Scheme}
-%To evaluate $\allUip$'s effectiveness as a clause learning scheme, we
+%\subsection{$\stablealluip$ as a Practical Learning Scheme}
+%To evaluate $\stablealluip$'s effectiveness as a clause learning scheme, we
 %re-implement $\allUipMin$ on $\MapleBase$ with the extensions mentioned
-%in section~\ref{sec:i-uip}. We evaluated 1-UIP learning and five
-%$\allUip$ configurations ( $\allUipMin$, $\allUipPure$, $\allUipAct$,
+%in section~\ref{sec:i-uip}. We evaluated \oneuip learning and five
+%$\stablealluip$ configurations ( $\allUipMin$, $\allUipPure$, $\allUipAct$,
 %$\allUipIn$, and $\allUipEx$) on the SAT Race 2019 main track
 %benchmark and reported solved instances, PAR-2 score and average
 %clause size.
@@ -1103,34 +1153,18 @@ Fig~\ref{fig:len_pdf}.
 %most UNSAT instances (93). $\allUipAct$ had the lowest PAR-2
 %score. $\allUipIn$ solved the most SAT instances (138). $\allUipEx$
 %produced the shortest average clause size, but solved the second least
-%instances, one more instance than the baseline 1-UIP learning. All
-%configurations of $\allUip$ outperformed the baseline 1-UIP scheme in
+%instances, one more instance than the baseline \oneuip learning. All
+%configurations of $\stablealluip$ outperformed the baseline \oneuip scheme in
 %solved instances, PAR-2 score and average clause size.
 
 
-\subsubsection{$\allUip$ on Modern SAT solvers}
-To validate $\allUip$ as a practical learning scheme for modern SAT
-solvers, we implemented $\allUip$ in the winners of 2017, 2018 and
-2019 SAT
-Race\cite{DBLP:conf/ijcai/LuoLXML17,ryvchin2018maple,Stepan2019MapleLCMDistChronoBT}
-and in the $\expSAT$\cite{MdSolimul2019expMalpe} ($\expSATShort$)
-solver. $\expSATShort$ is a top ten solver from 2019 SAT race which
-uses random walk simulation to help branching. We chose $\expSATShort$
-because (1) it one of the top solvers in the 2019 SAT Race that does
-not use chronological backtracking; and (2) the random walk simulation
-branching heuristic is different from local branching heuristic (VSIDS
-and LRB) that we have considered in $\allUipAct$, $\allUipIn$, and
-$\allUipEx$. We compared these solver's base 1-UIP learning scheme
-with $\allUipPure$, $\allUipMin$ and the top two $\allUip$ variants,
-$\allUipAct$ and $\allUipIn$, on the SAT Race 2019 main track
-benchmark. We report solved instances, PAR-2 score and the average
-clause size.
-
 \begin{figure} 
 \begin{center}
-\begin{tabular}{ | m{3.7cm} | m{4cm}| m{2cm} | m{2.75cm} |  } 
+\fss{8pt}{10pt}
+% \begin{tabular}{ | m{3.7cm} | m{4cm}| m{2cm} | m{2.75cm} |  }
+\begin{tabular}{|l|l|l|l|} 
 \hline
-Solver & \# solved (SAT, UNSAT) & PAR-2 & Avg clause Size \\ 
+Solver & \#solved (SAT, UNSAT) $\Delta$ & PAR-2 & avg. clause Size \\ 
 \hline
 SAT 2017 Winner & & & \\
 $\MapleSeven$ & 232 (135, 97) & 4755.96 & 61.9  \\ 
@@ -1139,7 +1173,7 @@ $\MapleSeven$-all-pure & \textbf{244 (146, 98)} +12 & \textbf{4504.18} & 43.76 \
 \hline
 $\MapleSeven$-all-min & 240 (144, 96) +8 & 4601.25 & \textbf{36.97} \\ 
 \hline
-$\MapleSeven$-all-Act & 237 (140, 97) +5 & 4678.434 & 43.62 \\ 
+$\MapleSeven$-all-act & 237 (140, 97) +5 & 4678.434 & 43.62 \\ 
 \hline
 $\MapleSeven$-all-inclusive & 234 (137, 97) +2 & 4718.03 & 37.96 \\
 \hline
@@ -1151,7 +1185,7 @@ $\MapleEightShort$-all-pure & \textbf{241} (\textbf{142, 99}) +5 & \textbf{4598.
 \hline
 $\MapleEightShort$-all-min & 236 (141, 95) +0 & 4683.92 & 38.05 \\ 
 \hline
-$\MapleEightShort$-all-Act & 240 (141, \textbf{99}) +4 & 4626.99 & 41.16 \\
+$\MapleEightShort$-all-act & 240 (141, \textbf{99}) +4 & 4626.99 & 41.16 \\
 \hline
 $\MapleEightShort$-all-inclusive & 240 (\textbf{142}, 98) +4 & 4602.13 & \textbf{37.52} \\
 \hline
@@ -1163,7 +1197,7 @@ $\MapleNineShort$-all-pure & 238 (140, \textbf{98}) +0 & 4519.08 &  43.32\\
 \hline
 $\MapleNineShort$-all-min & 244 (\textbf{148}, 96) +6 & \textbf{4419.84} & \textbf{36.88} \\
 \hline
-$\MapleNineShort$-all-Act & 243 (146, 97) + 5 & 4476.73 & 40.65 \\
+$\MapleNineShort$-all-act & 243 (146, 97) + 5 & 4476.73 & 40.65 \\
 \hline
 $\MapleNineShort$-all-inclusive & \textbf{243} (\textbf{148}, 95) +5 & 4455.76 & 37.02 \\
 \hline
@@ -1171,40 +1205,61 @@ $\MapleNineShort$-all-inclusive & \textbf{243} (\textbf{148}, 95) +5 & 4455.76 &
 SAT 2019 Competitor & & &\\
 $\expSATShort$ & 237 (137, 100)  & 4628.96 & 63.19 \\
 \hline
-$\expSATShort$-all-pure & 235 (136, 99) -2  & 4668.96 & 48.26 \\
+$\expSATShort$-all-pure & 235 (136, 99) $-$2  & 4668.96 & 48.26 \\
 \hline
 $\expSATShort$-all-min & 241 (143, 98) +4 & 4524.28 & 46.29 \\ 
 \hline
-$\expSATShort$-all-Act & 244 (143, \textbf{101}) +7 & \textbf{4460.92} & 47.25 \\
+$\expSATShort$-all-act & 244 (143, \textbf{101}) +7 & \textbf{4460.92} & 47.25 \\
 \hline
 $\expSATShort$-all-inclusive & \textbf{245} (\textbf{146}, 99) +8 & 4475.76 & \textbf{45.33} \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Benchmark results of 1-UIP, $\allUipPure$. $\allUipMin$, $\allUipAct$ and $\allUipIn$ on SAT2019 race main track.}
+\caption{Benchmark results of \oneuip, $\allUipPure$. $\allUipMin$, $\allUipAct$ and $\allUipIn$ on SAT2019 race main track.}
 \label{fig:t5}
 \end{figure}
 
-Table~\ref{fig:t5} shows the benchmark result of the $\allUip$
+
+\subsubsection{$\stablealluip$ in Modern SAT solvers}
+\begin{sloppypar}
+To validate $\stablealluip$ as a practical learning scheme for modern
+SAT solvers, we implemented $\stablealluip$ in the winners of 2017,
+2018 and 2019 SAT Race
+\cite{DBLP:conf/ijcai/LuoLXML17,ryvchin2018maple,Stepan2019MapleLCMDistChronoBT}
+and in the $\expSAT$ \cite{MdSolimul2019expMalpe} ($\expSATShort$)
+solver. $\expSATShort$ is a top ten solver from 2019 SAT race which
+uses random walk simulation to help branching. We chose $\expSATShort$
+because (1) it one of the top solvers in the 2019 SAT Race that does
+not use chronological backtracking; and (2) the random walk simulation
+branching heuristic is different from local branching heuristic (VSIDS
+and LRB) that we have considered in $\allUipAct$, $\allUipIn$, and
+$\allUipEx$. We compared these solver's base \oneuip learning scheme
+with $\allUipPure$, $\allUipMin$ and the top two $\stablealluip$
+variants, $\allUipAct$ and $\allUipIn$, on the SAT Race 2019 main
+track benchmark. We report solved instances, PAR-2 score and the
+average clause size.
+\end{sloppypar}
+
+Table~\ref{fig:t5} shows the benchmark result of the $\stablealluip$
 configurations in our suite of modern solvers. Overall, we observed
 similar performance gain on all modern solvers as we have seen on
 $\MapleBase$ in Fig.~\ref{fig:t4}. More specifically, almost all
 configurations improved on solved instance (+4.5 instances in average)
-and PAR-2 score (-83.6 in average).  The average clause size reduction
-is consistent across all solvers. Each configuration also exhibits
-different strength: $\allUipPure$ solved the most instances with the
-best PAR-2 score on two solvers, $\allUipMin$ yields small clauses,
-$\allUipIn$ solved the most SAT instances, and $\allUipAct$ has stable
-performance.
+and PAR-2 score ($-$83.6 in average).  The average clause size
+reduction is consistent across all solvers. Each configuration also
+exhibits different strength: $\allUipPure$ solved the most instances
+with the best PAR-2 score on two solvers, $\allUipMin$ yields small
+clauses, $\allUipIn$ solved the most SAT instances, and $\allUipAct$
+has stable performance.
 
 
 On the SAT 2017 race winner $\MapleSeven$, all four configurations of
-$\allUip$ outperformed 1-UIP learning by 12, 8, 5, and 2 instances,
+$\stablealluip$ outperformed \oneuip learning by 12, 8, 5, and 2 instances,
 respectively. $\allUipPure$ solved more UNSAT and SAT instances while
 the other configurations improved on solving SAT instances. The clause
-size reduction of $\allUip$ is more significant on $\MapleSeven$
+size reduction of $\stablealluip$ is more significant on $\MapleSeven$
 than on to $\MapleBase$.
-%This may suggests that $\allUip$ and the recent
+%This may suggests that $\stablealluip$ and the recent
 %learnt clause minimization approach~\cite{} synergies well because
 %i-UIP clauses are shorter with more common literals which allows
 %vivification~\cite{} to prune literals more aggressively through unit
@@ -1212,14 +1267,14 @@ than on to $\MapleBase$.
 
 The SAT 2018 race winner$\MapleEightShort$ uses chronological
 backtracking (CB) for long distance backtracks. Three out of four
-$\allUip$ configurations outperformed 1-UIP by 5, 4 an 4 instances,
+$\stablealluip$ configurations outperformed \oneuip by 5, 4 an 4 instances,
 respectively.
 %$\MapleEightShort$ improved from $\MapleSeven$ by using
 %chronological backtracking (CB) for long distance
-%backtracks. Therefore, we used $\allUip$-CB extension for all $\allUip$
+%backtracks. Therefore, we used $\stablealluip$-CB extension for all $\stablealluip$
 %configurations. 
 
-%The results indicates that the improvement of $\allUip$
+%The results indicates that the improvement of $\stablealluip$
 %is slightly shadowed by the adoption of CB. More specifically, we
 %believe CB prevents decision levels from being compressed through the
 %process of backtracking and literal assertion. The shorter i-UIP
@@ -1228,52 +1283,52 @@ respectively.
 %discourages long distance backtracking, the effect of learning shorter
 %clauses is shadowed until a full restart.  We believe we have observed
 %an interesting interaction effect that shows the limitations of both
-%CB and $\allUip$ learning for future research.
+%CB and $\stablealluip$ learning for future research.
 
 On the SAT 2019 race winner $\MapleNineShort$, three out of four
-$\allUip$ configurations solved instances 6, 5 and 5 more instances
-than 1-UIP, respectively. $\MapleNineShort$ prioritizes clauses that
+$\stablealluip$ configurations solved instances 6, 5 and 5 more instances
+than \oneuip, respectively. $\MapleNineShort$ prioritizes clauses that
 are learned multiple times. We observed that clauses learnt from
-$\allUip$ configurations are less likely to be duplicated. As an
+$\stablealluip$ configurations are less likely to be duplicated. As an
 example, $\allUipMin$ in average, added 12\% less duplicated clauses
-into the core clause database than 1-UIP. This observation is
+into the core clause database than \oneuip. This observation is
 surprising, and the cause is unclear.
 
 %One possible explanation is that
-%$\allUip$ learning can reduce an 1-UIP clause to different i-UIP clauses
+%$\stablealluip$ learning can reduce an \oneuip clause to different i-UIP clauses
 %for different assertion trails. Therefore, the solver is less likely
 %to learn the same i-UIP clauses.
 
-On $\expSATShort$, three out of four $\allUip$ configurations solved
-4, 7 and 8 more instances than 1-UIP learning. We noticed that
+On $\expSATShort$, three out of four $\stablealluip$ configurations solved
+4, 7 and 8 more instances than \oneuip learning. We noticed that
 $\allUipAct$ and $\allUipIn$ show significant better performance than
 $\allUipMin$ and $\allUipPure$ on this solver. The random walk
 simulation branching heuristic, however, didn't impact the performance
-of $\allUip$ schemes significantly.
-%$\allUip$ to solve the similar amount of instances with close PAR-2
+of $\stablealluip$ schemes significantly.
+%$\stablealluip$ to solve the similar amount of instances with close PAR-2
 %scores because the additional random walk exploration allows the
 %learning schemes to partially sidestep the activity problem; hence,
 %the learning adjustment for variable activities should have less
 %impact on the solver's performance. However, we instead, observed that
 %both $\allUipAct$ and $\allUipIn$ outperformed the default i-UIP
 %learning scheme. One possible explanation is that $\allUipAct$ and
-%$\allUipIn$ schemes could easily overcompensate variable activities
+%$\allUipIn$ schemes could easily over compensate variable activities
 %for i-UIP clauses, and $\expSATShort$'s random walk exploration could
 %use future search information to mitigate the negative effects of our
-%overcompensation.
+%over compensation.
 
 \section{Conclusion}
-In this paper we introduce a new clause learning scheme, $\allUip$,
-that combines the strengths of the existing all-UIP and 1-UIP learning
+In this paper we introduce a new clause learning scheme, $\stablealluip$,
+that combines the strengths of the existing \alluip and \oneuip learning
 schemes to learn shorter asserting clauses, while preserving the
-minimum LBDs of 1-UIP clauses. We provide empirical evidence that
-employing $\allUip$ and its variants in modern CDCL solvers achieves
+minimum \LBD of \oneuip clauses. We provide empirical evidence that
+employing $\stablealluip$ and its variants in modern CDCL solvers achieves
 significant clause reduction and yields useful performance gains.
 
-Our scheme extends 1-UIP learning by performing further resolution
+Our scheme extends \oneuip learning by performing further resolution
 beyond the deepest decision level in an attempt to find the UIP at
 each level in the learnt clause. Since resolutions may increase the
-clause's LBD by introducing literals from new decision level, we
+clause's \LBD by introducing literals from new decision level, we
 presented two methods to block such literals from entering the
 clause. Although our learning scheme is conceptually simple, and we
 have presented optimizations to reduce and balance the learning
@@ -1282,14 +1337,14 @@ features used in state of the art solvers, e.g., local branching
 heuristics and chronological backtracking.
 
 Although the field of SAT solving has long converged on using the
-1-UIP learning scheme, we've shown the possibility of developing an
-effective alternative through understanding 1-UIP and other existing
+\oneuip learning scheme, we've shown the possibility of developing an
+effective alternative through understanding \oneuip and other existing
 schemes' strengths and weaknesses.  Our learning scheme can be
 generalized and further improved by exploring more fine-grained
 trade-offs between different clause quality metrics beyond clause size
-and LBD. We also plan to study the interaction between clause learning
+and \LBD. We also plan to study the interaction between clause learning
 and variable branching. Since most of the branching heuristics are
-tailored for 1-UIP scheme, the interactions with other learning
+tailored for \oneuip scheme, the interactions with other learning
 schemes still needs further study.
 
 \bibliography{sat}{}

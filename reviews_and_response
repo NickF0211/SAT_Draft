@@ -1,0 +1,304 @@
+Review 1
+Overall evaluation:	Summary:
+
+The paper revisits all-UIP clause learning in CDCL solvers, which is a
+technique from the early days of CDCL solving. Since 1-UIP clause
+learning was found to work better empirically, all state-of-the-art
+CDCL solvers apply 1-UIP learning although the all-UIP clause may be
+shorter. A novel approach is presented to learn all-UIP clauses which
+takes the LBD score and size of the learned clause compared to the
+1-UIP clause into account.
+
+Assessment:
+
+This paper is a nice example of how known techniques like all-UIP that
+were no longer applied in practice can be successfully revived by
+combining them with other state-of-the-art techniques like LBD
+scores. As observed in the introduction, the SAT field has converged
+to using 1-UIP learning. This paper demonstrates that there are
+opportunities in revisiting old techniques in a modern context.
+
+An advantage of the presented approach is its orthogonality. All-UIP
+learning can be applied in addition to standard clause minimization
+techniques and chronological backtracking, for example. Experiments
+with the winners of recent SAT competitions, where the approach was
+implemented, demonstrate improvements in terms of solved instances,
+both satisfiable and unsatisfiable ones, PAR-2 scores, and learned
+clause sizes.
+
+The paper presents a concise framework to explain CDCL and the novel
+all-UIP approach. That framework and the presentation of CDCL is a
+valuable contribution in its own right.
+
+Some aspects that should be improved:
+
+- To obtain a complete picture of the experiments, please add cactus
+plots.
+
+- It would be interesting to include solvers that perform
+sophisticated inprocessing, such as cadical, in the
+experiments. Note that cadical solved the largest number of
+satisfiable instances in the SAT Race 2019
+(http://sat-race-2019.ciirc.cvut.cz/index.php?cat=results).
+
+- I am not convinced by the statement (Section 2.2) and the related
+reasoning that if the learned clause is not asserting, then it could
+be that it is a duplicate of another clause already in the
+formula. Under what assumptions does that statement hold, has this
+observation been pointed out in related work already? I think for
+standard CDCL the statement does not hold.
+
+Further Comments:
+
+Page 2:
+
+- Mention the main disadvantage of all-UIP already here (it is
+mentioned later): potentially larger LBD score.
+
+- Typo: "resolvant"
+
+- The definition of the decision level of unit literals is
+incorrect. It should be the number of decision literals appearing
+before the unit literal on the trail, while for decision literals we
+add one.
+
+Page 3:
+
+- Does the statement "In some implementations the trail might be
+altered during clause learning" refer to chronological backtracking?
+
+- "We will assume that T_{k−1} is propagation complete," isn't that a
+requirement for CDCL anyhow, cf. [10]?
+
+Page 6:
+
+- "each trail resolution step can only increase the LBD of the learnt
+clause"; the LBD could also stay the same.
+
+Footnote 3: decision clause -> decision literal
+
+Review 2
+Overall evaluation:	The paper investigates a variant of clause learning investigated in
+one of the Chaff papers from 2001, i.e. the all-UIP backtracking
+scheme, and proposes a number of optimizations, which make the clause
+learning scheme competitive with the 1-UIP learning scheme. The
+experimental results confirm that improvements can be observed for
+some solvers.
+
+The first six pages are dedicated to an overview of clause learning,
+with the purpose of introducing the notation used in the rest of the
+paper. The new 'stable-allUIP' procedure and its variants are
+described in section 3. Starting in page 11, the paper focuses on
+experimental results.
+
+The experiments are organized into four parts. The first part assesses
+the different variants of 'stable-allUIP' when implemented in the
+MapleCOMSPS_LRB SAT solver. The second and third parts of the
+experiments are dedicated to investigating the effectiveness of
+'stable-allUIP' are at learned clause reduction and at proof size
+reduction. The fourth and final part of the experiments is dedicated
+at assessing the effectiveness of 'stable-allUIP' on a number of
+top-performing SAT solvers.
+
+Although the paper is successful at showing that there is always some
+configuration that improves the 1-UIP clause learning scheme, it is
+also the case that no configuration is the best overall.
+
+Overall, I feel that the paper is interesting. It advances existing
+knowledge on clause learning. Also, some aspects of the experiments
+are positive. My overall score is justified by the lack of strong
+experimental results when the 'stable-allUIP' is integrated into
+top-performing SAT solvers.
+
+
+Specific comments:
+
+The term 'all UIPs' has been used with different meanings. The term
+"all UIPs" has also been used to denote all UIPs at a given decision
+level. This should be noted; see reference [2].
+
+Section 2 is nice to read, but it is too long for a conference paper.
+The actual contributions start being discussed an the bottom of page
+6.
+
+The term 'propagation complete' is used in other papers with a
+different semantics. It might be preferable to use some other name.
+
+The description of the algorithm should include additional detail. For
+example, what is 'type'? This is *never* defined. Granted that one can
+infer its purpose from the pseudo-code, but that should not be the
+case.
+
+
+Technical and presentation issues:
+
+Page 1:
+Capitalization is inconsistent, even in the paper's title: 'size
+reduction' vs. 'Learning'
+Footnote: UIPs can be traced at least to a 1996 paper; see reference
+[1] below.
+
+Page 2:
+'resolvant' is used instead of 'resolvent' twice.
+
+Page 3:
+Forced is used but not defined.
+Capitalization is inconsistent: 'Trail resolvent' vs. 'Trail Resolution'
+
+Page 4:
+'The above observation' should quality which observation the paper is
+talking about. Since the actual observation is numbered, this is easy
+to do.
+Capitalization is inconsistent: title of section 2.1. Capitalization
+is inconsistent throughout.
+
+Page 7:
+The description of Algorithm 1 should be improved. For example, 'type'
+is never used in the text. For an algorithm with 28 lines, everything
+should be explained. Also, the description of the algorithm should
+follow the order in which the algorithm is listed.
+
+Page 7~8:
+The optional line 13 could be easily included with an additional
+argument that picks the correct line to execute.
+
+Page 12:
+'DART' is used instead of 'DRAT' at least twice.
+
+Page 15:
+Regarding the references, [7] should include more detail. Also, some
+names are improperly typeset, e.g. Jarvisalo.
+
+
+References:
+
+[1] J. Marques-Silva, S. Malik: Propositional SAT Solving. Handbook of
+Model Checking 2018: 247-275
+
+[2] A. Sabharwal, H. Samulowitz, M. Sellmann: Learning Back-Clauses in
+SAT. SAT 2012: 498-499
+Copyright © 2002 – 2020 EasyChair
+
+
+==============
+Response:
+
+First and most importantly we wish to thank the reviewers for their
+efforts in these difficult times. We really appreciate it!
+
+----------
+Review #1.
+
+We will investigate the use of cactus plots and experiments with
+Cadical.
+
+Here is an example demonstrating that if the learnt clause is not
+asserting it *could* be a duplicate. This is not something that has,
+to our knowledge, been mentioned before, but many others probably
+already know this. Say that:
+
+a --- is forced at level 5
+d --- is decided at level 10
+
+Now we unit propagate d. Say the clauses watched by -d are
+
+(-d x -a) (-d y -x -a) (-d -y -x -a) (-d -x -a)  
+
+and that the clauses are on -d's watch list in this order, so will be
+checked in this order when we propagate d. This gives the new solver
+configuration:
+
+a --- forced at level 5
+d --- decided at level 10
+x <-- (x, -d, -a) level 10
+y <-- (y, -x, -a, -d)  at level 10
+                       (-x is false when checking
+                        this processing clause)
+(-d -y -x -a) --- conflict detected
+
+Propagation of d is stopped once (-d -y -x -a) is detected to be a conflict
+so we never look at the 4th clause (-d -x -a)  on -d's watch list
+
+We have 3 lits at level 10 in the conflict clause, but say we try to
+learn a non-asserting clause by only resolving away one of these lits
+from the conflict. E.g., we might resolve away the trail deepest lit y
+to obtain R[(-d -y -x-a), (y -x -a -d)] ==> (-d -x -a) = C_L
+
+C_L is a non-asserting learnt clause, but it is identical to the 4th
+clause on d's watch list that was never examined because an earlier
+conflict was detected.
+
+Of course "standard CDCL" does not learn non-asserting clauses like
+C_L, asserting clauses, as noted in the paper, can't be duplicates
+(except they might be duplicates of a clause previously learnt and
+then deleted by garbage collection).
+
+Page 3. The two statements are intended to handle non standard ways of
+managing the trail (i.e., so that our formalization not restricted to
+CDCL standard operations).
+
+We will fix the other typos--thanks for them.
+
+=======
+Review 2
+
+>Although the paper is successful at showing that there is always some
+>configuration that improves the 1-UIP clause learning scheme, it is
+>also the case that no configuration is the best overall.
+
+and
+
+>My overall score is justified by the lack of strong
+>experimental results when the 'stable-allUIP' is integrated into
+>top-performing SAT solvers.
+
+It is true that no single configuration is best overall, but these
+configurations are all variants of the same underlying idea.
+
+The fact that these variants perform differently in different solvers
+is an indication that full exploitation of our approach can benefit
+from further research. In our opinion, it does not however lessen the
+impact of the underlying idea.
+
+In particular, for the 4 solvers shown in fig 5, if we look at the
+total number of instances solved, only 2 times does some configuration
+of our approach fail to make an improvement, and only once does a
+configuration of our approach give worse results.  Two of our
+configurations, "i-Act" and "i-inclusive", improve every solver
+reported on.
+
+Two solvers, expMaple-i-Act and expMaple-i-inclusive, improve on the
+2019 sat competition winner MapleCB-DL in all four dimensions: number
+of solved instances, number of sat instances solved, number of unsat
+instances solved, and par2 score.
+
+Although the results are not strictly comparable due to different
+hardware, if we compare with the sat 2019 results, one of our
+configurations (expMaple-i-Act) solves more unsat instances, 101, than
+the best unsat instance solver of completion (expMaple which solved
+100 unsat), one configuration (expMaple-i-inclusive) solved more total
+instances (245) that the best total instance solver of the competition
+(Cadical which solved 244) and of course a number of our
+configurations achieved better par scores than the best par score
+solver of the competition MapleCB-DL. (We do not have a win over the
+best sat instance solver of the competition, Cadical-sat which solved
+149).
+
+We are not arguing that the individual differences are significant,
+however taken in total we believe that our results are strong and
+provide good evidence for the merit of using all-uip clause learning
+techniques. The consistent reduction in average learnt clause length
+achived is also strong evidence.
+
+Specific comments:
+
+>Section 2.
+
+We think that the presentation of section 2 has been scattered through
+the literature, and that it is a legitimate contribution of a research
+paper to systematize prior work. We acknowledge, however, that this
+cannot be the sole contribution of a research paper.
+
+We agree with your other comments (which are *very* helpful, thank
+you!) and will make suitable modifications.
+
