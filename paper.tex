@@ -32,7 +32,7 @@
 \newcommand{\tgap}{t_{\mathit{gap}}}
 \newcommand{\ntries}{n_{\mathit{tries}}}
 \newcommand{\nsuc}{n_{\mathit{succ}}}
-\newcommand{\stablealluip}{\textit{stable-alluip}}
+\newcommand{\stablealluip}{\textit{stable-alluip}\xspace}
 \newcommand{\tryuiplevel}{\textit{try-uip-level}\xspace}
 \newcommand{\allUipPure}{\textit{pure-alluip}\xspace}
 \newcommand{\allUipMin}{\textit{min-alluip}\xspace}
@@ -62,7 +62,7 @@
 \newcommand{\resolve}{\bowtie}
 \renewcommand{\implies}{\rightarrow}
 \newcommand{\ctry}{C_{\mathit{try}}}
-\newcommand{\type}{\textit{type}}
+\newcommand{\config}{\textit{config}}
 \newcommand{\unmarked}{\textbf{unmarked}}
 \newcommand{\mrk}{\textbf{mark}}
 \setlength{\theorempreskipamount}{3pt}
@@ -590,52 +590,51 @@ will start with the \oneuip clause and then try to apply \alluip
 learning to reduce other levels to single literals. As noted above,
 clause minimization is orthogonal to our approach, so we also first
 apply standard clause minimization \cite{DBLP:conf/sat/SorenssonB09}
-to the \oneuip clause. That is, our algorithm will start with the
-clause that most \sat solvers learn from a conflict, a minimized
-\oneuip clause. Our approach is specified in Algorithm~\ref{alg:i-uip}
-($\stablealluip$).
+to the \oneuip clause. That is, our algorithm $\stablealluip$,
+Algorithm~\ref{alg:i-uip}, starts with the clause that most \sat
+solvers learn from a conflict, a minimized \oneuip clause. 
 
 \begin{algorithm}[!t]
 \caption{\stablealluip}\label{alg:i-uip}
 \begin{algorithmic}[1]
     \Require $C_1$ is minimized \oneuip clause
-    \Require $\tgap\geq 0$ is a global parameter, $\ntries$ and $\nsuc$ are globals used to
-    configure $\tgap$,   \type{} a global determining how the
-    introduction of new decision levels is handled.
+    \Require \config{} a set of configuration parameters to give different versions \stablealluip.
+    \Require $\tgap\geq 0$ is a global parameter, $\ntries$ and $\nsuc$ are used to
+         dynamically adjust $\tgap$
 
-    \Procedure{\stablealluip}{$C_1, \assertionTrail$, \type} \State
-    \textbf{if} ($|C_1| - \LBD(C_1) < \tgap$) \textbf{return}
-    $C_1$\label{ln:control} \State $\ntries$++\label{ln:try} \State
-    $C_i \gets C_1$ \State $\dlevels \gets\mbox{}$ decision levels in
-    $C_i$ in descending order \Comment{These never change}
-    \For{($i=1$; $i < |\dlevels|$; $i$++)} \Comment{skip the deepest
-      level $\dlevels[0]$} \State $C_i\gets\mbox{}$\tryuiplevel($C_i$,
-    $\dlevels[i]$, \type) \Comment{Try to reduce this level to UIP}
-    \If{$\bigl|\{\ell\,|\,\ell \in C_i \land \dlevel{\ell} \geq
-      \dlevels[i]\}\bigr| + (|\dlevels| - (i+1)) \geq
-      |C_1|$}\label{ln:earlyTerminate} \State \textbf{return}
-    $C_1$. \Comment{can't generate smaller clause} \EndIf \EndFor
-    \State \textbf{if} ($\type = \allUipPure$)
-    $C_i \gets \mathbf{minimize}(C_i)$\label{ln:puremin}
-    %\State $\ntries$++\label{ln:try}% 
-    \State \textbf{if} ($|C_i| < |C_1|$) $\nsuc$++, \textbf{return} $C_i$ 
-           \label{ln:returnmin}\label{ln:suc}
-    \State \textcolor{gray}{$\triangleright\mbox{}$ Use next line instead for} \allUipAct
-    \State \textcolor{gray}{
-           \textbf{if} ($|C_i| < |C_1| 
-                        \land (\code{AvgVarAct}(C_i) > \code{AvgVarAct}(C_1))$)
-                       $\nsuc$++, \textbf{return} $C_i$} \label{ln:activity}
-    \State \textbf{return} $C_1$
+    \Procedure{\stablealluip}{$C_1, \assertionTrail$}
+    \State \textbf{if} ($|C_1| - \LBD(C_1) < \tgap$) \textbf{return} $C_1$\label{ln:control} 
+    \State $\ntries$++\label{ln:try} 
+    \State $C_i \gets C_1$
+    \State $\dlevels \gets\mbox{}$ decision levels in $C_1$ in descending order\label{ln:init_loop}
+        \Comment{These never change}
+    \For{($i=1$; $i < |\dlevels|$; $i$++)}\label{ln:begin_level_loop}
+         \Comment{skip the deepest level $\dlevels[0]$}
+        \State $C_i\gets\mbox{}$\tryuiplevel($C_i$, $\dlevels[i]$) 
+            \Comment{Try to reduce this level to UIP}
+        \If{$\bigl|\{\ell\,|\,\ell \in C_i \land \dlevel{\ell} \geq
+            \dlevels[i]\}\bigr| + (|\dlevels| - (i+1)) \geq
+            |C_1|$}\label{ln:earlyTerminate}
+            \State \textbf{return} $C_1$ 
+                \Comment{can't generate smaller clause}\label{ln:end_level_loop}
+        \EndIf
+   \EndFor
+   \If{$\mathbf{\allUipPure} \in \config$}
+       \State $C_i \gets \mathbf{minimize}(C_i)$\label{ln:puremin}
+   \EndIf
+   \If{$\bigl(|C_i| < |C_1| \land 
+       \mathbf{\allUipAct}\in\config\implies(\code{AvgVarAct}(C_i) > \code{AvgVarAct}(C_1))$
+      \label{ln:activity}}
+        \State $\nsuc$++, \textbf{return} $C_i$  \label{ln:returnmin}\label{ln:suc}
+        \Comment{$C_i$ is smaller than the input clause}
+   \Else \State \textbf{return} $C_1$
+   \EndIf
 %    \State \textbf{return} \textbf{if} $|C_i| < |C_1|$) 
 %           \textbf{then}  $C_i$ \textbf{else}  $C_1$
 \EndProcedure
 \Statex 
-\Procedure{\tryuiplevel}{$C_i$, $i$, \type}\Comment{
-  \parbox[t]{3in}{
-    Do not add new decision levels, \type{} determines
-    what to do if new decision levels would be introduced
-  }
-}
+\Procedure{\tryuiplevel}{$C_i$, $i$}
+    \Comment{Do not add new decision levels}
     \State $\ctry = C_i$
     \State $L_i = \left\{\ell \left| \ell \in \ctry 
                          \land \dlevel{l} = i\right.\right\}$\label{ln:litsati1}
@@ -643,9 +642,9 @@ clause that most \sat solvers learn from a conflict, a minimized
         \State $p \gets\mbox{}$ \textbf{remove} lit with the highest trail index from $L_i$ 
         \If{($\exists q \in \reason{\lnot p}.\, \dlevel{q} \not \in \mathit{decLvls}$)}\label{ln:newdlevel}
         \Comment{Would add new decision levels}
-             \If{($\type = \allUipPure$)}
+             \If{($\mathbf{\allUipPure}\in \config$)}
                  \State \textbf{return} $C_i$ \Comment{Abort, can't UIP this level}
-             \ElsIf{($\type = \allUipMin$)}
+             \ElsIf{($\mathbf{\allUipMin}\in\config$)}
                  \State \textbf{continue} \Comment{Don't try to resolve away $p$}
              \EndIf
         \Else\label{ln:nonewdlevel}
@@ -660,105 +659,121 @@ clause that most \sat solvers learn from a conflict, a minimized
 \end{algorithmic}
 \end{algorithm}
 
-Algorithm~\ref{alg:i-uip} attempts to reduce each level in the \oneuip
-clause to a single literal (a UIP). The \oneuip clause has only one
-literal at its deepest level, so that level, $\dlevels[0]$, can be
-skipped. The subroutine \tryuiplevel is used to reduce each level. It
-uses trail resolutions to achieve this, subject to the constraint that
-no new decision levels can be introduced in the clause. In particular,
+Algorithm~\ref{alg:i-uip} tries to compute a clause shorter than the
+inputted \oneuip clause $C_1$. If a clause shorter than $C_1$ cannot
+be computed the routine returns $C_1$ unchanged. Line~\ref{ln:control}
+uses the parameter $\tgap$ to predict if Alg.~\ref{alg:i-uip} will be
+successful in producing a shorter clause. This predication is
+described below. If the prediction is negative $C_1$ is immediately
+returned and Alg.~\ref{alg:i-uip} is not attempted. Otherwise, a copy
+of $C_1$ is made in $C_i$ and $\ntries$, which counts the number of
+times Alg.~\ref{alg:i-uip} is attempted, is incremented.
+
+Then the decision levels of $C_1$ are computed and stored in
+$\dlevels$ in order from largest to lowest. The for loop of
+lines~\ref{ln:begin_level_loop}--\ref{ln:end_level_loop} is then
+executed for each decision level $\dlevels[i]$. In the loop the
+subroutine \tryuiplevel tries to reduce the set of literals at
+$\dlevels[i]$ down to a single UIP literal using a sequence of trail
+resolutions. Since $C_1$ is a \oneuip clause $\dlevels[0]$ (the
+deepest level) already contains only one literal, so we can start at
+$i=1$.
+
+After the call to \tryuiplevel a check (line~\ref{ln:earlyTerminate})
+is made to see if we can abort further processing. At this point the
+algorithm has finished processing levels $\dlevels[0]$--$\dlevels[i]$
+so the literals at those levels will change. Furthermore, we know that
+the best that can be done from this point on is to reduce the
+remaining $|\dlevels| - (i+1)$ levels down to a single literal
+each. Hence, adding these two numbers gives a lower bound on the size
+of the final computed clause. If that lower bound is as large as the
+size of the initial \oneuip clause we can terminate and return the initial
+\oneuip clause.
+
+After processing all decision levels, if \tryuiplevel is using the
+\allUipPure configuration, additional reduction in the clause size
+might be achieved by an another round of clause minimization
+(line~\ref{ln:puremin}). Finally, if the newly computed clause $C_i$
+is smaller that the input clause $C_1$ it is returned. Otherwise the
+original clause $C_1$ is returned. Additionally, if the configuration
+$\allUipAct$, described in Section~\ref{sec:active}, is being used,
+then we also require that the average activity level of the new clause
+$C_i$ be larger than $C_1$ before we can return the new clause $C_i$.
+
 \tryuiplevel($C_i$, $i$) attempts to resolve away the literals at
 decision level $i$ in the clause $C_i$, i.e., those in the set $L_i$
 (line~\ref{ln:litsati1}), in order of decreasing trail index, until
 only one literal at level $i$ remains. If the resolution step will not
 introduce any new decision levels (line~\ref{ln:nonewdlevel}), it is
-performed updating $\ctry$. In addition, all new literals at level $i$
-are added to $L_i$. These are the literals at level $i$ in the reason
-clause.
+performed updating $\ctry$. In addition, all new literals added to
+$\ctry$ at level $i$ are added to $L_i$. These are the literals at
+level $i$ in the reason clause.
 
 On the other hand, if the resolution step would introduce new decision
 levels (line~\ref{ln:newdlevel}) then there are two options.  The
 first option we call $\allUipPure$. With $\allUipPure$ we abort our
 attempt to UIP this level and return the clause with level $i$
 unchanged. In the second option, called $\allUipMin$, we continue
-without performing the resolution, \textit{keeping} the current
-literal $p$ in $\ctry$. $\allUipMin$ then continues to try to resolve
-away the other literals in $L_i$ (note that $p$ is no longer in $L_i$)
-until $L_i$ is reduced to a single literal. Hence, $\allUipMin$ can
-leave multiple literals at level $i$---all of those with reasons
-containing new levels along with one other.\footnote{Since the sole
-  remaining literal $u\in L_i$ is at a lower trail index than all of
-  the other literals there is no point in trying to resolve away
-  $u$---either it will be the decision literal for level $i$ having no
-  reason, or its reason will contain at least one other literal at
-  level $i$.} Observe that the number of literals at level $i$ can not
-be increased after processing it with \allUipPure. \allUipMin can,
-however, potentially increase the number of literals at level $i$. In
-resolving away a literal $l$ at level $i$, more literals might be
-introduced into level $i$, and some of these might not be removable by
-\allUipMin if their reasons contain new levels. However, both
-\allUipPure and \allUipMin can increase the number of literals at
-levels less that $i$ as new literals can be introduced into those
-levels when the literals at level $i$ are resolved away. These added
-literals at the lower levels might not be removable from the clause,
-and thus both methods might yield a longer clause than the inputted
-\oneuip clause.
+without performing the resolution, keeping the current literal $p$ in
+$\ctry$. $\allUipMin$ then continues to try to resolve away the other
+literals in $L_i$ (note that $p$ is no longer in $L_i$) until $L_i$ is
+reduced to a single literal. Hence, $\allUipMin$ can leave multiple
+literals at level $i$---all of those with reasons containing new
+levels along with one other.\footnote{Since the sole remaining literal
+  $u\in L_i$ is at a lower trail index than all of the other literals
+  there is no point in trying to resolve away $u$---either it will be
+  the decision literal for level $i$ having no reason, or its reason
+  will contain at least one other literal at level $i$.} Observe that
+the number of literals at level $i$ can not be increased after
+processing it with \allUipPure. \allUipMin can, however, potentially
+increase the number of literals at level $i$. In resolving away a
+literal $l$ at level $i$, more literals might be introduced into level
+$i$, and some of these might not be removable by \allUipMin if their
+reasons contain new levels. However, both \allUipPure and \allUipMin
+can increase the number of literals at levels less that $i$ as new
+literals can be introduced into those levels when the literals at
+level $i$ are resolved away. These added literals at the lower levels
+might not be removable from the clause, and thus both methods might
+yield a longer clause than the inputted \oneuip clause.
 
 After trying to UIP each level the clause $C_i$ is obtained. If we
-were using $\allUipPure$ we can once again apply minimization
-(line~\ref{ln:puremin}). Recursive clause minimization
-\cite{DBLP:conf/sat/SorenssonB09} would be useless for the $\allUipMin$
-clause as all but one literal of each level introduces a new level and
-thus cannot be recursively removed.\footnote{Other more powerful
-  minimization techniques could still be applied.} 
+were using $\allUipPure$ we can once again apply recursive clause
+minimization (line~\ref{ln:puremin})
+\cite{DBLP:conf/sat/SorenssonB09}, but this would be useless when
+using $\allUipMin$ as all but one literal of each level introduces a
+new level and thus cannot be recursively removed.\footnote{Other more
+  powerful minimization techniques could still be applied.}
 
-Finally, the algorithm returns the shorter of the initial \oneuip clause
-and the newly computed clause (line~\ref{ln:returnmin}). Because we
-return the newly computed clause only when it is shorter, an early
-termination test can be used (line~\ref{ln:earlyTerminate}). After the
-algorithm has finished processing levels $\dlevels[0]$--$\dlevels[i]$
-the literals at those levels will not be further changed. Furthermore,
-we know that the best that can be done is to reduce the remaining
-$|\dlevels| - (i+1)$ levels down to a single literal each. These two
-observations give a lower bound on the size of the resulting clause,
-and if that lower bound is as large as the size of the initial \oneuip
-clause we can terminate and return the initial \oneuip clause.  This
-termination condition does not, however, account for the final clause
-minimization (line~\ref{ln:puremin}) of \allUipPure, and it could
-prematurely terminate processing that would otherwise yield a shorter
-clause. However, we discovered such false negative is rare, and
-applying early termination on \allUipPure generally improves
-performance.
 %\allUipPure cannot trigger this early termination
 %condition (it cannot increase the size of any processed level), but
 %\allUipMin can.
 
-\paragraph{$\tgap$:}
-$\stablealluip$ can produce significantly smaller clause. However, when it
-does not yield a smaller clause, the cost of the additional resolution
-steps can hurt the solver's performance. Since resolution cannot
-reduce a clause's $\LBD$, the maximum size reduction obtainable from
-$\stablealluip$ is the difference between the \oneuip clause's size and its
-$\LBD$: $\gap(C_1) = |C_1| - \LBD(C_1)$. When $\gap(C_1)$ is small,
-applying $\stablealluip$ is unlikely to be cost effective. Our approach is
-to dynamically set a threshold on $\gap(C_1)$, $\tgap$, such that when
-$\gap(C_1) < \tgap$ we do not attempt to reduce the clause
-(line~\ref{ln:control}). Initially, $\tgap = 0$, and we count the
-number of times $\stablealluip$ is attempted ($\ntries$) and the number of
-times it successfully yields a shorter clause ($\nsuc$)
-(line~\ref{ln:try} and \ref{ln:suc}). On every restart if the success
-rate since the last restart is greater than 80\%, we decrease $\tgap$ by one (not allowing it to
-become negative), and if it is less than 80\% we increase $\tgap$
-by one.
+\noindent\textbf{$\tgap$}:\,\,
+$\stablealluip$ can produce significantly smaller clauses. However,
+when it does not yield a smaller clause, the cost of the additional
+resolution steps can hurt the solver's performance. Since resolution
+cannot reduce a clause's $\LBD$, the maximum size reduction obtainable
+from $\stablealluip$ is the difference between the \oneuip clause's
+size and its $\LBD$: $\gap(C_1) = |C_1| - \LBD(C_1)$. When $\gap(C_1)$
+is small, applying $\stablealluip$ is unlikely to be cost
+effective. Our approach is to dynamically set a threshold on
+$\gap(C_1)$, $\tgap$, such that when $\gap(C_1) < \tgap$ we do not
+attempt to reduce the clause (line~\ref{ln:control}). Initially,
+$\tgap = 0$, and we count the number of times $\stablealluip$ is
+attempted ($\ntries$) and the number of times it successfully yields a
+shorter clause ($\nsuc$) (line~\ref{ln:try} and \ref{ln:suc}). On
+every restart if the success rate since the last restart is greater
+than 80\% (less than 80\%), we decrease (increase) $\tgap$ by one
+not allowing it to become negative.
 
-
+\vspace*{-3pt}
 \begin{example}
     Consider the trail $\assertionTrail = \ldots$, $\ell_1$, $a_2$, $b_2$,
     $c_2$,$d_2$, $\ldots$, $\ldots$, $e_5$, $f_5$, $g_5$,
     $h_6$, $i_6$, $j_6$, $k_6$, $\ldots$, $m_{10}$,
     $\ldots$ where the subscript indicates the decision level of each
     literal and the literals are in order of increasing trail
-    index. Let the clauses
-    $C_x$ denote the reason clause for literal $x_i$ with 
+    index. 
     \[\begin{array}{|l|l|l|}\hline
       C_{a} = \varnothing 
       & C_{b} =  (b_2, \lnot \ell_3, \lnot a_2)
@@ -774,15 +789,16 @@ by one.
       & C_{k} = (k_6, \lnot f_5, \lnot j_6) \\\hline
       \end{array}
   \]
-  Suppose \oneuip learning yields the clause
+  Let the clauses $C_x$, show above, denote the reason clause for
+  literal $x_i$.  Suppose \oneuip learning yields the clause
   $C_1 = (\neg{m_{10}}$, $\neg{k_6}$, $\neg{j_6}$, $\neg{i_6}$,
-  $\neg{h_6}$, $\neg{g_5}$, $\neg{d_2}$, $\neg{c_2})$ where $\neg{m_{10}}$
-  is the UIP from the conflicting level. $\stablealluip$ first tries to find
-  the UIP for level 6 by resolving $C_1$ with $C_k$, $C_j$
-  and then $C_i$ producing the clause
-  $C^* = (\neg{m_{10}}$, $\neg{h_6}$, $\neg{g_5}$,
-  $\neg{f_5}$, $\neg{e_5}$, $\neg{d_2}$, $\neg{c_2})$ where
-  $\neg{h_6}$ is the UIP for level 6.
+  $\neg{h_6}$, $\neg{g_5}$, $\neg{d_2}$, $\neg{c_2})$ where
+  $\neg{m_{10}}$ is the UIP from the conflicting
+  level. $\stablealluip$ first tries to find the UIP for level 6 by
+  resolving $C_1$ with $C_k$, $C_j$ and then $C_i$ producing the
+  clause $C^* = (\neg{m_{10}}$, $\neg{h_6}$, $\neg{g_5}$, $\neg{f_5}$,
+  $\neg{e_5}$, $\neg{d_2}$, $\neg{c_2})$ where $\neg{h_6}$ is the UIP
+  for level 6.
 
   $\stablealluip$ then attempts to find the UIP for level 5 by resolving $C^*$
   with $C_g$ and then $C_f$. However, resolving with $C_f$ would
@@ -813,21 +829,20 @@ We also developed and experimented with a few variants of the
 $\stablealluip$ algorithm which we describe below.
 
 \subsubsection{$\allUipAct$: Clauses with Active Variables.}
-\label{sec:active} $\stablealluip$ learning might
-introduce literals with low variable activity into $C_i$. Low activity
-variables are variables that have had low recent participation in
-clause learning. Hence, clauses with variables of low activity might
-not be as currently useful to the solver. Our variant $\allUipAct$,
-shown as the optional line~\ref{ln:activity} in
-Algorithm~\ref{alg:i-uip}, computes the average variable activity of
-the newly produced \alluip clause $C_i$ and the original \oneuip
-clause $C_1$. The new clause $C_i$ will be returned only if it is both
-smaller and has higher average variable activity than the original
-\oneuip clause. There are, of course, generalizations of this approach
-where one has a weighted trade-off between these factors that allows
-preferring the new clause when it has large gains in one metric even
-though it has small losses in the other. We did not, however,
-experiment with such generalizations.
+\label{sec:active} $\stablealluip$ learning might introduce literals
+with low variable activity into $C_i$. Low activity variables are
+variables that have had low recent participation in clause
+learning. Hence, clauses with variables of low activity might not be
+as currently useful to the solver. Our variant $\allUipAct$
+(line~\ref{ln:activity} in Algorithm~\ref{alg:i-uip}) computes the
+average variable activity of the newly produced \alluip clause $C_i$
+and the original \oneuip clause $C_1$. The new clause $C_i$ will be
+returned only if it is both smaller and has higher average variable
+activity than the original \oneuip clause. There are, of course,
+generalizations of this approach where one has a weighted trade-off
+between these factors that allows preferring the new clause when it
+has large gains in one metric even though it has small losses in the
+other. We did not, however, experiment with such generalizations.
 
 \subsubsection{Adjust Variable Activity.}
 \label{sec: varajust} An alternative to filtering clauses with low

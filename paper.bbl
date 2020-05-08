@@ -97,6 +97,14 @@ Ryvchin, V., Nadel, A.: Maple\_lcm\_dist chronobt: Featuring chronological
   Proceedings of SAT Competition 2018 Solver and Benchmark Descriptions.
   University of Helsinki (2018), \url{https://hdl.handle.net/10138/237063}
 
+\bibitem{DBLP:conf/sat/SabharwalSS12}
+Sabharwal, A., Samulowitz, H., Sellmann, M.: Learning back-clauses in {SAT} -
+  (poster presentation). In: Cimatti, A., Sebastiani, R. (eds.) Theory and
+  Applications of Satisfiability Testing - {SAT} 2012 - 15th International
+  Conference, Trento, Italy, June 17-20, 2012. Proceedings. Lecture Notes in
+  Computer Science, vol.~7317, pp. 498--499. Springer (2012),
+  \url{https://doi.org/10.1007/978-3-642-31612-8\_53}
+
 \bibitem{DBLP:series/faia/SilvaLM09}
 Silva, J.P.M., Lynce, I., Malik, S.: Conflict-driven clause learning {SAT}
   solvers. In: Handbook of Satisfiability, pp. 131--153. IOS Press (2009),
