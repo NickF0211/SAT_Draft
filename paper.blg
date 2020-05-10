@@ -1,46 +1,46 @@
-This is BibTeX, Version 0.99d (TeX Live 2019)
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: paper.aux
 The style file: splncs04.bst
 Database file #1: sat.bib
-You've used 23 entries,
+You've used 25 entries,
             2850 wiz_defined-function locations,
-            793 strings with 12326 characters,
-and the built_in function-call counts, 15577 in all, are:
-= -- 1311
-> -- 480
+            800 strings with 12465 characters,
+and the built_in function-call counts, 16381 in all, are:
+= -- 1367
+> -- 504
 < -- 29
-+ -- 184
-- -- 160
-* -- 1056
-:= -- 1953
-add.period$ -- 54
-call.type$ -- 23
-change.case$ -- 171
++ -- 193
+- -- 167
+* -- 1102
+:= -- 2063
+add.period$ -- 57
+call.type$ -- 25
+change.case$ -- 181
 chr.to.int$ -- 0
-cite$ -- 23
-duplicate$ -- 1378
-empty$ -- 1394
-format.name$ -- 195
-if$ -- 3436
+cite$ -- 25
+duplicate$ -- 1456
+empty$ -- 1485
+format.name$ -- 203
+if$ -- 3611
 int.to.chr$ -- 0
-int.to.str$ -- 23
-missing$ -- 283
-newline$ -- 75
-num.names$ -- 80
-pop$ -- 514
+int.to.str$ -- 25
+missing$ -- 298
+newline$ -- 81
+num.names$ -- 86
+pop$ -- 548
 preamble$ -- 1
-purify$ -- 109
+purify$ -- 115
 quote$ -- 0
-skip$ -- 416
+skip$ -- 433
 stack$ -- 0
-substring$ -- 870
-swap$ -- 798
+substring$ -- 896
+swap$ -- 832
 text.length$ -- 29
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 92
+type$ -- 100
 warning$ -- 0
-while$ -- 139
-width$ -- 25
-write$ -- 276
+while$ -- 146
+width$ -- 27
+write$ -- 296

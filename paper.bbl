@@ -15,6 +15,16 @@ Beame, P., Kautz, H.A., Sabharwal, A.: Towards understanding and harnessing the
   potential of clause learning. J. Artif. Intell. Res.  \textbf{22},  319--351
   (2004), \url{https://doi.org/10.1613/jair.1410}
 
+\bibitem{Armin2019Cadical}
+Biere, A.: Cadical at the sat race 2019. In: Heule, M.J.H., J{\"{a}}rvisalo,
+  M., Suda, M. (eds.) Proceedings of SAT Competition 2019 Solver and Benchmark
+  Descriptions. University of Helsinki (2019),
+  \url{http://hdl.handle.net/10138/306988}
+
+\bibitem{cadical}
+Biere, A.: Cadical sat solver. \url{https://github.com/arminbiere/cadical}
+  (2019)
+
 \bibitem{DBLP:conf/aaai/BayardoS97}
 Jr., R.J.B., Schrag, R.: Using {CSP} look-back techniques to solve real-world
   {SAT} instances. In: Kuipers, B., Webber, B.L. (eds.) Proceedings of the
