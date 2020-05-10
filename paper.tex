@@ -680,7 +680,7 @@ $i=1$.
 After the call to \tryuiplevel a check (line~\ref{ln:earlyTerminate})
 is made to see if we can abort further processing. At this point the
 algorithm has finished processing levels $\dlevels[0]$--$\dlevels[i]$
-so the literals at those levels will change. Furthermore, we know that
+so the literals at those levels will not change. Furthermore, we know that
 the best that can be done from this point on is to reduce the
 remaining $|\dlevels| - (i+1)$ levels down to a single literal
 each. Hence, adding these two numbers gives a lower bound on the size
