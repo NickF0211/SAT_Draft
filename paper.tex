@@ -4,7 +4,6 @@
 \usepackage{amssymb}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
-%\usepackage[ruled,linesnumbered,noend,oldcommands]{algorithm2e}
 \usepackage{xspace}
 \usepackage{mathtools}
 \usepackage{graphicx}
@@ -12,9 +11,8 @@
 \usepackage{xcolor}
 \usepackage{theorem}
 \usepackage[T1]{fontenc}
-% \usepackage[T1,hyphens]{url}
 \usepackage{hyperref}
-%\PassOptionsToPackage{hypnens}{url}
+
 
 \algrenewcommand\algorithmicprocedure{}
 \algrenewcommand\algorithmicthen{}
@@ -631,8 +629,6 @@ solvers learn from a conflict, a minimized \oneuip clause.
         \Comment{$C_i$ is smaller than the input clause}
    \Else \State \textbf{return} $C_1$
    \EndIf
-%    \State \textbf{return} \textbf{if} $|C_i| < |C_1|$) 
-%           \textbf{then}  $C_i$ \textbf{else}  $C_1$
 \EndProcedure
 \Statex 
 \Procedure{\tryuiplevel}{$C_i$, $i$}
@@ -746,9 +742,6 @@ using $\allUipMin$ as all but one literal of each level introduces a
 new level and thus cannot be recursively removed.\footnote{Other more
   powerful minimization techniques could still be applied.}
 
-%\allUipPure cannot trigger this early termination
-%condition (it cannot increase the size of any processed level), but
-%\allUipMin can.
 
 \noindent\textbf{$\tgap$}:\,\,
 $\stablealluip$ can produce significantly smaller clauses. However,
@@ -883,7 +876,7 @@ In sum, the two modified variable activity update schemes we
 experimented with were
 \[
     \begin{array}{l}
-    \textbf{\allUipIn} \equiv \forall l\in C_i - C_1.\,\mathit{bumpActivity}l) \\
+    \textbf{\allUipIn} \equiv \forall l\in C_i - C_1.\,\mathit{bumpActivity}(l) \\
     \textbf{\allUipEx} \equiv \forall l\in C_i - C_1.\,\mathit{bumpActivity}(l) \land\mbox{} \\
     \qquad \forall l\in C_1 - C_i.\,\mathit{unbumpActivity(l)}
   \end{array}
@@ -913,42 +906,13 @@ in order to add our new schemes to those solvers using chronological
 backtracking.
 
 \section{Implementation and Experiments}
-%\subsubsection{Clause Reduction with $\stablealluip$.}
 We implemented $\stablealluip$ learning schemes on \text{\MapleBase}
 \cite{liang2016maple}, the winner of SAT Race 2016 application
 track. We then evaluated these schemes and compare against the \oneuip
 baseline on the full set of benchmarks from SAT RACE 2019 main track
 which contains 400 instances. We ran our experiments on 2.70 GHz
 XeonE5-2680 CPUs, allowing
-%\fb{insert time bound}
 5000 seconds per instance and a maximum of 12 GB memory.
-%\fb{insert RAM bound}.
-
-%\fb{Delete figure 2 and use only figure 8 with all of the
-%  solvers. First briefly comment on the performance and make a brief observation about clause sizes.
- %Then have a new subsubsection that looks at clause sizes wrt. to the
-  %two schemes \allUipPure and \allUipMin. Shrink fig 3 and 4 and put
-  %them side by side (using a tabular environment as I did in figure 1).
-
-  %Remove fig 5 and put those numbers in the text instead of in a table
-  %as part of your discussion.
-  
-  %Then have a new subsubsection on DRAT trim and get rid of Fig 7.
-  
-  
-
-  %Then a subsubsection on \stablealluip in modern solvers. Some of our
-  %observations have no solid foundation, so check them to make sure
-  %that you are just not stating your intuitions without reasonable
-  %evidence. We need to to fit into 15 pages total along with a short
-  %1/3 page for conclusions.
-
-  %Finally add all citations.
-
-  %If we add the more complex \allUipMin we also will need more space
-  %to describe that, so prune some of your conclusions especially those
-  %that are simply conjectures.
-%}
 
 \begin{figure} 
 \begin{center}
@@ -1036,79 +1000,6 @@ results.
 \end{figure}
 
 
-%Beside solved instances count and PAR-2 score, we additionally measure
-%the average clause size. 
-%and clause reduction ratio (both cumulative
-%and non-cumulative)\footnote{The cumulative reduction ratio is
-%  obtained through learning all clauses with the target learning
-%  scheme; Therefore, the reduction is cumulative. The %non-cumulative
-%  reduction ratio is obtained by running the target scheme for
-%  measurement only (the minimized \oneuip clause is learned); Therefore,
-%  the reduction is not cumulative. }  for each instances. 
-%For $\MapleIUIPPure$ and $\MapleIUIMin$, we also captures the $\stablealluip$
-%learning attempted rate and success rate.
-
-%\begin{figure} 
-%\begin{center}
-%\begin{tabular}{ | m{3.3cm} | m{2cm}| m{2cm} | m{2cm} | m{2.7cm} | } 
-%\hline
-%Solver & \# solved & PAR-2 & Clause Size & Cl Reduction\% \\ 
-%\hline
-%$\MapleBase$ & 221 (132, 89) & 5018.89 & 62.6 & 36.53\% \\ 
-%\hline
-%$\MapleIUIPPure$ & \textbf{228} (135, 93) & \nf{4867.37} & 49.88 & 41.6\%  (42.72\%)\\ 
-%\hline
-%$\MapleIUIMin$ & 226 (135, 91) & 4890.67 & \textbf{45.2} & \textbf{47.8\% (51.19\%)}\\ 
-%\hline
-%\end{tabular}
-%\end{center}
-%\caption{Benchmark results of $\MapleBase$ , $\MapleIUIPPure$  and $\MapleIUIMin$ on SAT2019 %race main track.
-%CL Reduction\% is the clause size reduction ratio comparing to non-minimized \oneuip clauses, %and the values in the brackets are the non-cumulative reduction ratio.}
-%\label{fig:t1}
-%\end{figure}
-
-%Fig.~\ref{fig:t1} shows that $\allUipPure$ ($\allUipPure$) solved seven
-%(five) more instances than the baseline solver with lower PAR-2
-%scores. $\allUipPure$ has marginally lower PAR-2 score than
-%$\allUipPure$. Both $\allUipPure$ and $\allUipMin$ produce clause with
-%significantly smaller size than \oneuip by 20.4\% and 27.7\%,
-%respectively. Fig.~\ref{fig:len_pdf} shows the probability density
-%distribution (PDF) of the relative clause size of both i-uip learning
-%schemes ($\allUipPure$ in red and $\allUipMin$ in green) for each
-%instance. $\allUipPure$ ($\allUipMin$) produces shorter clauses for 77.7\%
-%(88.5\%) of instances, and average relative reduction from \oneuip is
-%16.7\% (18.6\%). Fig.~\ref{fig:len_compare} compares the absolute
-%clause size of $\allUipMin$, $\allUipPure$ and \oneuip, and it shows that
-%both i-UIP learning schemes in general produce the smaller clauses,
-%and the size reduction is more significant for instances with large
-%average \oneuip clause size. Moreover, $\allUipMin$ clauses (indicated in
-%5green) is consistently smaller than $\allUipPure$ clauses.
-
-%\nf{ Do we need this?  We additionally looked at the 14 instances
-%  solved by $\allUipMin$ but not by \oneuip. $\allUipMin$ produces smaller
-%  clauses for all of them with average relative reduction of 22\% and
-%  maximum 77\% (30 vs 135). Seven out of 14 instances has size
-%  relative reduction over 30\%. For the 9 instances solved by \oneuip
-%  but not by $\allUipMin$, $\allUipMin$ only produce smaller clause for
-%  three instances and with average relative reduction of 3.3\%.}
-
-
-%\begin{figure} 
-%\begin{center} 
-%\begin{tabular}{ | m{3.5cm} | m{5cm}| m{3.5cm} | } 
-%\hline
-%Solver & $\stablealluip$ attempt rate & $\stablealluip$ success rate  \\ 
-%\hline
-%$\MapleIUIPPure$ & 16.1\% & 43.4\% \\ 
-%\hline
-%$\MapleIUIMin$ & 28.8\% & 59.3\% \\ 
-%\hline
-%\end{tabular}
-%\end{center}
-%\caption{Compare $\allUipPure$ and $\allUipMin$ i-uip attempt rate and success rate. %$\allUipMin$ scheme attempted $\stablealluip$ more frequently, and it is more likely to %successfully produce smaller $C_i$ clause .}
-%\label{fig:t2}
-%\end{figure}
-
 \subsubsection{Reduced Proof Sizes with $\stablealluip$.}
 A learning scheme that yields smaller clauses (lemmas) might also
 construct smaller causal proofs. For 88 UNSAT instances solved mutually
@@ -1129,57 +1020,11 @@ $\allUipPure$ was 16.5\% and 3.6\% compared with \oneuip, which roughly
 correlate with our observed clause size observation in
 Fig~\ref{fig:len_pdf}.
 
-%Fig.~\ref{fig:proof_compare} shows the
-%absolute proof size comparison between $\allUipMin$ and \oneuip, and displays a similar trend %as the clause size comparison plot in Fig.~\ref{fig:len_compare}.
-
-%\begin{figure} 
-%\begin{center} 
-%\begin{tabular}{ | m{3.5cm} | m{5cm}| m{3.5cm} | } 
-%\hline
-%Solver & optimized proof size (MB) & relative reduction size  \\ 
-%\hline
-%$\MapleBase$ & 613.9 & 0  \\ 
-%\hline
-%$\MapleIUIPPure$ & 487.2 & 6.90\% \\ 
-%\hline
-%$\MapleIUIMin$ & 413.2 & 17.18\% \\ 
-%\hline
-%\end{tabular}
-%\end{center}
-%\caption{Optimized UNSAT proof comparison for \oneuip $\allUipPure$ and $\allUipMin$. %Optimized proof size measures the average absolute proof size in MB, and relative reduction %size measures the average relative reduction for all UNSAT instances.}
-%\label{fig:t3}
-%\end{figure}
-
-%\begin{figure}
-%    \centering
-%    \includegraphics[width=0.8\textwidth]{figures/proof_size_compare.pdf}
-%    \caption{Average optimized proof size between 1-uip and $\allUipMin$.}
-%    \label{fig:proof_compare}
-%\end{figure}
-
-%\subsection{$\stablealluip$ as a Practical Learning Scheme}
-%To evaluate $\stablealluip$'s effectiveness as a clause learning scheme, we
-%re-implement $\allUipMin$ on $\MapleBase$ with the extensions mentioned
-%in section~\ref{sec:i-uip}. We evaluated \oneuip learning and five
-%$\stablealluip$ configurations ( $\allUipMin$, $\allUipPure$, $\allUipAct$,
-%$\allUipIn$, and $\allUipEx$) on the SAT Race 2019 main track
-%benchmark and reported solved instances, PAR-2 score and average
-%clause size.
-
-%Fig.~\ref{fig:t4} summarizes the result of the experiment. Learning
-%scheme $\allUipPure$ solved the most overall instances (228) and the
-%most UNSAT instances (93). $\allUipAct$ had the lowest PAR-2
-%score. $\allUipIn$ solved the most SAT instances (138). $\allUipEx$
-%produced the shortest average clause size, but solved the second least
-%instances, one more instance than the baseline \oneuip learning. All
-%configurations of $\stablealluip$ outperformed the baseline \oneuip scheme in
-%solved instances, PAR-2 score and average clause size.
 
 
 \begin{figure} 
 \begin{center}
 \fss{8pt}{10pt}
-% \begin{tabular}{ | m{3.7cm} | m{4cm}| m{2cm} | m{2.75cm} |  }
 \begin{tabular}{|l|l|l|l|} 
 \hline
 Solver & \#solved (SAT, UNSAT) $\Delta$ & PAR-2 & avg. clause Size \\ 
@@ -1238,7 +1083,7 @@ $\defaultcadical$ & 249 (150, 99)  & \textbf{4311.76} & 101.96 \\
 \hline
 $\defaultcadical$-all-pure & 248 (151, 97) $-$1  & 4373.38 & 82.44  \\
 \hline
-$\defaultcadical$-all-min & 248 (149, 99) $-$1 & 4398.31 & 46.29 \\ 
+$\defaultcadical$-all-min & 248 (149, 99) $-$1 & 4398.31 & 43.93 \\ 
 \hline
 $\defaultcadical$-all-act & \textbf{252} (\textbf{152}, \textbf{100}) +3 & 4331.56 & 47.34 \\
 \hline
@@ -1261,11 +1106,11 @@ SAT solvers, we implemented $\stablealluip$ in the winners of 2017,
 and in the $\expSAT$ \cite{MdSolimul2019expMalpe} ($\expSATShort$)
 and $\cadical$~\cite{cadical} solver. $\expSATShort$ is a top ten solver from 2019 SAT race which
 uses random walk simulation to help branching. We chose $\expSATShort$
-because (1) it one of the top solvers in the 2019 SAT Race that does
+because (1) it is one of the top solvers in the 2019 SAT Race that does
 not use chronological backtracking; and (2) the random walk simulation
 branching heuristic is different from local branching heuristic (VSIDS
 and LRB) that we have considered in $\allUipAct$, $\allUipIn$, and
-$\allUipEx$. We chose $\cadical$ because its default configuration\footnote{$\cadical$'s default configuration is different from the specialized 'sat' configuration, which solved the most SAT instances in the 2019 SAT Race.} (denote as $\defaultcadical$) solved 244 total instances in 2019 SAT Race, the highest among all participants. For this experimented, we used the latest version of $\defaultcadical$ instead of the SAT Race participant~\cite{Armin2019Cadical}.  We compared these solver's base \oneuip learning scheme
+$\allUipEx$. We chose $\cadical$ because its default configuration\footnote{$\cadical$'s default configuration is different from the specialized 'sat' configuration, which solved the most SAT instances in the 2019 SAT Race.} (denote as $\defaultcadical$) solved 244 total instances in 2019 SAT Race, the highest among all participants. For this experimented, we used the latest available version of $\defaultcadical$ instead of the 2019 SAT Race participant~\cite{Armin2019Cadical}.  We compared these solver's base \oneuip learning scheme
 with $\allUipPure$, $\allUipMin$ and the top two $\stablealluip$
 variants, $\allUipAct$ and $\allUipIn$, on the SAT Race 2019 main
 track benchmark. We report solved instances, PAR-2 score and the
@@ -1276,8 +1121,8 @@ Table~\ref{fig:t5} shows the benchmark result of the $\stablealluip$
 configurations in our suite of modern solvers. Overall, we observed
 similar performance gain on all modern solvers as we have seen on
 $\MapleBase$ in Fig.~\ref{fig:t4}. More specifically, almost all
-configurations improved on solved instance (+4.5 instances in average)
-and PAR-2 score ($-$83.6 in average).  The average clause size
+configurations improved on solved instance (+3.9 instances in average)
+and PAR-2 score ($-$57.7 in average).  The average clause size
 reduction is consistent across all solvers. Each configuration also
 exhibits different strength: $\allUipPure$ solved the most instances
 with the best PAR-2 score on two solvers, $\allUipMin$ yields small
@@ -1291,31 +1136,11 @@ respectively. $\allUipPure$ solved more UNSAT and SAT instances while
 the other configurations improved on solving SAT instances. The clause
 size reduction of $\stablealluip$ is more significant on $\MapleSeven$
 than on to $\MapleBase$.
-%This may suggests that $\stablealluip$ and the recent
-%learnt clause minimization approach~\cite{} synergies well because
-%i-UIP clauses are shorter with more common literals which allows
-%vivification~\cite{} to prune literals more aggressively through unit
-%propagation.
 
 The SAT 2018 race winner$\MapleEightShort$ uses chronological
 backtracking (CB) for long distance backtracks. Three out of four
 $\stablealluip$ configurations outperformed \oneuip by 5, 4 an 4 instances,
 respectively.
-%$\MapleEightShort$ improved from $\MapleSeven$ by using
-%chronological backtracking (CB) for long distance
-%backtracks. Therefore, we used $\stablealluip$-CB extension for all $\stablealluip$
-%configurations. 
-
-%The results indicates that the improvement of $\stablealluip$
-%is slightly shadowed by the adoption of CB. More specifically, we
-%believe CB prevents decision levels from being compressed through the
-%process of backtracking and literal assertion. The shorter i-UIP
-%clauses can bring related literals closer, which in turns compresses
-%the assertion stack and the decision levels. However, since CB
-%discourages long distance backtracking, the effect of learning shorter
-%clauses is shadowed until a full restart.  We believe we have observed
-%an interesting interaction effect that shows the limitations of both
-%CB and $\stablealluip$ learning for future research.
 
 On the SAT 2019 race winner $\MapleNineShort$, all four
 $\stablealluip$ configurations solved instances 2, 6, 5 and 5 more instances
@@ -1326,10 +1151,6 @@ example, $\allUipMin$ in average, added 12\% less duplicated clauses
 into the core clause database than \oneuip. This observation is
 surprising, and the cause is unclear.
 
-%One possible explanation is that
-%$\stablealluip$ learning can reduce an \oneuip clause to different i-UIP clauses
-%for different assertion trails. Therefore, the solver is less likely
-%to learn the same i-UIP clauses.
 
 On $\expSATShort$, three out of four $\stablealluip$ configurations solved
 4, 7 and 8 more instances than \oneuip learning. We noticed that
@@ -1338,7 +1159,7 @@ $\allUipMin$ and $\allUipPure$ on this solver. The random walk
 simulation branching heuristic, however, didn't impact the performance
 of $\stablealluip$ schemes significantly.
 
-$\defaultcadical$ with \oneuip solved 249 total instances, 5 more than the result from the SAT 2019 Race.  Applying $\allUipAct$ and $\allUipIn$ further improved the solved instance by 3 an 2, respectively.  The average learnt clause size of \oneuip on $\defaultcadical$ is much larger than other solvers' (101 vs 60) while the average clause size of $\stablealluip$ configurations are similar for all solvers.
+$\defaultcadical$ with \oneuip solved 249 instances, 5 more than the result from the SAT 2019 Race.  Applying $\allUipAct$ and $\allUipIn$ further improved the solved instance by 3 an 2, respectively.  The average learnt clause size of \oneuip on $\defaultcadical$ is much larger than other solvers' (101 vs 60) while the average clause size of $\stablealluip$ configurations are similar on all solvers.
 
 \section{Conclusion}
 In this paper we introduce a new clause learning scheme, $\stablealluip$,
