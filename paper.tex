@@ -1110,7 +1110,13 @@ because (1) it is one of the top solvers in the 2019 SAT Race that does
 not use chronological backtracking; and (2) the random walk simulation
 branching heuristic is different from local branching heuristic (VSIDS
 and LRB) that we have considered in $\allUipAct$, $\allUipIn$, and
-$\allUipEx$. We chose $\cadical$ because its default configuration\footnote{$\cadical$'s default configuration is different from the specialized 'sat' configuration, which solved the most SAT instances in the 2019 SAT Race.} (denote as $\defaultcadical$) solved 244 total instances in 2019 SAT Race, the highest among all participants. For this experimented, we used the latest available version of $\defaultcadical$ instead of the 2019 SAT Race participant~\cite{Armin2019Cadical}.  We compared these solver's base \oneuip learning scheme
+$\allUipEx$. We chose $\cadical$ because its default configuration\footnote{$\cadical$'s 
+default configuration is different from the specialized 'sat' configuration, 
+which solved the most SAT instances in the 2019 SAT Race.} (denote as $\defaultcadical$) 
+solved 244 instances in the 2019 SAT Race, the highest among 
+all participants. For this experimented, we used the latest available version of
+ $\defaultcadical$ instead of the 2019 SAT Race participant~\cite{Armin2019Cadical}. 
+  We compared these solver's base \oneuip learning scheme
 with $\allUipPure$, $\allUipMin$ and the top two $\stablealluip$
 variants, $\allUipAct$ and $\allUipIn$, on the SAT Race 2019 main
 track benchmark. We report solved instances, PAR-2 score and the
