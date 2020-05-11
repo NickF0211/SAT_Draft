@@ -1112,7 +1112,7 @@ branching heuristic is different from local branching heuristic (VSIDS
 and LRB) that we have considered in $\allUipAct$, $\allUipIn$, and
 $\allUipEx$. We chose $\cadical$ because its default configuration\footnote{$\cadical$'s 
 default configuration is different from the specialized 'sat' configuration, 
-which solved the most SAT instances in the 2019 SAT Race.} (denote as $\defaultcadical$) 
+which solved the most satisfiable instances in the 2019 SAT Race.} (denote as $\defaultcadical$) 
 solved 244 instances in the 2019 SAT Race, the highest among 
 all participants. For this experimented, we used the latest available version of
  $\defaultcadical$ instead of the 2019 SAT Race participant~\cite{Armin2019Cadical}. 
@@ -1165,8 +1165,8 @@ $\allUipMin$ and $\allUipPure$ on this solver. The random walk
 simulation branching heuristic, however, didn't impact the performance
 of $\stablealluip$ schemes significantly.
 
-$\defaultcadical$ with \oneuip solved 249 instances,   
-and $\allUipAct$ and $\allUipIn$ solved 2 and 3 more instance, respectively.  
+$\defaultcadical$ with \oneuip solved 249 total instances. 
+Applying $\allUipAct$ and $\allUipIn$ helped the solver solve 2 and 3 more instance, respectively.  
 The average learnt clause size of \oneuip on 
 $\defaultcadical$ is much larger than other solvers' (101 vs 60) 
 while the average clause size of $\stablealluip$ configurations are similar on all solvers.
