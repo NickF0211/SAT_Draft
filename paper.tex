@@ -1,5 +1,4 @@
 \documentclass[runningheads]{llncs}
-\usepackage{times}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{algorithm}
@@ -934,7 +933,7 @@ $\allUipEx$ & 223 (134, 89) +2& 5015.23& \textbf{43.2} \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Benchmark results of $\MapleBase$ with \oneuip, $\allUipPure$, $\allUipMin$, $\allUipAct$,
+\caption{Results of $\MapleBase$ with \oneuip, $\allUipPure$, $\allUipMin$, $\allUipAct$,
 $\allUipIn$, and $\allUipEx$ on SAT2019 race main track.}
 \label{fig:t4}
 \end{figure}
@@ -963,7 +962,7 @@ clause size of $\allUipMin$, $\allUipPure$ and \oneuip per instance.
 Both $\stablealluip$ schemes generally yield smaller clauses, and the size
 reduction is more significant for instances with larger \oneuip clauses.
 
-The results in Fig.~\ref{fig:t4}, ~\ref{fig:len_pdf} and
+The results in Fig.~\ref{fig:t4}, \ref{fig:len_pdf} and
 \ref{fig:len_compare} indicate $\allUipMin$ often achieves higher
 clause reduction than $\allUipPure$. We also observed that
 $\allUipMin$ attempted algorithm~\ref{alg:i-uip} more frequently than
@@ -994,7 +993,6 @@ results.
       $\MapleIUIMin$ ($\allUipPure$).}
       \label{fig:len_compare}
   \end{minipage}
-
 \end{tabular}
 }
 \end{figure}
@@ -1004,20 +1002,20 @@ results.
 A learning scheme that yields smaller clauses (lemmas) might also
 construct smaller causal proofs. For 88 UNSAT instances solved mutually
 by $\allUipPure$, $\allUipMin$ and \oneuip schemes, we additionally
-compare the size of the optimized DRAT proof from the three learning schemes. 
+compared the size of the optimized DRAT proof from the three learning schemes. 
 We used the DRAT-trim tool
 \cite{DBLP:conf/sat/WetzlerHH14} with a 30000 second timeout to check and
-optimize every DRAT proof once \footnote{Applying DRAT-trim multiple
+optimize every DRAT proof once\footnote{Applying DRAT-trim multiple
   times can further reduce the proof size until a fix-point. However,
-  the full optimization is time consuming and was impractical for our
+  the full optimization is too time consuming for our
   experiments.}.
 
 The average optimized DRAT proof from $\allUipMin$ and $\allUipPure$
 are 556.6MB and 698.5MB, respectively. Both sizes are significantly
 smaller than the average optimized proof size from \oneuip, 824.9MB.
 The average proof size reduction per instance for $\allUipMin$ and
-$\allUipPure$ was 16.5\% and 3.6\% compared with \oneuip, which roughly
-correlate with our observed clause size observation in
+$\allUipPure$ is 16.5\% and 3.6\% against \oneuip, which roughly
+correlate with our clause size observation in
 Fig~\ref{fig:len_pdf}.
 
 
@@ -1078,7 +1076,6 @@ $\expSATShort$-all-inclusive & \textbf{245} (\textbf{146}, 99) +8 & 4475.76 & \t
 \\
 \hline
 \hline
- & & &\\
 $\defaultcadical$ & 249 (150, 99)  & \textbf{4311.76} & 101.96 \\
 \hline
 $\defaultcadical$-all-pure & 248 (151, 97) $-$1  & 4373.38 & 82.44  \\
@@ -1140,7 +1137,7 @@ On the SAT 2017 race winner $\MapleSeven$, all four configurations of
 $\stablealluip$ outperformed \oneuip learning by 12, 8, 5, and 2 instances,
 respectively. $\allUipPure$ solved more UNSAT and SAT instances while
 the other configurations improved on solving SAT instances. The clause
-size reduction of $\stablealluip$ is more significant on $\MapleSeven$
+size reduction of $\stablealluip$ is more significant on this solver
 than on to $\MapleBase$.
 
 The SAT 2018 race winner$\MapleEightShort$ uses chronological
@@ -1151,8 +1148,8 @@ respectively.
 On the SAT 2019 race winner $\MapleNineShort$, all four
 $\stablealluip$ configurations solved instances 2, 6, 5 and 5 more instances
 than \oneuip, respectively. $\MapleNineShort$ prioritizes clauses that
-are learned multiple times. We observed that clauses learnt from
-$\stablealluip$ configurations are less likely to be duplicated. As an
+are learned multiple times. We observed that
+$\stablealluip$ clauses are less likely to be duplicated. As an
 example, $\allUipMin$ in average, added 12\% less duplicated clauses
 into the core clause database than \oneuip. This observation is
 surprising, and the cause is unclear.
@@ -1160,7 +1157,7 @@ surprising, and the cause is unclear.
 
 On $\expSATShort$, three out of four $\stablealluip$ configurations solved
 4, 7 and 8 more instances than \oneuip learning. We noticed that
-$\allUipAct$ and $\allUipIn$ show significant better performance than
+both $\allUipAct$ and $\allUipIn$ show better performance than
 $\allUipMin$ and $\allUipPure$ on this solver. The random walk
 simulation branching heuristic, however, didn't impact the performance
 of $\stablealluip$ schemes significantly.
